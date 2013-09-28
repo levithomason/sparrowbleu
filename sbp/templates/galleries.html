@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+
+	{% include "_navbar.html" %}
+
+{% endblock nav %}
+
+{% block body %}
+	<div class="container text-center">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+	    		<div id="page_icon"><i class="icon-picture"></i></div>
+		        <h1>Galleries</h1>
+			    <ul class="text-left">
+			    	{% for g in Galleries %}
+			    		<li><h3>{{ g }} <i>({{ g.number_of_images }} images)</i></h3></li>
+		    		{% endfor %}
+			    </ul>
+			</div>
+		</div>
+	</div>
+{% endblock body %}
