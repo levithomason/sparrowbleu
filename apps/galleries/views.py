@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 
-from sbp.galleries.models import Gallery
-from sbp.galleries.forms import GalleryForm
+from apps.galleries.models import Gallery
+from apps.galleries.forms import GalleryForm
 
 def new_gallery(request):
     if not request.user.is_authenticated():

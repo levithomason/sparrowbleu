@@ -1,5 +1,5 @@
 from django import forms
-from sbp.galleries.models import Gallery
+from apps.galleries.models import Gallery
     
 class GalleryForm(forms.Form):
     name = forms.CharField(max_length=60)

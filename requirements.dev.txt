@@ -1,6 +1,6 @@
-# requirements/dev.txt
+# requirements.dev.txt
 
--r common.txt
+-r requirements.txt
 South==0.8.2
 psycopg2==2.5.1
 django-debug-toolbar==0.9.4
