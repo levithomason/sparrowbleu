@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
 				<form id="login_form" action="/login&next={{request.path}}" method="post">{% csrf_token %}
-					<input type="text" id="username" class="form-group form-control" name="username" placeholder="Username">
+					<input type="text" id="username" class="form-group form-control" name="username" placeholder="Username" autofocus=true>
 					<input type="password" id="password" class="form-group form-control" name="password" placeholder="Password">
 		            <label class="checkbox form-group">
 		            	<input type="checkbox" name="remember" value="1"> Remember Me
