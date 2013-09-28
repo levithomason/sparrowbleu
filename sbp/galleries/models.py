@@ -1,10 +1,9 @@
 from django.db import models
-from django.forms import ModelForm
-
 
 class Gallery(models.Model):
     name = models.CharField(max_length=60)
     passcode = models.CharField(max_length=60)
+    number_of_images = models.PositiveIntegerField()
     
     def __unicode__(self):
         return self.name
@@ -15,8 +14,3 @@ class Image(models.Model):
     
     def __unicode__(self):
         return self.image
-    
-class GalleryForm(ModelForm):
-    class Meta:
-        model = Gallery
-        fields = ['name', 'passcode']

@@ -8,8 +8,8 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'sbp.views.home', name='home'),
     url(r'^client-access', 'sbp.views.client_access', name='client_access'),
-    url(r'^new-gallery', 'sbp.views.new_gallery', name='new_gallery'),
-    
+
+    url(r'^new-gallery', 'sbp.galleries.views.new_gallery', name='new_gallery'),
     url(r'^gallery-posted', 'sbp.galleries.views.gallery_posted', name='gallery_posted'),
     # url(r'^sbp/', include('sbp.foo.urls')),
 
