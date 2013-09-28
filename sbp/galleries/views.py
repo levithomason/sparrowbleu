@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 from sbp.galleries.models import Gallery
 from sbp.galleries.forms import GalleryForm
 
-@login_required
 def new_gallery(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
+    
     if request.method == 'POST':
         form = GalleryForm(request.POST or None)
         if form.is_valid():
@@ -27,13 +29,21 @@ def new_gallery(request):
     return render(request, 'new_gallery.html', {
         'form': form
     })
+
     
-@login_required
 def gallery_posted(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
+
     return render(request, 'gallery_posted.html')
 
-class galleries(ListView):
-    model = Gallery
-    context_object_name = 'Galleries'
-    template_name = 'galleries.html'
+
+def galleries(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
     
+    Galleries = Gallery.objects.all()
+    
+    return render(request, 'galleries.html', {
+      'Galleries': Galleries,
+    })

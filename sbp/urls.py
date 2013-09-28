@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 
     url(r'^new-gallery', 'sbp.galleries.views.new_gallery', name='new_gallery'),
     url(r'^gallery-posted', 'sbp.galleries.views.gallery_posted', name='gallery_posted'),
-    url(r'^galleries', galleries.as_view()),
+    url(r'^galleries', 'sbp.galleries.views.galleries', name='galleries'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
