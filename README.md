@@ -4,19 +4,8 @@ This site will be the main site for SparrowBleu Photography.  It will showcase i
 
 # Goals
 
-1. Image galleries for various types of photography
-2. Private proofing galleries
-
-## Image Galleries
-
-The site should have separate newborn, kids, families, engagement, and wedding galleries. These are static galleries updated by the photographer infrequently (~4 times per year).
-
-- Each gallery should:
-	- have a top nav link
-	- play automatically
-	- should transition between photos
-	- should show thumbs of all the images in the gallery
-	- should auto repeat
+1. Private proofing galleries
+2. Image galleries for various types of photography
 
 ## Private Proofing Galleries
 
@@ -50,3 +39,15 @@ The site should have separate newborn, kids, families, engagement, and wedding g
 	- See which images they have selected
 	- See the total number of images they can select
 	- See how many images they have remaining to select
+
+
+## Image Galleries
+
+The site should have separate newborn, kids, families, engagement, and wedding galleries. These are static galleries updated by the photographer infrequently (~4 times per year).
+
+- Each gallery should:
+	- have a top nav link
+	- play automatically
+	- should transition between photos
+	- should show thumbs of all the images in the gallery
+	- should auto repeat
