@@ -7,14 +7,13 @@
 {% endblock nav %}
 
 {% block body %}
-{{ form }}
 <div class="container text-center">
 
 	<div class="row">
 		<div class="col-xs-12">
     		<div id="page_icon"><i class="icon-picture"></i></div>
-	        <h1>New Gallery</h1>
-		    <form>
+			<h1>New Gallery</h1>
+		    <form id="new_gallery_form" action="/new-gallery/" method="post">{% csrf_token %}
 		        <div class="form-group">
 	        		<input type="text" class="form-control input-lg" name="name" placeholder="Name" autofocus="" x-webkit-speech="">
 	        	</div>
@@ -22,10 +21,13 @@
 	        		<input type="text" class="form-control input-lg" name="passcode" placeholder="Passcode" autofocus="" x-webkit-speech="">
 	        	</div>
 		        <div class="form-group">
+	        		<input type="number" class="form-control input-lg" name="number_of_images" placeholder="Number of images" autofocus="" x-webkit-speech="">
+	        	</div>
+		        <div class="form-group">
 	        		<input type="file" class="form-control btn btn-default" name="images" multiple/>
 	        	</div>
 		        <div class="form-group">
-		        	<button class="btn btn-lg btn-primary" type="submit"><i class="icon-plus"></i> Create Gallery</button>
+		        	<button class="btn btn-lg btn-primary" type="submit" form="new_gallery_form"><i class="icon-plus"></i> Create Gallery</button>
 		        </div>
 		    </form>
 		</div>
