@@ -30,6 +30,15 @@ STATICFILES_DIRS = (
     'C:/Users/Levi/Projects/sbp/static',
 )
 
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    "c:/users/levi/projects/sbp/",
+    "c:/users/levi/projects/sbp/sparrow_bleu/templates/",
+    "c:/users/levi/projects/sbp/galleries/templates/",
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
