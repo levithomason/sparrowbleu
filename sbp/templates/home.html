@@ -13,6 +13,11 @@
 				<p>
 					<img src="/static/img/logo_small.png" id="home_logo" alt="SparrowBleu Photography" />
 				</p>
+				<p>Perms Gallery == {{ perms.Gallery }}</p>
+				<p>Can Add == {{ perms.Gallery.can_add }}</p>
+				<p>Can Change == {{ perms.Gallery.can_change }}</p>
+				<p>Can Create == {{ perms.Gallery.can_create }}</p>
+				<p>Can Edit == {{ perms.Gallery.can_edit }}</p>
 			</div>
 		</div>
 	</div>

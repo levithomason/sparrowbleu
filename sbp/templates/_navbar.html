@@ -12,11 +12,21 @@
 	</div>
 	<div class="collapse navbar-collapse">
 	    <ul class="nav navbar-nav">
-	        <li><a href="/client-access">Client Access</a></li>
-	        {% if perms.Gallery.can_create %}
-	        <li><a href="/new-gallery">New Gallery</a></li>
-	        <li><a href="/galleries">Galleries</a></li>
+	        <li class="{% ifequal request.path '/client-access/'%}active{% endifequal %}"><a href="/client-access">Client Access</a></li>
+	        {% if perms.Gallery.can_add %}
+	        	<li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery">New Gallery</a></li>
+	        {% if perms.Gallery.can_change %}
+	        {% endif %}
+	        	<li class="{% ifequal request.path '/galleries/'%}active{% endifequal %}"><a href="/galleries">Galleries</a></li>
 	        {% endif %}
 	    </ul>
+
+    	{% if user.is_authenticated %}
+    		{{ user.name }} <a class="btn btn-info navbar-btn navbar-right" data-toggle="modal" href="/logout">{{ user }} (logout)</a>
+        {% else %}
+    		<a class="navbar-text navbar-link navbar-right" data-toggle="modal" href="#loginModal">Login</a>
+        {% endif %}
 	</div>
 </div>
+
+{% include '_login_form.html' %}

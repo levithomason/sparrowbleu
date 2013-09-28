@@ -1,0 +1,22 @@
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+				<form id="login_form" action="/login&next={{request.path}}" method="post">{% csrf_token %}
+					<input type="text" id="username" class="form-group form-control" name="username" placeholder="Username">
+					<input type="password" id="password" class="form-group form-control" name="password" placeholder="Password">
+		            <label class="checkbox form-group">
+		            	<input type="checkbox" name="remember" value="1"> Remember Me
+		            </label>
+				</form>
+            </div>
+            <div class="modal-footer">
+				<button type="submit" form="login_form" name="submit" class="btn btn-info btn-block btn-lg">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
