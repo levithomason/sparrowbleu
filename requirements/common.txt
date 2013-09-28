@@ -1,0 +1,4 @@
+# requirements/common.txt
+
+Django==1.5.4
+Pillow==2.1.0
