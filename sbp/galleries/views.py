@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 
 from sbp.galleries.models import Gallery
 from sbp.galleries.forms import GalleryForm
 
-
+@login_required
 def new_gallery(request):
     if request.method == 'POST':
         form = GalleryForm(request.POST or None)
@@ -27,12 +28,12 @@ def new_gallery(request):
         'form': form
     })
     
-    
+@login_required
 def gallery_posted(request):
     return render(request, 'gallery_posted.html')
-
 
 class galleries(ListView):
     model = Gallery
     context_object_name = 'Galleries'
     template_name = 'galleries.html'
+    

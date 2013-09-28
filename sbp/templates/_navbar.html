@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default">
 	<div class="navbar-header">
 	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 	        <span class="icon-bar"></span>
@@ -21,11 +21,13 @@
 	        {% endif %}
 	    </ul>
 
-    	{% if user.is_authenticated %}
-    		{{ user.name }} <a class="btn btn-info navbar-btn navbar-right" data-toggle="modal" href="/logout">{{ user }} (logout)</a>
-        {% else %}
-    		<a class="navbar-text navbar-link navbar-right" data-toggle="modal" href="#loginModal">Login</a>
-        {% endif %}
+	    <ul class="nav navbar-nav navbar-right">
+	    	{% if user.is_authenticated %}
+	    		<li>{{ user.name }} <a class="btn btn-info navbar-btn navbar-right" data-toggle="modal" href="/logout">{{ user }} (logout)</a></li>
+	        {% else %}
+	    		<li><a data-toggle="modal" href="#loginModal">Login</a></li>
+	        {% endif %}
+	    </ul>
 	</div>
 </div>
 
