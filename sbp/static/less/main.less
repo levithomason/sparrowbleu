@@ -8,37 +8,64 @@ html,
 body,
 h1, h2, h3, h4, h5, h6 {
 	font-family: "Raleway", sans-serif;
+	color: @sbp_font_color;
 }
 
 body {
-  background: url('../img/zigzag.png') repeat center center;
+    background: url('../img/zigzag_highres.png') repeat center center;
+    background-size: 53px 19px;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 300;
-	text-shadow: 0 1px hsl(0,0,80%);
+    .text_shadow_sm();
+    color: @sbp_heading_color;
 }
 
 label {
-  font-weight: 400;
+    font-weight: 400;
 }
 
 /***************************************************************************************************
  * general
  ***************************************************************************************************/
 #app {
-  position: absolute;
-  width: 100%;
+    position: absolute;
+    width: 100%;
 }
 
-.container {
-  padding: 40px 20px;
-  .sbp_panel();
+.sbp_panel {
+    .sbp_panel();
 }
 
-#page_icon {
-  font-size: 5em;
-  color: @sbp_blue;
+.container.sbp_panel {
+    padding: 40px 20px;
+    .sbp_panel();
+}
+
+// page heading
+.page_heading {
+    margin: 0 0 40px 0;
+    line-height: 1.2;
+    .text_shadow_md();
+    .page_icon {
+        font-size: 4em;
+        color: @sbp_blue;
+    }
+    .page_title {
+        font-size: 4em;
+        font-weight: 200;
+        color: @sbp_heading_color;
+        .text_shadow_md();
+    }
+}
+
+.tool_bar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid @sbp_border_color;
+    border-top: 1px solid @sbp_border_color;
 }
 
 
@@ -46,24 +73,26 @@ label {
  * navbar
  ***************************************************************************************************/
 .navbar {
-  border: none;
-  .sbp_panel();
+    border: none;
+    .sbp_panel();
+    i {
+        margin-right: 6px;
+    }
 }
 
 .navbar-brand {
-  padding: 8px;
-
+    padding: 8px;
 }
 #brand_sparrow_bleu {
-  position: relative;
-  top: 2px;
-  font-family: 'Learning Curve Pro Regular', arial;
-  font-size: 28px;
-  text-shadow: 0 0 hsl(0, 0%, 60%);
+    position: relative;
+    top: 2px;
+    font-family: 'Learning Curve Pro Regular', arial;
+    font-size: 28px;
+    text-shadow: 0 0 hsl(0, 0%, 60%);
 }
 #brand_photography {
-  font-family: "Arial";
-  font-size: 14px;
+    font-family: "Arial";
+    font-size: 14px;
 }
 
 
@@ -72,8 +101,36 @@ label {
  * home access page
  ***************************************************************************************************/
 #home_logo {
-
+    width: 50%;
+    max-width: 100%;
 }
 #brand_logo {
-  padding: 0 8px;
+    padding: 0 8px;
 }
+
+/***************************************************************************************************
+ * galleries page
+ ***************************************************************************************************/
+.gallery_list {
+    list-style: none;
+}
+.gallery_list_item {
+    display: inline-block;
+    padding: 5px;
+    border: 1px solid @sbp_border_color;
+    margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

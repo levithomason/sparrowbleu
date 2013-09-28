@@ -1,8 +1,25 @@
 /***************************************************************************************************
- * sbp mixins
+ * shadows
  ***************************************************************************************************/
+
+.text_shadow_sm {
+    text-shadow: 0 1px @sbp_shadow_color;
+}
+.text_shadow_md {
+    text-shadow: 2px 3px @sbp_shadow_color;
+}
+
+.box_shadow_lg {
+    box-shadow: 8px 8px 1px @sbp_shadow_color;
+}
+
+
+/***************************************************************************************************
+ * special styles
+ ***************************************************************************************************/
+
 .sbp_panel() {
-  background: hsl(0, 100%, 100%);
-  box-shadow: 8px 8px 1px hsla(0, 0%, 0%, 0.1);
-  border-radius: 3px;
+    background: #FFF;
+    border-radius: 3px;
+    .box_shadow_lg();
 }

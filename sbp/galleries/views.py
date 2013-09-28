@@ -20,7 +20,7 @@ def new_gallery(request):
             gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images)
             gallery.save()
             
-            return redirect('gallery_posted')
+            return redirect('galleries')
         
     else:
         
