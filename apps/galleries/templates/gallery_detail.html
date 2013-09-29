@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block additional_head %}
-	<!-- LESS -->
 	<link rel="stylesheet/less" href="/static/less/gallery_detail.less" type="text/css" />
+	<link rel="stylesheet" href="/static/css/dropzone.css" type="text/css" />
 {% endblock additional_head %}
 
 {% block nav %}
-	{% include "_navbar.html" %}
+	<div class="row">
+		<div class="col-sm-12">
+			<h1><a href="/galleries" class="gallery_detail_done_btn"><i class="icon-double-angle-left"></i> Done</a></h1>
+		</div>
+	</div>
 {% endblock nav %}
 
 {% block body %}
