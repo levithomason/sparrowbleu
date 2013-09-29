@@ -66,10 +66,10 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT= os.path.join(BASE_DIR,'/staticfiles/')
+STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'asdf'),
+    os.path.join(BASE_DIR,'static'),
 )
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
