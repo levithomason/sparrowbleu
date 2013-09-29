@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import admin
 from django.db import models
 from settings import MEDIA_ROOT
@@ -16,7 +18,7 @@ class Gallery(models.Model):
 
 class GalleryImage(models.Model):
     gallery = models.ForeignKey('Gallery')
-    image = models.ImageField(upload_to=MEDIA_ROOT)
+    image = models.ImageField(upload_to="gallery_images")
     
     def __unicode__(self):
         return self.image
