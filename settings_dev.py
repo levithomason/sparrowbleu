@@ -30,6 +30,9 @@ STATICFILES_DIRS = (
     'C:/Users/Levi/Projects/sbp/static',
 )
 
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '*blhedyelf3m-y90by&0@4ta0&6$k#@70qy93dn#-2&or5d(l1'
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
