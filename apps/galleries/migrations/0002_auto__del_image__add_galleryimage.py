@@ -8,30 +8,29 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Gallery'
-        db.create_table(u'galleries_gallery', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('passcode', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('number_of_images', self.gf('django.db.models.fields.PositiveIntegerField')()),
-        ))
-        db.send_create_signal(u'galleries', ['Gallery'])
+        # Deleting model 'Image'
+        db.delete_table(u'galleries_image')
 
-        # Adding model 'Image'
-        db.create_table(u'galleries_image', (
+        # Adding model 'GalleryImage'
+        db.create_table(u'galleries_galleryimage', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('gallery', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['galleries.Gallery'])),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
         ))
-        db.send_create_signal(u'galleries', ['Image'])
+        db.send_create_signal(u'galleries', ['GalleryImage'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Gallery'
-        db.delete_table(u'galleries_gallery')
+        # Adding model 'Image'
+        db.create_table(u'galleries_image', (
+            ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
+            ('gallery', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['galleries.Gallery'])),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        ))
+        db.send_create_signal(u'galleries', ['Image'])
 
-        # Deleting model 'Image'
-        db.delete_table(u'galleries_image')
+        # Deleting model 'GalleryImage'
+        db.delete_table(u'galleries_galleryimage')
 
 
     models = {
@@ -42,8 +41,8 @@ class Migration(SchemaMigration):
             'number_of_images': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'passcode': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        u'galleries.image': {
-            'Meta': {'object_name': 'Image'},
+        u'galleries.galleryimage': {
+            'Meta': {'object_name': 'GalleryImage'},
             'gallery': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['galleries.Gallery']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'})

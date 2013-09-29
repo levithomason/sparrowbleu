@@ -27,7 +27,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 			    <ul class="gallery_list">
-			    	{% for g in Galleries %}
+			    	{% for g in galleries %}
 			    		<li class="gallery_list_item">
 	    					<a href="{{ g.get_absolute_url }}">{{ g }} <i>({{ g.number_of_images }} images)</i></a>
 		    			</li>

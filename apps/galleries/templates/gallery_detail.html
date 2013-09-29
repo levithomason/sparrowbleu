@@ -8,7 +8,7 @@
 {% block nav %}
 	<div class="row">
 		<div class="col-sm-12">
-			<h1><a href="/galleries" class="gallery_detail_done_btn"><i class="icon-double-angle-left"></i> Done</a></h1>
+			<h3><a href="/galleries" class="gallery_detail_done_btn"><i class="icon-double-angle-left"></i> Done</a></h3>
 		</div>
 	</div>
 {% endblock nav %}
@@ -18,16 +18,18 @@
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
 	    		<div class="page_heading">
-	    			<div class="page_title">{{ Gallery }}</div>
+	    			<div class="page_title">{{ gallery }}</div>
     			</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2">
-			    <ul class="gallery_image_list">
-					<div class="gallery_image_item"></div>
-			    </ul>
-			</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+		    <ul class="gallery_image_list">
+				{% for image in gallery_images %}
+					<li class="gallery_image_item">{{ image.image }}</li>
+				{% endfor %}
+		    </ul>
 		</div>
 	</div>
 
@@ -35,11 +37,15 @@
 		<div class="container text-center">
 			<div class="row">
 				<div class="col-xs-12">
-					<form action="/new_gallery_image" class="dropzone">
+					<form action="/new-gallery-image" method="post" class="dropzone" enctype="multipart/form-data">{% csrf_token %}
 						<div class="fallback">
 					        <div class="form-group">
 					        	<label for="new_gallery_images_field">Drag n' Drop Photos</label>
-					    		<input type="file" id="new_gallery_images_field" class="form-control btn btn-default" name="images" multiple/>
+					    		<input type="file" class="form-control btn btn-default" name="image" multiple/>
+					    		<input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
+					    	</div>
+					        <div class="form-group">
+								<button class="btn btn-primary btn-block btn-lg" type="submit">Submit</button>
 					    	</div>
 						</div>
 					</form>
@@ -52,6 +58,7 @@
 
 {% block additional_script %}
 	{% if perms.Gallery.can_change %}
-		<script src="/static/js/dropzone.min.js"></script>
+		{#<script src="/static/js/dropzone.min.js"></script>#}
+		{#<script src="/static/js/dropzoneCustom.js"></script>#}
 	{% endif %}
 {% endblock additional_script %}

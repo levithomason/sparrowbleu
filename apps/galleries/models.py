@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from settings import MEDIA_ROOT
 
 class Gallery(models.Model):
     name = models.CharField(max_length=60)
@@ -13,11 +14,11 @@ class Gallery(models.Model):
         return "/gallery/%i/" % self.id
 
 
-class Image(models.Model):
-    image = models.ImageField(upload_to="/")
-    gallery = models.ForeignKey(Gallery)
+class GalleryImage(models.Model):
+    gallery = models.ForeignKey('Gallery')
+    image = models.ImageField(upload_to=MEDIA_ROOT)
     
     def __unicode__(self):
-        return self.image   
+        return self.image
 
 admin.site.register(Gallery)

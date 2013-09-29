@@ -1,0 +1,34 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit"/>
+</form>
+
+<h2>Request details</h2>
+
+<p>
+Request method: {{ request.method }}
+<br />
+POST data: {{ request.POST|default:"No data" }}
+<br />
+FILES data: {{ request.FILES|default:"No data" }}
+</p>
+
+<h2>Form details</h2>
+
+<p>
+Cleaned data: {{ form.cleaned_data|default:"No data" }}<br>
+Cleaned image: {{ form.cleaned_data.image|default:"No data" }}
+</p>
+
+<p>
+Errors:
+	{% for e in form.errors %}
+	{{ e|default:"None" }}
+	{% endfor %}
+</p>
+
+<p>
+Valid:
+	{{ form.is_valid }}
+</p>
