@@ -1,5 +1,6 @@
-# Load defaults in order to then add/override with dev-only settings
-from defaults import *
+# grab default settings, then override as necessary for production
+from default import *
+
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

@@ -1,5 +1,5 @@
-# Load defaults in order to then add/override with dev-only settings
-from defaults import *
+# grab default settings, then override as necessary for dev
+from default import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
