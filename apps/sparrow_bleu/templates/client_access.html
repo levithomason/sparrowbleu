@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% block additional_head %}
+{% endblock additional_head %}
+
 {% block nav %}
 
 	{% include "_navbar.html" %}
@@ -10,9 +13,9 @@
 	<div class="sbp_panel container text-center">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
-	    		<div class="page_title">
-	    			<i class="icon-key"></i>
-	    			<div>Client Access</div>
+	    		<div class="page_heading">
+	    			<i class="page_icon icon-key"></i>
+	    			<div class="page_title">Client Access</div>
     			</div>
 			    <form>
 			        <div class="form-group">
