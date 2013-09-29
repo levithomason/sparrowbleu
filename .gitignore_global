@@ -2,4 +2,4 @@
 
 .*
 *.pyc
-dev.py
+settings_dev.py
