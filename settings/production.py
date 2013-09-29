@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'apps.sparrow_bleu.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = '.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -116,14 +116,17 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+
     'apps.sparrow_bleu',
     'apps.galleries',
-    'south',
-    'debug_toolbar',
+    
+    'gunicorn',
+    'pillow',
+    'dj-database-url',
+    'dj-static',
+    'dj-static',
+    'static',
+    'wsgiref',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
