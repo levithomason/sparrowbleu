@@ -9,11 +9,15 @@ class Gallery(models.Model):
     def __unicode__(self):
         return self.name
      
+    def get_absolute_url(self):
+        return "/gallery/%i/" % self.id
+
+
 class Image(models.Model):
     image = models.ImageField(upload_to="/")
     gallery = models.ForeignKey(Gallery)
     
     def __unicode__(self):
-        return self.image
-    
+        return self.image   
+
 admin.site.register(Gallery)

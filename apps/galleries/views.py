@@ -47,3 +47,10 @@ def galleries(request):
     return render(request, 'galleries.html', {
       'Galleries': Galleries,
     })
+    
+def gallery_detail(request, pk):
+    ThisGallery = Gallery.objects.get(pk=pk)
+    
+    return render(request, 'gallery_detail.html', {
+      'Gallery': ThisGallery,
+    })

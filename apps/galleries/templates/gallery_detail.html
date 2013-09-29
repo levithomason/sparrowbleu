@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
+{% block head %}
+	<!-- LESS -->
+	<link rel="stylesheet/less" href="/static/less/main.less" type="text/css" />
+{% endblock head %}
+
 {% block nav %}
-
 	{% include "_navbar.html" %}
-
 {% endblock nav %}
 
 {% block body %}
@@ -12,7 +15,7 @@
 			<div class="col-sm-8 col-sm-offset-2">
 	    		<div class="page_heading">
 	    			<i class="page_icon icon-picture"></i>
-	    			<div class="page_title">Galleries</div>
+	    			<div class="page_title">{{ Gallery }}</div>
     			</div>
 			</div>
 		</div>
@@ -24,11 +27,7 @@
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
 			    <ul class="gallery_list">
-			    	{% for g in Galleries %}
-			    		<li class="gallery_list_item">
-	    					<a href="{{ g.get_absolute_url }}">{{ g }} <i>({{ g.number_of_images }} images)</i></a>
-		    			</li>
-		    		{% endfor %}
+					<div>{{ Gallery }}</div>
 			    </ul>
 			</div>
 		</div>
