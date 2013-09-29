@@ -1,5 +1,5 @@
 # grab default settings, then override as necessary for production
-from default import *
+from settings_default import *
 
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
