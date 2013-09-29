@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from django.contrib.auth.decorators import login_required
 
 from apps.galleries.models import Gallery
 from apps.galleries.forms import GalleryForm

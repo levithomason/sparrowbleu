@@ -4,9 +4,7 @@
 {% endblock additional_head %}
 
 {% block nav %}
-
 	{% include "_navbar.html" %}
-
 {% endblock nav %}
 
 {% block body %}
@@ -23,7 +21,7 @@
 
 	<div class="row">
 		<div class="col-sm-8 col-sm-offset-2">
-			<form id="new_gallery_form" action="/new-gallery/" method="post">{% csrf_token %}
+			<form id="new_gallery_form" action="/new-gallery/" method="post" enctype="multipart/form-data">{% csrf_token %}
 		        <div class="form-group">
 	        		<input type="text" class="form-control input-lg" name="name" placeholder="Name" autofocus>
 	        	</div>
@@ -46,3 +44,6 @@
 
 </div>
 {% endblock body %}
+
+{% block script %}
+{% endblock script %}
