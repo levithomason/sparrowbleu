@@ -120,11 +120,7 @@ INSTALLED_APPS = (
     'apps.galleries',
     
     'gunicorn',
-    'pillow',
-    'dj-database-url',
-    'dj-static',
-    'dj-static',
-    'static',
+    'pil',
     'wsgiref',
 )
 
