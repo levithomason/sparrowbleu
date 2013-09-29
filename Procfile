@@ -1,1 +1,1 @@
-web: gunicorn sbp.wsgi
+web: gunicorn wsgi
