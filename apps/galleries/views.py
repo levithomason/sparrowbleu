@@ -5,6 +5,17 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm
 
+
+def galleries(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
+    
+    galleries = Gallery.objects.all()
+    
+    return render(request, 'galleries.html', {
+      'galleries': galleries,
+    })
+    
 def new_gallery(request):
     if not request.user.is_authenticated():
         return redirect('/')
@@ -20,7 +31,7 @@ def new_gallery(request):
             gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images)
             gallery.save()
             
-            return redirect('galleries')
+            return redirect('/gallery/' + str(gallery.pk))
         
     else:
         
@@ -30,24 +41,6 @@ def new_gallery(request):
         'form': form
     })
 
-    
-def gallery_posted(request):
-    if not request.user.is_authenticated():
-        return redirect('/')
-
-    return render(request, 'gallery_posted.html')
-
-
-def galleries(request):
-    if not request.user.is_authenticated():
-        return redirect('/')
-    
-    galleries = Gallery.objects.all()
-    
-    return render(request, 'galleries.html', {
-      'galleries': galleries,
-    })
-    
 def gallery_detail(request, pk):
     this_gallery = Gallery.objects.get(pk=pk)
     gallery_images = GalleryImage.objects.filter(gallery=pk)
@@ -58,7 +51,6 @@ def gallery_detail(request, pk):
     })
     
 def new_gallery_image(request):
-
     if request.method == 'POST':
         form = GalleryImageForm(request.POST, request.FILES)
         if form.is_valid():

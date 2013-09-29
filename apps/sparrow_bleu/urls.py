@@ -3,6 +3,8 @@ from django.contrib import admin
 
 from apps.galleries.views import galleries
 
+
+
 urlpatterns = patterns('',
     url(r'^$', 'apps.sparrow_bleu.views.home', name='Home'),
     url(r'^client-access/', 'apps.sparrow_bleu.views.client_access', name='client_access'),
@@ -10,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^logout', 'apps.sparrow_bleu.views.user_logout', name='user_logout'),
 
     url(r'^new-gallery/', 'apps.galleries.views.new_gallery', name='new_gallery'),
-    url(r'^gallery-posted/', 'apps.galleries.views.gallery_posted', name='gallery_posted'),
     url(r'^galleries/', 'apps.galleries.views.galleries', name='galleries'),
     url(r'^gallery/(?P<pk>\d+)/', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
 
@@ -24,3 +25,12 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+try:
+    from settings_dev import *
+    if settings_dev.DEBUG:
+        # static files (images, css, javascript, etc.)
+        urlpatterns += patterns('',
+            (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT}))
+except ImportError:
+    from settings_prod import *

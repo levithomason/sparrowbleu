@@ -21,6 +21,6 @@ class GalleryImage(models.Model):
     image = models.ImageField(upload_to="gallery_images")
     
     def __unicode__(self):
-        return self.image
+        return self.image.url
 
 admin.site.register(Gallery)
