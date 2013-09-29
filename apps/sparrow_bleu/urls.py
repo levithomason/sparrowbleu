@@ -3,9 +3,6 @@ from django.contrib import admin
 
 from apps.galleries.views import galleries
 
-admin.autodiscover()
-
-
 urlpatterns = patterns('',
     url(r'^$', 'apps.sparrow_bleu.views.home', name='Home'),
     url(r'^client-access', 'apps.sparrow_bleu.views.client_access', name='client_access'),
