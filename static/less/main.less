@@ -1,3 +1,7 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+@import "bootstrap/buttons.less";
+
 @import "variables.less";
 @import "mixins.less";
 
@@ -106,6 +110,15 @@ label {
 }
 #brand_logo {
     padding: 0 8px;
+}
+
+
+/***************************************************************************************************
+ * bootstrap overrides
+ ***************************************************************************************************/
+
+.btn-primary {
+  .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
 }
 
 
