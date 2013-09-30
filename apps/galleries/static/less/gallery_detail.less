@@ -1,4 +1,5 @@
 @import "/static/less/variables.less";
+@import "/static/less/mixins.less";
 
 body {
     background: url('../img/zigzag_dark_highres.png') repeat center center;
@@ -25,14 +26,57 @@ body {
 .gallery_image_item {
 	display: inline-block;
 	margin: 0.5%;
-	max-width: 250px;
-	max-height: 250px;
+	min-width: 200px;
+	max-width: 350px;
+	width: 23.5%;
+	height: 23.5%;
 	background: #FFF;
 	border: 2px solid #555;
-	box-shadow: 8px 8px rgba(0, 0, 0, 0.1);
+	.box_shadow_lg();
 
 	img {
 		max-width: 100%;
 	}
+}
+
+.upload_photos_form {
+	.sbp_transition(height);
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	bottom: 0;
+	height: 60px;
+	background: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	overflow: hidden;
+	&:hover, &:active, &focus {
+		height: 350px;
+	}
+
+	.drag_drop_title {
+		margin-bottom: 80px;
+		color: #DDD;
+		.text_shadow_sm();
+	}
+
+	.gallery_deatil_upload_drop_area {
+		position: absolute;
+		padding: 70px 0 0 50%;
+		margin-left: -148px;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: auto;
+		height: 100%;
+		color: #555;
+		text-indent: 100%;
+		background: none;
+		border: none;
+		box-shadow: none;
+	}
+	.upload_photos_submit_btn {
+		position: relative;
+	}
+
 }
 

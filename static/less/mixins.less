@@ -24,3 +24,14 @@
     border: none;
     .box_shadow_lg();
 }
+
+/***************************************************************************************************
+ * transitions
+ ***************************************************************************************************/
+
+.sbp_transition(@property) {
+	-webkit-transition: @property @sbp_transition_speed @sbp_transition_easing;
+	-moz-transition: @property @sbp_transition_speed @sbp_transition_easing;
+	-o-transition: @property @sbp_transition_speed @sbp_transition_easing;
+	transition: @property @sbp_transition_speed @sbp_transition_easing;
+}

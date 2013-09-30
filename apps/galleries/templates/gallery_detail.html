@@ -2,7 +2,7 @@
 
 {% block additional_head %}
 	<link rel="stylesheet/less" href="/static/less/gallery_detail.less" type="text/css" />
-	<link rel="stylesheet" href="/static/css/dropzone.css" type="text/css" />
+	{# <link rel="stylesheet" href="/static/css/dropzone.css" type="text/css" /> #}
 {% endblock additional_head %}
 
 {% block nav %}
@@ -36,24 +36,14 @@
 	</div>
 
 	{% if perms.Gallery.can_change %}
-		<div class="container text-center">
-			<div class="row">
-				<div class="col-xs-12">
-					<form action="/new-gallery-image" method="post" class="dropzone" enctype="multipart/form-data">{% csrf_token %}
-						<div class="fallback">
-					        <div class="form-group">
-					        	<label for="new_gallery_images_field">Drag n' Drop Photos</label>
-					    		<input type="file" class="form-control btn btn-default" name="image" multiple/>
-					    		<input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
-					    	</div>
-					        <div class="form-group">
-								<button class="btn btn-primary btn-block btn-lg" type="submit">Submit</button>
-					    	</div>
-						</div>
-					</form>
-				</div>
+		<form action="/new-gallery-image" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
+			<div class="uploaded_photos_form_container">
+				<h3 class="drag_drop_title"><i class="icon-cloud-upload"></i> Drag n' Drop Photos Here</h3>
+				<input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="image" multiple/>
+	        	<input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
+				<button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="icon-cloud-upload"></i> Upload</button>
 			</div>
-		</div>
+		</form>
 	{% endif %}
 
 {% endblock body %}
