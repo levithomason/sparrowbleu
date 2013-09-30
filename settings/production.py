@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'apps.galleries',
     
     'gunicorn',
+    'dj_static',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
