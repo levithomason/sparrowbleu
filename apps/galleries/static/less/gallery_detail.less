@@ -16,17 +16,23 @@ body {
 
 
 .gallery_image_list {
-	display: inline;
+	text-align: center;
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 
 .gallery_image_item {
-	float: left;
-	padding: 5px;
-	margin: 10px;
-	width: 200px;
-	height: 200px;
-	background: rgba(255, 255, 255, 0.75);
+	display: inline-block;
+	margin: 0.5%;
+	max-width: 250px;
+	max-height: 250px;
+	background: #FFF;
+	border: 2px solid #555;
+	box-shadow: 8px 8px rgba(0, 0, 0, 0.1);
+
+	img {
+		max-width: 100%;
+	}
 }
+
