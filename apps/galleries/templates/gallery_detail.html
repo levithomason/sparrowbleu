@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block additional_head %}
-	<link rel="stylesheet/less" href="{{ STATIC_URL }}less/gallery_detail.less" type="text/css" />
-	{# <link rel="stylesheet" href="{{ STATIC_URL }}css/dropzone.css" type="text/css" /> #}
+	<link rel="stylesheet/less" href="{% static "less/gallery_detail.less" %}" type="text/css" />
+	{# <link rel="stylesheet" href="{% static "css/dropzone.css" %}" type="text/css" /> #}
 {% endblock additional_head %}
 
 {% block nav %}
@@ -50,7 +52,7 @@
 
 {% block additional_script %}
 	{% if perms.Gallery.can_change %}
-		{#<script src="{{ STATIC_URL }}js/dropzone.min.js"></script>#}
-		{#<script src="{{ STATIC_URL }}js/dropzoneCustom.js"></script>#}
+		{#<script src="{% static "js/dropzone.min.js" %}"></script>#}
+		{#<script src="{% static "js/dropzoneCustom.js" %}"></script>#}
 	{% endif %}
 {% endblock additional_script %}
