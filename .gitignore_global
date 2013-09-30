@@ -2,5 +2,5 @@
 
 .*
 *.pyc
-settings_dev.py
+development.py
 mediafiles
