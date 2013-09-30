@@ -1,3 +1,10 @@
+Setup
+===========
+1. Clone repo
+2. Rename /settings/development(dot).py to development.py
+...?
+
+
 SparrowBleu Photography
 ===========
 This site will be the main site for SparrowBleu Photography.  It will showcase images and allow clients to select images from their photo shoots which they would like the photographer to further process.
