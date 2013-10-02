@@ -1,4 +1,5 @@
 @import "/static/less/variables.less";
+@import "/static/less/mixins.less";
 
 /***************************************************************************************************
  * galleries page
@@ -7,8 +8,26 @@
     list-style: none;
 }
 .gallery_list_item {
-    display: inline-block;
-    padding: 5px;
-    border: 1px solid @sbp_border_color;
-    margin: 10px;
+	.sbp_transition(background);
+	display: inline-block;
+	margin: 0.5%;
+	min-width: 200px;
+	max-width: 350px;
+	width: 23.5%;
+	height: 23.5%;
+	&:hover {
+		text-decoration: none;
+		background: hsl(hue(@sbp_blue), 30%, 95%);
+	}
+    .gallery_list_item_image {
+		max-width: 100%;
+    }
+	.gallery_list_gallery_title {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		padding: 10px;
+		font-size: 18px;
+		white-space: nowrap;
+		color: @sbp_font_color;
+	}
 }

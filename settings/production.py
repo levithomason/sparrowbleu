@@ -69,15 +69,6 @@ ROOT_URLCONF = 'apps.sparrow_bleu.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = '.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    ".",
-    "./sparrow_bleu/templates/",
-    "./galleries/templates/",
-)
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -86,11 +77,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'apps.user',
     'apps.sparrow_bleu',
     'apps.galleries',
     
     'gunicorn',
-    'dj_static',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

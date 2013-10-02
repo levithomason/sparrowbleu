@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block additional_head %}
+{% endblock additional_head %}
+
+{% block nav %}
+	{% include "_navbar.html" %}
+{% endblock nav %}
+
+{% block body %}
+<div class="sbp_panel container text-center">
+
+	<div class="row">
+		<div class="col-xs-12">
+    		<div class="page_heading">
+    			<i class="page_icon icon-exclamation"></i>
+	    		<div class="page_title">Woa, sorry that didn't work :(</div>
+	    		<hr>
+				<a href="{{ gallery.get_absolute_url }}" class="btn btn-primary btn-lg"><i class="icon-arrow-left"></i> {{ gallery}}</a>
+				<hr>
+				<legend>Debug</legend>
+				<ul class="list-unstyled">
+					{% for msg in debug %}
+						<li><p>{{ msg }}</p></li>
+					{% endfor %}
+				</ul>
+				<hr>
+				<legend>Form Errors:</legend>
+				<ul class="list-unstyled">
+					{% for error in form.errors %}
+						<li><p>{{ error }}</p></li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock body %}
+
+{% block additional_script %}
+{% endblock additional_script %}

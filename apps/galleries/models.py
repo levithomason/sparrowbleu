@@ -19,6 +19,7 @@ class Gallery(models.Model):
 class GalleryImage(models.Model):
     gallery = models.ForeignKey('Gallery')
     image = models.ImageField(upload_to="gallery_images")
+    is_preview_image = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.image.url

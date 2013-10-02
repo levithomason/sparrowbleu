@@ -25,12 +25,10 @@
 		        {% if perms.Gallery.can_add %}
 		        	<li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery"><i class="icon-plus"></i>New Gallery</a></li>
 		        {% endif %}
-	    		<li><a data-toggle="modal" href="/logout"><i class="icon-off"></i>{{ user }} (logout)</a></li>
+	    		<li><a href="/user_logout"><i class="icon-off"></i>{{ user }} (logout)</a></li>
 	        {% else %}
-		        <li><a data-toggle="modal" href="#loginModal"><i class="icon-user"></i>Login</a></li>
+		        <li><a href="/user_login"><i class="icon-user"></i>Login</a></li>
 	        {% endif %}
 		</ul>
 	</div>
 </div>
-
-{% include '_login_form.html' %}

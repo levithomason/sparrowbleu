@@ -10,7 +10,12 @@ def galleries(request):
     if not request.user.is_authenticated():
         return redirect('/')
     
-    galleries = Gallery.objects.all()
+    galleries = []
+    for gallery in Gallery.objects.all():
+        preview_image_object = GalleryImage.objects.filter(gallery=gallery, is_preview_image=True)
+        for data in preview_image_object:
+            preview_image = data
+        galleries.append([gallery, preview_image])
     
     return render(request, 'galleries.html', {
       'galleries': galleries,
@@ -42,51 +47,49 @@ def new_gallery(request):
     })
 
 def gallery_detail(request, pk):
-    this_gallery = Gallery.objects.get(pk=pk)
-    gallery_images = GalleryImage.objects.filter(gallery=pk)
+    try:
+        this_gallery = Gallery.objects.get(pk=pk)
+        gallery_images = GalleryImage.objects.filter(gallery=pk)
+                
+        return render(request, 'gallery_detail.html', {
+          'gallery': this_gallery,
+          'gallery_images': gallery_images,
+        })
     
-    return render(request, 'gallery_detail.html', {
-      'gallery': this_gallery,
-      'gallery_images': gallery_images,
-    })
+    except Gallery.DoesNotExist:
+        return redirect('/galleries/')
     
 def new_gallery_image(request):
+    debug = []
+    debug.append('checking method...')
     if request.method == 'POST':
+        debug.append('method is post')
         form = GalleryImageForm(request.POST, request.FILES)
+        gallery = Gallery.objects.get(pk=request.POST['gallery'])
+        debug.append('gallery is ' + str(gallery))
+
+        debug.append('checking form valid...')
         if form.is_valid():
-            gallery = Gallery.objects.get(pk=request.POST['gallery'])
-            
-            for image_file in request.FILES.getlist('image'):
+            is_first_gallery_image = (gallery.galleryimage_set.count() == 0)
+            counter = 0
+
+            for image_file in request.FILES.getlist('images'):
                 new_image = GalleryImage.objects.create(gallery=gallery)
+                
+                if is_first_gallery_image:
+                    new_image.is_preview_image=True
+                    
                 new_image.image.save(image_file.name, image_file)
-            
+                counter += 1
+
             return redirect('/gallery/' + str(gallery.pk))
-
+            
         else:
-            form = GalleryImageForm()
-    else:
-        form = GalleryImageForm()
-
-    return render(request, 'uploaded_image.html', {'form': form})
-
-
-
-###############################################################
-# Debug stuff
-###############################################################
-
-def images(request):
-    images = GalleryImage.objects.all()
+            debug.append('form is invalid')
+            return render(request, 'gallery_image_failed.html', {'form': form, 'gallery': gallery, 'debug': debug})
     
-    return render(request, 'images.html', {'images': images})
-
-def upload_test(request):
-    if request.method == 'POST':
-        form = GalleryImageForm(request.POST, request.FILES)
-        return render(request, 'upload_test.html', {'form': form})
-    else:
-        form = GalleryImageForm()
-        return render(request, 'upload_test.html', {'form': form})
-
-
-
+    form = GalleryImageForm()
+    return render(request, 'gallery_detail.html', {'form': form, 'gallery': gallery, 'debug': debug})
+    
+    
+    

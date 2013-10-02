@@ -28,9 +28,9 @@
 	<div class="row">
 		<div class="col-xs-12">
 		    <ul class="gallery_image_list">
-				{% for GalleryImage in gallery_images %}
+				{% for g_img in gallery_images %}
 					<li class="gallery_image_item">
-						<img src="{{ GalleryImage }}">
+						<img src="{{ g_img }}">
 					</li>
 				{% endfor %}
 		    </ul>
@@ -41,7 +41,7 @@
 		<form action="/new-gallery-image" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
 			<div class="uploaded_photos_form_container">
 				<h3 class="drag_drop_title"><i class="icon-cloud-upload"></i> Drag n' Drop Photos Here</h3>
-				<input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="image" multiple/>
+				<input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="images" multiple/>
 	        	<input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
 				<button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="icon-cloud-upload"></i> Upload</button>
 			</div>

@@ -7,5 +7,7 @@ class GalleryForm(forms.Form):
     number_of_images = forms.IntegerField()
     
 class GalleryImageForm(forms.Form):
-    image = forms.FileField()
     gallery = forms.ModelChoiceField(Gallery.objects.all())
+    is_preview_image = forms.BooleanField(required=False)
+    images = forms.FileField()
+    

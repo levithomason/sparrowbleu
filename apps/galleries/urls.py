@@ -8,6 +8,4 @@ urlpatterns = patterns('',
 
     # Gallery Images
     url(r'^new-gallery-image', 'apps.galleries.views.new_gallery_image', name='new_gallery_image'),
-    url(r'^images', 'apps.galleries.views.images', name='images'),
-    url(r'^upload-test', 'apps.galleries.views.upload_test', name='upload_test'),
 )

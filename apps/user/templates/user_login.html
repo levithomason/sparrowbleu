@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block additional_head %}
+{% endblock additional_head %}
+
+{% block nav %}
+
+	{% include "_navbar.html" %}
+
+{% endblock nav %}
+
+{% block body %}
+	<div class="container text-center sbp_panel">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+	    		<div class="page_heading">
+	    			<i class="page_icon icon-user"></i>
+	    			<div class="page_title">Login</div>
+    			</div>
+				{% if form.errors %}
+	            	<div class="alert alert-danger text-left">
+					    <div>Please fix:</div>
+					    <ul>
+					    	{% for error in errors %}
+					    		<li>{{ error }}</li>
+				    		{% endfor %}
+					    </ul>
+					</div>
+				{% endif %}
+				<form id="login_form" class="text-left" action="/user_login" method="post">{% csrf_token %}
+					<input type="text" id="username" class="form-group form-control" name="username" placeholder="Username" autofocus=true>
+					<input type="password" id="password" class="form-group form-control" name="password" placeholder="Password">
+    				<button type="submit" form="login_form" name="submit" class="btn btn-primary btn-block btn-lg">Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock body %}
+
+{% block additional_script %}
+{% endblock additional_script %}
