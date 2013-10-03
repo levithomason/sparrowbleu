@@ -1,3 +1,5 @@
+import os
+
 # Django settings for sbp project.
 
 DEBUG = False
@@ -59,8 +61,6 @@ MEDIA_URL = '/media/'
 
 
 # Static asset configuration
-import os
-
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
