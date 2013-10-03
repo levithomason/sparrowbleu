@@ -61,7 +61,7 @@ MEDIA_URL = '/media/'
 
 
 # Static asset configuration
-PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
