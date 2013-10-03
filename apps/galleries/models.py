@@ -2,7 +2,6 @@ import os
 
 from django.contrib import admin
 from django.db import models
-from settings import MEDIA_ROOT
 
 class Gallery(models.Model):
     name = models.CharField(max_length=60)
@@ -13,7 +12,7 @@ class Gallery(models.Model):
         return self.name
      
     def get_absolute_url(self):
-        return "/gallery/%i/" % self.id
+        return "/gallery/%i/%s" % (self.id, self.passcode)
 
 
 class GalleryImage(models.Model):

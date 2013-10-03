@@ -50,18 +50,15 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'mediafiles'
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = '/media/'
-
 
 # Static asset configuration
 PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/var/www/example.com/media/"
+MEDIA_ROOT = 'mediafiles'
+MEDIA_URL = '/media/'
+
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
@@ -79,6 +76,9 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '*blhedyelf3m-y90by&0@4ta0&6$k#@70qy93dn#-2&or5d(l1'
+
+# Used to authenticate client access requests in addition to passcode
+CLIENT_ACCESS_KEY = 'uien1nQW74Ezx63cvCl8aCXVBw5e2y1pq4welA5n4M4HG4'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

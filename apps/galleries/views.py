@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.core.files.uploadedfile import SimpleUploadedFile
+from settings import CLIENT_ACCESS_KEY
 
 from apps.galleries.models import Gallery, GalleryImage
-from apps.galleries.forms import GalleryForm, GalleryImageForm
+from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 
 
 def galleries(request):
@@ -11,6 +12,8 @@ def galleries(request):
         return redirect('/')
     
     galleries = []
+    preview_image = None
+    
     for gallery in Gallery.objects.all():
         preview_image_qs = GalleryImage.objects.filter(gallery=gallery, is_preview_image=True)
         
@@ -19,8 +22,13 @@ def galleries(request):
         
         galleries.append([gallery, preview_image])
     
+    gallery_empty = True
+    for (gallery, image) in galleries:
+        gallery_empty = image == None
+    
     return render(request, 'galleries.html', {
       'galleries': galleries,
+      'gallery_empty': gallery_empty,
     })
     
 def new_gallery(request):
@@ -48,18 +56,22 @@ def new_gallery(request):
         'form': form
     })
 
-def gallery_detail(request, pk):
-    try:
-        this_gallery = Gallery.objects.get(pk=pk)
-        gallery_images = GalleryImage.objects.filter(gallery=pk)
-                
-        return render(request, 'gallery_detail.html', {
-          'gallery': this_gallery,
-          'gallery_images': gallery_images,
-        })
-    
-    except Gallery.DoesNotExist:
+def gallery_detail(request, pk=None, passcode=None):
+    if (pk == None or passcode == None):
         return redirect('/galleries/')
+    else:
+        try:
+            this_gallery = Gallery.objects.get(pk=pk)
+            gallery_images = GalleryImage.objects.filter(gallery=pk)
+
+            return render(request, 'gallery_detail.html', {
+              'gallery': this_gallery,
+              'gallery_images': gallery_images,
+            })
+        
+        except Gallery.DoesNotExist:
+            return redirect('/galleries/')
+
     
 def new_gallery_image(request):
     debug = []
@@ -93,6 +105,17 @@ def new_gallery_image(request):
     
     form = GalleryImageForm()
     return render(request, 'gallery_detail.html', {'form': form, 'gallery': gallery, 'debug': debug})
-    
+
+def client_access(request):
+    if request.method == 'POST':
+        form = ClientAccessForm(request.POST or None)
+        
+        if form.is_valid():
+            passcode = form.cleaned_data['passcode']
+            gallery = Gallery.objects.get(passcode=passcode)
+            
+            return redirect('/gallery/' + str(gallery.pk) + "/" + passcode)
+
+    return render(request, 'client_access.html', locals())    
     
     

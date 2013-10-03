@@ -4,10 +4,10 @@ import settings
 
 urlpatterns = patterns('',
     url(r'^$', 'apps.sparrow_bleu.views.home', name='Home'),
-    url(r'^client-access/', 'apps.sparrow_bleu.views.client_access', name='client_access'),
 
     url(r'^', include('apps.user.urls')),
     url(r'^', include('apps.galleries.urls')),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )
 
 if settings.DEBUG:

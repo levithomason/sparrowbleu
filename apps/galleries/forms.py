@@ -11,3 +11,5 @@ class GalleryImageForm(forms.Form):
     is_preview_image = forms.BooleanField(required=False)
     images = forms.FileField()
     
+class ClientAccessForm(forms.Form):
+    passcode = forms.CharField(max_length=60)

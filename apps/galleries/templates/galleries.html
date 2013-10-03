@@ -28,14 +28,25 @@
 		<div class="row">
 			<div class="col-xs-12">
 		    	{% for g, img in galleries %}
-	    			<a href="{{ g.get_absolute_url }}" class="gallery_list_item panel panel-default">
+	    			 <div class="gallery_list_item panel panel-default">
 	    				<div class="panel-body">
-	    					<img src="{{ img }}" class="gallery_list_item_image">
-							<div class="gallery_list_gallery_title">
-								{{ g.name }} <i>({{ g.number_of_images }} images)</i>
+	    					{% if gallery_empty %}
+	    						<h1><a href="{{ g.get_absolute_url }}" class="btn btn-lg btn-primary"><i class="icon-plus"></i> Add Photos</a></h1>
+	    					{% else %}
+		    					<a href="{{ g.get_absolute_url }}">
+		    						<img src="{{ img }}" class="gallery_list_item_image">
+		    					</a>
+	    					{% endif %}
+							<div class="gallery_list_gallery_info">
+								<a href="{{ g.get_absolute_url }}">
+		    						<h2 class="gallery_list_gallery_title">{{ g.name }}</h2>
+		    					</a>
+								<hr>
+								<small class="gallery_data pull-left"><i class="icon-picture"></i> {{ g.number_of_images }}</small>
+								<small class="gallery_data pull-right"><i class="icon-lock"></i> {{ g.passcode }}</small>
 							</div>
 	    				</div>
-	    			</a>
+	    			</div>
 	    		{% endfor %}
 			</div>
 		</div>
