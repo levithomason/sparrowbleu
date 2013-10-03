@@ -2,6 +2,9 @@
 import os
 import sys
 
+sys.path.append("./")
+sys.path.append("./apps")
+
 if __name__ == "__main__":
     os.environ["DJANGO_SETTINGS_MODULE"] = "settings"
 
