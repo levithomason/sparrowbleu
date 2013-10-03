@@ -132,3 +132,8 @@ LOGGING = {
 }
 
 INTERNAL_IPS = ('',)
+
+# Set your DSN value
+RAVEN_CONFIG = {
+    'dsn': 'https://c4bf3fe7a4e64448a062c04a603e7450:de418b2411944472a3c6695270622d41@app.getsentry.com/13905',
+}

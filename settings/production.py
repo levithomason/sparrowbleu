@@ -49,7 +49,6 @@ USE_TZ = True
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'dyelf3m-y9*&0@4the0b@70qy93dy$k#n#-2&or5d(l1a0&6bl'
 
-SENTRY_DSN = https://c4bf3fe7a4e64448a062c04a603e7450:de418b2411944472a3c6695270622d41@app.getsentry.com/13905
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -78,6 +77,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'raven.contrib.django.raven_compat',
 
     'apps.user',
     'apps.sparrow_bleu',
