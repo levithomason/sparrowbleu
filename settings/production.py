@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'apps.sparrow_bleu',
     'apps.galleries',
     
+    'south',
     'gunicorn',
 )
 
