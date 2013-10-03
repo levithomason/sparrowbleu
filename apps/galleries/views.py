@@ -12,9 +12,8 @@ def galleries(request):
     
     galleries = []
     for gallery in Gallery.objects.all():
-        preview_image_object = GalleryImage.objects.filter(gallery=gallery, is_preview_image=True)
-        for data in preview_image_object:
-            preview_image = data
+        preview_image = GalleryImage.objects.filter(gallery=gallery.pk, is_preview_image=True)
+
         galleries.append([gallery, preview_image])
     
     return render(request, 'galleries.html', {

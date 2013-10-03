@@ -30,6 +30,9 @@
 		    	{% for g, img in galleries %}
 	    			<a href="{{ g.get_absolute_url }}" class="gallery_list_item panel panel-default">
 	    				<div class="panel-body">
+	    					img == {{ img }}<br>
+	    					img gallery == {{ img.gallery }}<br>
+	    					img is_preview_image == {{ img.is_preview_image }}<br>
 	    					<img src="{{ img }}" class="gallery_list_item_image">
 							<div class="gallery_list_gallery_title">
 								{{ g.name }} <i>({{ g.number_of_images }} images)</i>

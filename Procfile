@@ -1,1 +1,1 @@
-web: gunicorn sparrowbleu.wsgi
+web: gunicorn .apps.sparrowbleu.wsgi
