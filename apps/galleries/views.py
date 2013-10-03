@@ -12,8 +12,11 @@ def galleries(request):
     
     galleries = []
     for gallery in Gallery.objects.all():
-        preview_image = GalleryImage.objects.filter(gallery=gallery.pk, is_preview_image=True)
-
+        preview_image_qs = GalleryImage.objects.filter(gallery=gallery, is_preview_image=True)
+        
+        for data in preview_image_qs:
+            preview_image = data
+        
         galleries.append([gallery, preview_image])
     
     return render(request, 'galleries.html', {
@@ -69,10 +72,11 @@ def new_gallery_image(request):
 
         debug.append('checking form valid...')
         if form.is_valid():
-            is_first_gallery_image = (gallery.galleryimage_set.count() == 0)
-            counter = 0
 
+            counter = 0
             for image_file in request.FILES.getlist('images'):
+                is_first_gallery_image = (gallery.galleryimage_set.count() == 0 and counter == 0)
+                
                 new_image = GalleryImage.objects.create(gallery=gallery)
                 
                 if is_first_gallery_image:
