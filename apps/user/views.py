@@ -2,14 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
 from apps.user.forms import loginForm
-
-def get_form_errors(form):
-    errors = []
-
-    for error in form.errors:
-        errors.append(error)
-    
-    return errors
+from apps.sparrow_bleu.views import get_form_errors
 
 def user_login(request):
     if request.method == "POST":

@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.core.files.uploadedfile import SimpleUploadedFile
-from settings import CLIENT_ACCESS_KEY
 
 from sorl.thumbnail import get_thumbnail
 
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
+from apps.sparrow_bleu.views import get_form_errors
 
 
 def galleries(request):
@@ -51,13 +51,13 @@ def new_gallery(request):
             
             return redirect('/gallery/' + str(gallery.pk))
         
-    else:
+        errors = get_form_errors(form)
+        return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
+    
+    form = GalleryForm()
+    return render(request, 'new_gallery.html', {'form': form})
         
-        form = GalleryForm()
-        
-    return render(request, 'new_gallery.html', {
-        'form': form
-    })
+
 
 def gallery_detail(request, pk=None, passcode=None):
     if (pk == None or passcode == None):
