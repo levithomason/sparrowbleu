@@ -20,18 +20,13 @@
 
 		    <ul class="nav navbar-nav navbar-right">
 		    	{% if user.is_authenticated %}
-					<div class="btn-group">
-		    			<a href="/user_logout" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ user }} <i class="icon-caret-down"></i></a>
-				        <ul class="dropdown-menu">
-					        {% if perms.Gallery.can_change %}
-					        	<li class="{% ifequal request.path '/galleries/'%}active{% endifequal %}"><a href="/galleries"><i class="icon-picture"></i>Galleries</a></li>
-					        {% endif %}
-					        {% if perms.Gallery.can_add %}
-					        	<li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery"><i class="icon-plus"></i>New Gallery</a></li>
-					        {% endif %}
-				    		<li><a href="/user_logout"><i class="icon-off"></i> Logout</a></li>
-				        </ul>
-				    </div>
+			        {% if perms.Gallery.can_change %}
+			        	<li class="{% ifequal request.path '/galleries/'%}active{% endifequal %}"><a href="/galleries"><i class="icon-picture"></i>Galleries</a></li>
+			        {% endif %}
+			        {% if perms.Gallery.can_add %}
+			        	<li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery"><i class="icon-plus"></i>New Gallery</a></li>
+			        {% endif %}
+		    		<li><a href="/user_logout"><i class="icon-off"></i> Logout</a></li>
 		        {% else %}
 			        <li><a href="/user_login"><i class="icon-user"></i> Login</a></li>
 		        {% endif %}

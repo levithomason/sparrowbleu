@@ -33,10 +33,12 @@
 	    					{% if gallery_empty %}
 	    						<h1><a href="{{ g.get_absolute_url }}" class="btn btn-lg btn-primary"><i class="icon-plus"></i> Add Photos</a></h1>
 	    					{% else %}
-		    					<a href="{{ g.get_absolute_url }}">
+		    					<a class="gallery_list_item_image_container" href="{{ g.get_absolute_url }}">
 		    						<img src="{{ img }}" class="gallery_list_item_image">
 		    					</a>
 	    					{% endif %}
+	    				</div>
+	    				<div class="panel-footer">
 							<div class="gallery_list_gallery_info">
 								<a href="{{ g.get_absolute_url }}">
 		    						<h2 class="gallery_list_gallery_title">{{ g.name }}</h2>

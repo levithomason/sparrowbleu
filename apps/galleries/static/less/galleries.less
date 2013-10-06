@@ -14,20 +14,22 @@
 	margin: 0.5%;
 	min-width: 200px;
 	width: 23.5%;
-	height: 23.5%;
 	&:hover {
 		text-decoration: none;
 		background: hsl(hue(@sbp_blue), 30%, 96%);
 	}
 	.panel-body {
+		position: relative;
 		padding: 0;
 	}
-	.gallery_number_of_images {
-
+	.gallery_list_item_image_container {
+		background: url('../img/zigzag_dark_highres.png') repeat center center;
+	    .gallery_list_item_image {
+			max-width: 100%;
+			max-height: 200px;
+	    }
 	}
-    .gallery_list_item_image {
-		max-width: 100%;
-    }
+
 	.gallery_list_gallery_info {
 		padding: 10px;
 		font-size: 18px;
