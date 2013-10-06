@@ -17,10 +17,13 @@ def galleries(request):
     preview_image = None
     
     for gallery in Gallery.objects.all():
-        preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
-        preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99)
+        try:
+            preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
+            preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99).url
+        except GalleryImage.DoesNotExist:
+            preview_image_thumbnail = None
         
-        galleries.append([gallery, preview_image_thumbnail.url])
+        galleries.append([gallery, preview_image_thumbnail])
     
     gallery_empty = True
     for (gallery, image) in galleries:
