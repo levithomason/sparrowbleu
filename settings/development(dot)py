@@ -53,7 +53,7 @@ INSTALLED_APPS = (
     'raven.contrib.django.raven_compat',
 
     'south',
-    'sorl',
+    'sorl.thumbnail',
     'debug_toolbar',
 
     'apps.user',

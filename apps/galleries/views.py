@@ -3,6 +3,8 @@ from django.views.generic import ListView
 from django.core.files.uploadedfile import SimpleUploadedFile
 from settings import CLIENT_ACCESS_KEY
 
+from sorl.thumbnail import get_thumbnail
+
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 
@@ -15,12 +17,10 @@ def galleries(request):
     preview_image = None
     
     for gallery in Gallery.objects.all():
-        preview_image_qs = GalleryImage.objects.filter(gallery=gallery, is_preview_image=True)
+        preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
+        im = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99)
         
-        for data in preview_image_qs:
-            preview_image = data
-        
-        galleries.append([gallery, preview_image])
+        galleries.append([gallery, im])
     
     gallery_empty = True
     for (gallery, image) in galleries:

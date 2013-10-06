@@ -85,7 +85,7 @@ INSTALLED_APPS = (
     'apps.galleries',
     
     'south',
-    'sorl',
+    'sorl.thumbnail',
     'gunicorn',
 )
 
