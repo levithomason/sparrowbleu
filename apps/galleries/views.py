@@ -18,9 +18,9 @@ def galleries(request):
     
     for gallery in Gallery.objects.all():
         preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
-        im = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99)
+        preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99)
         
-        galleries.append([gallery, im])
+        galleries.append([gallery, preview_image_thumbnail])
     
     gallery_empty = True
     for (gallery, image) in galleries:
@@ -62,11 +62,19 @@ def gallery_detail(request, pk=None, passcode=None):
     else:
         try:
             this_gallery = Gallery.objects.get(pk=pk)
-            gallery_images = GalleryImage.objects.filter(gallery=pk)
+            gallery_images_qs = GalleryImage.objects.filter(gallery=pk)
+            
+            gallery_image_thumbnails = []
+            
+            for gallery_image_object in gallery_images_qs:
+                gallery_image = GalleryImage.objects.get(pk=gallery_image_object.pk)
+                thumbnail = get_thumbnail(gallery_image.image, '500x500', crop='center', quality=99)
+                gallery_image_thumbnails.append(thumbnail)
+                
 
             return render(request, 'gallery_detail.html', {
               'gallery': this_gallery,
-              'gallery_images': gallery_images,
+              'gallery_image_thumbnails': gallery_image_thumbnails,
             })
         
         except Gallery.DoesNotExist:

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load thumbnail %}
 
 {% block additional_head %}
 	<link rel="stylesheet/less" href="{% static "less/gallery_detail.less" %}" type="text/css" />
@@ -28,9 +29,9 @@
 	<div class="row">
 		<div class="col-xs-12">
 		    <ul class="gallery_image_list">
-				{% for g_img in gallery_images %}
+				{% for g_im in gallery_image_thumbnails %}
 					<li class="gallery_image_item">
-						<img src="{{ g_img }}">
+						<img src="{{ g_im.url }}">
 					</li>
 				{% endfor %}
 		    </ul>
