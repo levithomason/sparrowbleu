@@ -61,20 +61,25 @@ def gallery_detail(request, pk=None, passcode=None):
         return redirect('/galleries/')
     else:
         try:
-            this_gallery = Gallery.objects.get(pk=pk)
+            gallery = Gallery.objects.get(pk=pk)
             gallery_images_qs = GalleryImage.objects.filter(gallery=pk)
-            
-            gallery_image_thumbnails = []
-            
-            for gallery_image_object in gallery_images_qs:
-                gallery_image = GalleryImage.objects.get(pk=gallery_image_object.pk)
-                thumbnail = get_thumbnail(gallery_image.image, '500x500', crop='center', quality=99)
-                gallery_image_thumbnails.append(thumbnail)
-                
+            gallery_images_and_thumbnails = []
+            thumbnail_scale = 0.20
 
+            for gallery_image_object in gallery_images_qs:
+
+                gallery_image = GalleryImage.objects.get(pk=gallery_image_object.pk).image
+
+                thumbnail_width = str(int(gallery_image.width * thumbnail_scale))
+                thumbnail_height = str(int(gallery_image.height * thumbnail_scale))
+                
+                thumbnail = get_thumbnail(gallery_image, thumbnail_width + 'x' + thumbnail_height, quality=99)
+                
+                gallery_images_and_thumbnails.append([gallery_image, thumbnail])
+                
             return render(request, 'gallery_detail.html', {
-              'gallery': this_gallery,
-              'gallery_image_thumbnails': gallery_image_thumbnails,
+              'gallery': gallery,
+              'gallery_images_and_thumbnails': gallery_images_and_thumbnails,
             })
         
         except Gallery.DoesNotExist:

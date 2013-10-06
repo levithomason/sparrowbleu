@@ -29,9 +29,9 @@
 	<div class="row">
 		<div class="col-xs-12">
 		    <ul class="gallery_image_list">
-				{% for g_im in gallery_image_thumbnails %}
+				{% for img, im in gallery_images_and_thumbnails %}
 					<li class="gallery_image_item">
-						<img src="{{ g_im.url }}">
+						<a href="{{ img.url }}"><img src="{{ im.url }}"></a>
 					</li>
 				{% endfor %}
 		    </ul>
