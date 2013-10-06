@@ -5,6 +5,7 @@
 
 {% block additional_head %}
 	<link rel="stylesheet/less" href="{% static "less/gallery_detail.less" %}" type="text/css" />
+	<link rel="stylesheet" href="{% static "less/jquery.isotope.css" %}" type="text/css" />
 	{# <link rel="stylesheet" href="{% static "css/dropzone.css" %}" type="text/css" /> #}
 {% endblock additional_head %}
 
@@ -53,6 +54,7 @@
 
 {% block additional_script %}
 	{% if perms.Gallery.can_change %}
+		<script src="../js/gallery_detail.js"></script>
 		{#<script src="{% static "js/dropzone.min.js" %}"></script>#}
 		{#<script src="{% static "js/dropzoneCustom.js" %}"></script>#}
 	{% endif %}
