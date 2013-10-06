@@ -20,7 +20,7 @@ def galleries(request):
         preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
         preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99)
         
-        galleries.append([gallery, preview_image_thumbnail])
+        galleries.append([gallery, preview_image_thumbnail.url])
     
     gallery_empty = True
     for (gallery, image) in galleries:
@@ -75,7 +75,7 @@ def gallery_detail(request, pk=None, passcode=None):
                 
                 thumbnail = get_thumbnail(gallery_image, thumbnail_width + 'x' + thumbnail_height, quality=99)
                 
-                gallery_images_and_thumbnails.append([gallery_image, thumbnail])
+                gallery_images_and_thumbnails.append([gallery_image.url, thumbnail.url])
                 
             return render(request, 'gallery_detail.html', {
               'gallery': gallery,
