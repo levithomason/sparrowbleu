@@ -4,3 +4,6 @@
 *.pyc
 development.py
 mediafiles
+_source_files
+.project
+.pydevproject

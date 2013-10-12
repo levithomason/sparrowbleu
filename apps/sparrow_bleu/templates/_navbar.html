@@ -18,13 +18,13 @@
 		        <li class="{% ifequal request.path '/client-access/'%}active{% endifequal %}"><a href="/client-access"><i class="icon-key"></i>Client Access</a></li>
 		    </ul>
 
-		    <ul class="nav navbar-nav navbar-right">
-		    	{% if user.is_authenticated %}
-			        {% if perms.Gallery.can_change %}
-			        	<li class="{% ifequal request.path '/galleries/'%}active{% endifequal %}"><a href="/galleries"><i class="icon-picture"></i>Galleries</a></li>
-			        {% endif %}
-			        {% if perms.Gallery.can_add %}
-			        	<li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery"><i class="icon-plus"></i>New Gallery</a></li>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    {% if perms.Gallery.can_change %}
+                    <li class="{% ifequal request.path '/galleries/'%}active{% endifequal %}"><a href="/galleries"><i class="icon-picture"></i>Galleries</a></li>
+                    {% endif %}
+                    {% if perms.Gallery.can_add %}
+                    <li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery"><i class="icon-plus"></i>New Gallery</a></li>
 			        {% endif %}
 		    		<li><a href="/user_logout"><i class="icon-off"></i> Logout</a></li>
 		        {% else %}
