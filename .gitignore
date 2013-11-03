@@ -1,3 +1,9 @@
 venv/*
 *.pyc
 ipadd.txt
+development.py
+mediafiles
+_source_files
+.project
+.pydevproject
+.idea/
