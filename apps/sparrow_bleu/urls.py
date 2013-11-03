@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 
     url(r'^', include('apps.user.urls')),
     url(r'^', include('apps.galleries.urls')),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    #url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )
 
 if settings.DEBUG:
