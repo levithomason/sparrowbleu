@@ -6,7 +6,7 @@ Setup
 3. Copy fresdb from helper_files to your env scripts folder
   - update the local paths to your local paths
 4. If you cant compile, copy PIL from helper_files to your env site-packages
-
+5. Run ```freshdb```
 
 SparrowBleu Photography
 ===========
