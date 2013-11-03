@@ -2,7 +2,10 @@ Setup
 ===========
 1. Clone repo
 2. Rename /settings/development(dot).py to development.py
-...?
+  - Update static files dir to your project location
+3. Copy fresdb from helper_files to your env scripts folder
+  - update the local paths to your local paths
+4. If you cant compile, copy PIL from helper_files to your env site-packages
 
 
 SparrowBleu Photography
