@@ -7,3 +7,4 @@ _source_files
 .project
 .pydevproject
 .idea/
+.settings
