@@ -21,7 +21,44 @@ body {
 .gallery_image_item {
 	background: #FFF;
 	border: 2px solid #555;
+	max-width: 320px;
+	max-height: 320px;
+	cursor: pointer;
 	.sbp_box_shadow_lg();
+	.gallery_image_item_inner {
+	    position: relative;
+        img {
+            top: 0;
+            left: 0;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .gallery_thumbnail {
+        }
+        .gallery_large {
+            position: absolute;
+            opacity: 0;
+        }
+        .favorite {
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            color: hsl(351, 100%, 96%);
+            font-size: 36px;
+            text-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5);
+            opacity: 0;
+        }
+    }
+    &.selected {
+        .gallery_thumbnail {
+        }
+        .gallery_large {
+            opacity: 0;
+        }
+        .favorite {
+            opacity: 1;
+        }
+    }
 }
 
 .upload_photos_form {
@@ -34,6 +71,7 @@ body {
 	background: rgba(0, 0, 0, 0.5);
 	text-align: center;
 	overflow: hidden;
+	z-index: 9999;
 	&:hover, &:active, &focus {
 		height: 250px;
 	}

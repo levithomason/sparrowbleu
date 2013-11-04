@@ -12,7 +12,7 @@
 {% block nav %}
     <div class="row">
         <div class="col-sm-12">
-            <h3><a href="/galleries" class="gallery_detail_done_btn"><i class="icon-double-angle-left"></i> Done</a></h3>
+            <h3><a href="/galleries" class="gallery_detail_done_btn"><i class="fa fa-double-angle-left"></i> Done</a></h3>
         </div>
     </div>
 {% endblock nav %}
@@ -32,7 +32,11 @@
             <div class="gallery_image_container">
                 {% for img, im in gallery_images_and_thumbnails %}
                     <div class="gallery_image_item">
-                        <a href="{{ img }}"><img src="{{ im }}"></a>
+                        <div class="gallery_image_item_inner">
+                            <img class="gallery_large" src="{{ img }}">
+                            <img class="gallery_thumbnail" src="{{ im }}">
+                            <span class="favorite"><i class="fa fa-heart-o"></i></span>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
@@ -42,10 +46,10 @@
     {% if perms.Gallery.can_change %}
         <form action="/new-gallery-image" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
             <div class="uploaded_photos_form_container">
-                <h3 class="drag_drop_title"><i class="icon-cloud-upload"></i> Drag n' Drop Photos Here</h3>
+                <h3 class="drag_drop_title"><i class="fa fa-cloud-upload"></i> Drag n' Drop Photos Here</h3>
                 <input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="images" multiple/>
                 <input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
-                <button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="icon-cloud-upload"></i> Upload</button>
+                <button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="fa fa-cloud-upload"></i> Upload</button>
             </div>
         </form>
     {% endif %}

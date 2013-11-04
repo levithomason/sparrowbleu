@@ -13,3 +13,12 @@ $(window).load(function(){
         });
     });
 });
+
+$(document).ready(function() {
+    $('.gallery_image_item').click(function() {
+        $(this).toggleClass('selected');
+        var thumb = $(this).find('.gallery_thumbnail')
+        thumb.hide();
+        thumb.fadeIn(800);
+    });
+});

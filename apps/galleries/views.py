@@ -74,11 +74,13 @@ def gallery_detail(request, pk=None, passcode=None):
 
                 # landscape/portrait thumbs
                 if gallery_image.width > gallery_image.height:
+                    large = get_thumbnail(gallery_image, "960x480", quality=99)
                     thumbnail = get_thumbnail(gallery_image, "320x240", quality=99)
                 else:
+                    large = get_thumbnail(gallery_image, "480x960", quality=99)
                     thumbnail = get_thumbnail(gallery_image, "240x320", quality=99)
 
-                gallery_images_and_thumbnails.append([gallery_image.url, thumbnail.url])
+                gallery_images_and_thumbnails.append([large.url, thumbnail.url])
                 
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
