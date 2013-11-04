@@ -1,19 +1,15 @@
-// A $( document ).ready() block.
-$( document ).ready(function() {
-    console.log( "ready!" );
+$(window).load(function(){
+    // Isotope
+    $(function(){
+        var $container = $('.gallery_image_container');
 
-
-
-});
-
-$(function(){
-    var $container = $('.gallery_image_container');
-
-    $container.isotope({
-        itemSelector: '.gallery_image_item',
-        layoutMode : 'masonry',
-        masonry: {
-            columnWidth: 320
-          }
+        $container.isotope({
+            itemSelector: '.gallery_image_item',
+            layoutMode: 'cellsByRow',
+            cellsByRow: {
+                columnWidth: 360,
+                rowHeight: 360
+            }
+        });
     });
 });

@@ -67,8 +67,6 @@ def gallery_detail(request, pk=None, passcode=None):
             gallery = Gallery.objects.get(pk=pk)
             gallery_images_qs = GalleryImage.objects.filter(gallery=pk)
             gallery_images_and_thumbnails = []
-            thumbnail_width = "320"
-            thumbnail_height = "240"
 
             for gallery_image_object in gallery_images_qs:
 
@@ -76,9 +74,9 @@ def gallery_detail(request, pk=None, passcode=None):
 
                 # landscape/portrait thumbs
                 if gallery_image.width > gallery_image.height:
-                    thumbnail = get_thumbnail(gallery_image, thumbnail_width + 'x' + thumbnail_height, quality=99)
+                    thumbnail = get_thumbnail(gallery_image, "320x240", quality=99)
                 else:
-                    thumbnail = get_thumbnail(gallery_image, thumbnail_height + 'x' + thumbnail_width, quality=99)
+                    thumbnail = get_thumbnail(gallery_image, "240x320", quality=99)
 
                 gallery_images_and_thumbnails.append([gallery_image.url, thumbnail.url])
                 
