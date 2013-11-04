@@ -15,7 +15,7 @@ def galleries(request):
     
     galleries = []
     preview_image = None
-    
+
     for gallery in Gallery.objects.all():
         try:
             preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
@@ -33,7 +33,8 @@ def galleries(request):
       'galleries': galleries,
       'gallery_empty': gallery_empty,
     })
-    
+
+
 def new_gallery(request):
     if not request.user.is_authenticated():
         return redirect('/')
@@ -56,7 +57,6 @@ def new_gallery(request):
     
     form = GalleryForm()
     return render(request, 'new_gallery.html', {'form': form})
-        
 
 
 def gallery_detail(request, pk=None, passcode=None):
@@ -81,8 +81,8 @@ def gallery_detail(request, pk=None, passcode=None):
                 gallery_images_and_thumbnails.append([gallery_image.url, thumbnail.url])
                 
             return render(request, 'gallery_detail.html', {
-              'gallery': gallery,
-              'gallery_images_and_thumbnails': gallery_images_and_thumbnails,
+                'gallery': gallery,
+                'gallery_images_and_thumbnails': gallery_images_and_thumbnails,
             })
         
         except Gallery.DoesNotExist:
@@ -108,7 +108,7 @@ def new_gallery_image(request):
                 new_image = GalleryImage.objects.create(gallery=gallery)
                 
                 if is_first_gallery_image:
-                    new_image.is_preview_image=True
+                    new_image.is_preview_image = True
                     
                 new_image.image.save(image_file.name, image_file)
                 counter += 1
@@ -120,7 +120,8 @@ def new_gallery_image(request):
             return render(request, 'gallery_image_failed.html', {'form': form, 'gallery': gallery, 'debug': debug})
     
     form = GalleryImageForm()
-    return render(request, 'gallery_detail.html', {'form': form, 'gallery': gallery, 'debug': debug})
+    return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
+
 
 def client_access(request):
     if request.method == 'POST':
@@ -128,10 +129,15 @@ def client_access(request):
         
         if form.is_valid():
             passcode = form.cleaned_data['passcode']
-            gallery = Gallery.objects.get(passcode=passcode)
-            
-            return redirect('/gallery/' + str(gallery.pk) + "/" + passcode)
 
-    return render(request, 'client_access.html', locals())    
-    
-    
+            try:
+                gallery = Gallery.objects.get(passcode=passcode)
+                return redirect('/gallery/' + str(gallery.pk) + "/" + passcode)
+
+            except Gallery.DoesNotExist:
+                return render(request, 'client_access.html', {
+                    'gallery_does_not_exist': True,
+                    'passcode': passcode
+                })
+
+    return render(request, 'client_access.html', locals())
