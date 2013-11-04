@@ -4,58 +4,60 @@
 {% load thumbnail %}
 
 {% block additional_head %}
-	<link rel="stylesheet/less" href="{% static "less/gallery_detail.less" %}" type="text/css" />
-	<link rel="stylesheet" href="{% static "less/jquery.isotope.css" %}" type="text/css" />
-	{# <link rel="stylesheet" href="{% static "css/dropzone.css" %}" type="text/css" /> #}
+    <link rel="stylesheet/less" href="{% static "less/gallery_detail.less" %}" type="text/css" />
+    <link rel="stylesheet" href="{% static "css/jquery.isotope.css" %}" type="text/css" />
+    {# <link rel="stylesheet" href="{% static "css/dropzone.css" %}" type="text/css" /> #}
 {% endblock additional_head %}
 
 {% block nav %}
-	<div class="row">
-		<div class="col-sm-12">
-			<h3><a href="/galleries" class="gallery_detail_done_btn"><i class="icon-double-angle-left"></i> Done</a></h3>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><a href="/galleries" class="gallery_detail_done_btn"><i class="icon-double-angle-left"></i> Done</a></h3>
+        </div>
+    </div>
 {% endblock nav %}
 
 {% block body %}
-	<div class="container text-center">
-		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2">
-	    		<div class="page_heading">
-	    			<div class="page_title">{{ gallery }}</div>
-    			</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-		    <ul class="gallery_image_list">
-				{% for img, im in gallery_images_and_thumbnails %}
-					<li class="gallery_image_item">
-						<a href="{{ img }}"><img src="{{ im }}"></a>
-					</li>
-				{% endfor %}
-		    </ul>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="page_heading">
+                    <div class="page_title text-center">{{ gallery }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="gallery_image_container">
+                {% for img, im in gallery_images_and_thumbnails %}
+                    <div class="gallery_image_item">
+                        <a href="{{ img }}"><img src="{{ im }}"></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-	{% if perms.Gallery.can_change %}
-		<form action="/new-gallery-image" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
-			<div class="uploaded_photos_form_container">
-				<h3 class="drag_drop_title"><i class="icon-cloud-upload"></i> Drag n' Drop Photos Here</h3>
-				<input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="images" multiple/>
-	        	<input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
-				<button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="icon-cloud-upload"></i> Upload</button>
-			</div>
-		</form>
-	{% endif %}
+    {% if perms.Gallery.can_change %}
+        <form action="/new-gallery-image" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
+            <div class="uploaded_photos_form_container">
+                <h3 class="drag_drop_title"><i class="icon-cloud-upload"></i> Drag n' Drop Photos Here</h3>
+                <input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="images" multiple/>
+                <input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
+                <button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="icon-cloud-upload"></i> Upload</button>
+            </div>
+        </form>
+    {% endif %}
 
 {% endblock body %}
 
 {% block additional_script %}
-	{% if perms.Gallery.can_change %}
-		<script src="../js/gallery_detail.js"></script>
-		{#<script src="{% static "js/dropzone.min.js" %}"></script>#}
-		{#<script src="{% static "js/dropzoneCustom.js" %}"></script>#}
-	{% endif %}
+    <script src="{% static 'js/gallery_detail.js' %}"></script>
+
+    {% if perms.Gallery.can_change %}
+        {#<script src="{% static 'js/dropzone.min.js' %}"></script>#}
+        {#<script src="{% static 'js/dropzoneCustom.js' %}"></script>#}
+    {% endif %}
+
 {% endblock additional_script %}
