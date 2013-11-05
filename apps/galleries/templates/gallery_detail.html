@@ -30,11 +30,12 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="gallery_image_container">
-                {% for img, im in gallery_images_and_thumbnails %}
-                    <div class="gallery_image_item">
+                {% for image in gallery_images %}
+                    <div class="gallery_image_item" data-pk="{{ image.pk }}">
+                        <div>{{image.is_selected}}</div>
                         <div class="gallery_image_item_inner">
-                            <img class="gallery_large" src="{{ img }}">
-                            <img class="gallery_thumbnail" src="{{ im }}">
+                            <img class="gallery_large" src="{{ image.thumb_large }}">
+                            <img class="gallery_thumbnail" src="{{ image.thumb_small }}">
                             <span class="favorite"><i class="fa fa-heart-o"></i></span>
                         </div>
                     </div>

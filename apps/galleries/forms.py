@@ -1,5 +1,5 @@
 from django import forms
-from apps.galleries.models import Gallery
+from apps.galleries.models import Gallery, GalleryImage
 
 
 class GalleryForm(forms.Form):

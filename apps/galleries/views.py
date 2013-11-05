@@ -60,37 +60,43 @@ def new_gallery(request):
 
 
 def gallery_detail(request, pk=None, passcode=None):
-    if (pk == None or passcode == None):
+    if pk is None or passcode is None:
         return redirect('/galleries/')
     else:
         try:
             gallery = Gallery.objects.get(pk=pk)
             gallery_images_qs = GalleryImage.objects.filter(gallery=pk)
-            gallery_images_and_thumbnails = []
+            gallery_images = []
 
-            for gallery_image_object in gallery_images_qs:
+            for image_object in gallery_images_qs:
 
-                gallery_image = GalleryImage.objects.get(pk=gallery_image_object.pk).image
+                image = GalleryImage.objects.get(pk=image_object.pk).image
 
                 # landscape/portrait thumbs
-                if gallery_image.width > gallery_image.height:
-                    large = get_thumbnail(gallery_image, "960x480", quality=99)
-                    thumbnail = get_thumbnail(gallery_image, "320x240", quality=99)
+                if image.width > image.height:
+                    thumb_large = get_thumbnail(image, "960x480", quality=99)
+                    thumb_small = get_thumbnail(image, "320x240", quality=99)
                 else:
-                    large = get_thumbnail(gallery_image, "480x960", quality=99)
-                    thumbnail = get_thumbnail(gallery_image, "240x320", quality=99)
+                    thumb_large = get_thumbnail(image, "480x960", quality=99)
+                    thumb_small = get_thumbnail(image, "240x320", quality=99)
 
-                gallery_images_and_thumbnails.append([large.url, thumbnail.url])
-                
+                gallery_image = {
+                    "pk": image_object.pk,
+                    "is_selected": image_object.is_selected,
+                    "thumb_large": thumb_large.url,
+                    "thumb_small": thumb_small.url
+                }
+                gallery_images.append(gallery_image)
+
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
-                'gallery_images_and_thumbnails': gallery_images_and_thumbnails,
+                'gallery_images': gallery_images
             })
 
         except Gallery.DoesNotExist:
             return redirect('/galleries/')
 
-    
+
 def new_gallery_image(request):
     debug = []
     debug.append('checking method...')
@@ -123,6 +129,18 @@ def new_gallery_image(request):
     
     form = GalleryImageForm()
     return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
+
+
+def select_gallery_image(request, gallery_pk=None, passcode=None, image_pk=None):
+    if gallery_pk is None or passcode is None or image_pk is None:
+        return redirect('/galleries/')
+    else:
+        if request.method == 'POST':
+            GalleryImage.objects.get(pk=image_pk).is_selected = True
+
+            image.save()
+
+            return render(request, 'gallery_detail.html')
 
 
 def client_access(request):
