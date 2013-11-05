@@ -17,14 +17,14 @@
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
 	    		<div class="page_heading">
-	    			<i class="page_icon icon-picture"> </i>
+	    			<i class="page_icon fa fa-picture-o"> </i>
 	    			<div class="page_title">Galleries</div>
     			</div>
 			</div>
 		</div>
 		<div class="tool_bar row">
 			<div class="col-sm-12 text-left">
-				<a href="/new-gallery/" class="btn btn-primary btn-sm"><i class="icon-plus"></i> New Gallery</a>
+				<a href="/new-gallery/" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> New Gallery</a>
 			</div>
 		</div>
 		<div class="row">
@@ -33,7 +33,7 @@
 	    			 <div class="gallery_list_item panel panel-default">
 	    				<div class="panel-body">
 	    					{% if gallery_empty %}
-	    						<h1><a href="{{ g.get_absolute_url }}" class="btn btn-lg btn-primary"><i class="icon-plus"></i> Add Photos</a></h1>
+	    						<h1><a href="{{ g.get_absolute_url }}" class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Add Photos</a></h1>
 	    					{% else %}
 		    					<a href="{{ g.get_absolute_url }}">
 	    						<img src="{{ im }}" class="gallery_list_item_image">
@@ -43,8 +43,8 @@
 	    				<div class="panel-footer">
 							<a href="{{ g.get_absolute_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
 							<div class="gallery_list_gallery_info">
-								<span  class="gallery_number_of_images pull-left"><i class="icon-picture"></i> {{ g.number_of_images }}</span >
-								<span class="gallery_passcode pull-right"><i class="icon-lock"></i> {{ g.passcode }}</span >
+								<span  class="gallery_number_of_images pull-left"><i class="fa fa-picture-o"></i> {{ g.number_of_images }}</span >
+								<span class="gallery_passcode pull-right"><i class="fa fa-lock"></i> {{ g.passcode }}</span >
 							</div>
 	    				</div>
 	    			</div>
