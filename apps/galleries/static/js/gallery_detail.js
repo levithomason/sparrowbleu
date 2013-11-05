@@ -27,37 +27,36 @@ $(document).ready(function() {
     // selecting an image
     $('.gallery_image_item').click(function() {
 
-        $(this).toggleClass('selected');
-
-        // flash the thumb if selected
-        if ($(this).hasClass('selected')) {
-            var thumb = $(this).find('.gallery_thumbnail')
-            thumb.hide();
-            thumb.fadeIn(800);
-        }
-
         // TODO: This needs to use the csrf token https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
         // Assign handlers immediately after making the request, and remember the jqxhr object for this request
         var image_pk = $(this).data('pk');
 
         var jqxhr = $.post( document.URL + "/select_image/" + image_pk, function() {
-            alert( "success" );
+            console.log( "first success" );
+            $(this).toggleClass('selected');
+
+            // flash the thumb if selected
+            if ($(this).hasClass('selected')) {
+                var thumb = $(this).find('.gallery_thumbnail')
+                thumb.hide();
+                thumb.fadeIn(800);
+            }
         })
             .done(function() {
-                alert( "second success" );
+                console.log( "second success" );
             })
             .fail(function() {
-                alert( "error" );
+                console.log( "error" );
             })
             .always(function() {
-                alert( "finished" );
+                console.log( "finished" );
         });
 
         // Perform other work here ...
 
         // Set another completion function for the request above
         jqxhr.always(function() {
-            alert( "second finished" );
+            console.log( "second finished" );
         });
     });
 
