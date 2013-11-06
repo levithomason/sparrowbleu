@@ -18,6 +18,41 @@
 
 });
 
+
+/*
+ * CSRF for ajax requests
+ */
+var csrftoken = $.cookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+function sameOrigin(url) {
+    // test that a given url is a same-origin URL
+    // url could be relative or scheme relative or absolute
+    var host = document.location.host; // host + port
+    var protocol = document.location.protocol;
+    var sr_origin = '//' + host;
+    var origin = protocol + sr_origin;
+    // Allow absolute or scheme relative URLs to same origin
+    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+            // Send the token to same-origin, relative URLs only.
+            // Send the token only if the method warrants CSRF protection
+            // Using the CSRFToken value acquired earlier
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+
 /*
  * Selecting images
  */
@@ -26,37 +61,37 @@ $(document).ready(function() {
 
     // selecting an image
     $('.gallery_image_item').click(function() {
+        var ele = $(this);
 
-        // TODO: This needs to use the csrf token https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
-        // Assign handlers immediately after making the request, and remember the jqxhr object for this request
+        // register the click as a success in the ui immediately
+        ele.toggleClass('selected');
+
+        if (ele.hasClass('selected')) {
+            var thumb = ele.find('.gallery_thumbnail')
+            thumb.hide();
+            thumb.fadeIn(800);
+        }
+
         var image_pk = $(this).data('pk');
-
-        var jqxhr = $.post( document.URL + "/select_image/" + image_pk, function() {
-            console.log( "first success" );
-            $(this).toggleClass('selected');
-
-            // flash the thumb if selected
-            if ($(this).hasClass('selected')) {
-                var thumb = $(this).find('.gallery_thumbnail')
-                thumb.hide();
-                thumb.fadeIn(800);
-            }
+        var jqxhr = $.post(document.URL + "/select_image/" + image_pk, function() {
+            console.log('post ' + document.URL + "/select_image/" + image_pk)
         })
             .done(function() {
-                console.log( "second success" );
+                console.log( "done" );
             })
             .fail(function() {
-                console.log( "error" );
+                ele.toggleClass('selected');
+                alert("Oops, couldn't select that image.  If this continues to happen contact SparrowBleu.")
             })
             .always(function() {
-                console.log( "finished" );
+                console.log( "always" );
         });
 
         // Perform other work here ...
 
         // Set another completion function for the request above
         jqxhr.always(function() {
-            console.log( "second finished" );
+            console.log( "second always" );
         });
     });
 

@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     url(r'^gallery/(?P<pk>\d+)', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
     url(r'^gallery/', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
 
-    url(r'^gallery/(?P<gallery_pk>\d+)/(?P<passcode>\w)/select_image/(?P<image_pk>\w)', 'apps.galleries.views.select_gallery_images', name='select_gallery_images'),
+    url(r'^gallery/(?P<gallery_pk>\d+)/(?P<passcode>\w)/select_image/(?P<image_pk>\w)',
+        'apps.galleries.views.select_gallery_image', name='select_gallery_image'),
 
     url(r'^client-access/', 'apps.galleries.views.client_access', name='client_access'),
 

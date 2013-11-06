@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -131,16 +132,29 @@ def new_gallery_image(request):
     return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
 
 
+# TODO: think this should be getting request.POST.get()
 def select_gallery_image(request, gallery_pk=None, passcode=None, image_pk=None):
-    if gallery_pk is None or passcode is None or image_pk is None:
-        return redirect('/galleries/')
-    else:
-        if request.method == 'POST':
-            GalleryImage.objects.get(pk=image_pk).is_selected = True
+    print "select image view"
 
+    if request.is_ajax() and request.method == 'POST':
+        try:
+            gallery = Gallery.objects.get(pk=gallery_pk, passcode=passcode)
+            image = GalleryImage.objects.get(pk=image_pk, gallery=gallery)
+
+            image.is_selected = True
             image.save()
 
-            return render(request, 'gallery_detail.html')
+            response = HttpResponse("Image selected")
+            response.status_code = 200
+
+            return response
+
+        except Gallery.DoesNotExist or GalleryImage.DoesNotExist:
+
+            response = HttpResponse("Could find image or could not find gallery")
+            response.status_code = 400
+
+            return response
 
 
 def client_access(request):
