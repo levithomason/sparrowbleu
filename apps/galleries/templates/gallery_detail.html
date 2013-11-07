@@ -32,7 +32,7 @@
             <div class="gallery_image_container">
                 {% for image in gallery_images %}
                     <div class="gallery_image_item {% if image.is_selected %}selected{% endif %}" data-pk="{{ image.pk }}">
-                        <div>{{image.is_selected}}</div>
+                        <div>{{ image.is_selected }}</div>
                         <div class="gallery_image_item_inner">
                             <img class="gallery_large" src="{{ image.thumb_large }}">
                             <img class="gallery_thumbnail" src="{{ image.thumb_small }}">

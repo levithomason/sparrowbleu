@@ -58,10 +58,9 @@ $.ajaxSetup({
  */
 $(document).ready(function() {
 
-
-    // selecting an image
     $('.gallery_image_item').click(function() {
         var ele = $(this);
+        var image_pk = ele.data('pk');
 
         // register the click as a success in the ui immediately
         ele.toggleClass('selected');
@@ -72,15 +71,16 @@ $(document).ready(function() {
             thumb.fadeIn(800);
         }
 
-        var image_pk = $(this).data('pk');
-        var jqxhr = $.post(document.URL + "/select_image/" + image_pk, function() {
-            console.log('post ' + document.URL + "/select_image/" + image_pk)
+        console.log('post: ' + "/select_gallery_image/, " + image_pk);
+
+        var jqxhr = $.post('/select_gallery_image/', {'image_pk': image_pk}, function() {
+            console.log('it worked!');
         })
             .done(function() {
                 console.log( "done" );
             })
             .fail(function() {
-                ele.toggleClass('selected');
+                ele.removeClass('selected');
                 alert("Oops, couldn't select that image.  If this continues to happen contact SparrowBleu.")
             })
             .always(function() {

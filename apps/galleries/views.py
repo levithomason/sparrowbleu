@@ -132,29 +132,20 @@ def new_gallery_image(request):
     return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
 
 
-# TODO: think this should be getting request.POST.get()
-def select_gallery_image(request, gallery_pk=None, passcode=None, image_pk=None):
-    print "select image view"
-
+def select_gallery_image(request):
     if request.is_ajax() and request.method == 'POST':
         try:
-            gallery = Gallery.objects.get(pk=gallery_pk, passcode=passcode)
-            image = GalleryImage.objects.get(pk=image_pk, gallery=gallery)
+            image_pk = request.POST.get('image_pk')
+            image = GalleryImage.objects.get(pk=image_pk)
 
             image.is_selected = True
             image.save()
 
-            response = HttpResponse("Image selected")
-            response.status_code = 200
+            return HttpResponse(content="Image selected", content_type=None, status=200)
 
-            return response
+        except GalleryImage.DoesNotExist:
 
-        except Gallery.DoesNotExist or GalleryImage.DoesNotExist:
-
-            response = HttpResponse("Could find image or could not find gallery")
-            response.status_code = 400
-
-            return response
+            return HttpResponse(content="Could find image with id " + image_pk, content_type=None, status=400)
 
 
 def client_access(request):
