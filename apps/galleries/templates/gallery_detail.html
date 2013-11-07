@@ -12,13 +12,13 @@
 {% block nav %}
     <div class="gallery_detail_nav">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 col-xs-6">
                 <a href="/galleries" class="gallery_detail_done_btn"><i class="fa fa-angle-double-left"></i> Done</a>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 hidden-xs">
                 <div class="gallery_title">{{ gallery }}</div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 col-xs-6">
                 <div id="selected_images">
                     <div class="included" data-max="{{ gallery.number_of_images }}"></div>
                     <span class="at_cost"></span>
