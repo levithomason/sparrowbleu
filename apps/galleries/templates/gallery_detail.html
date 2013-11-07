@@ -10,33 +10,36 @@
 {% endblock additional_head %}
 
 {% block nav %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h3><a href="/galleries" class="gallery_detail_done_btn"><i class="fa fa-angle-double-left"></i> Done</a></h3>
+    <div class="gallery_detail_nav">
+        <div class="row">
+            <div class="col-sm-3">
+                <a href="/galleries" class="gallery_detail_done_btn"><i class="fa fa-angle-double-left"></i> Done</a>
+            </div>
+            <div class="col-sm-6">
+                <div class="gallery_title">{{ gallery }}</div>
+            </div>
+            <div class="col-sm-3">
+                <div id="selected_images">
+                    <div class="included" data-max="{{ gallery.number_of_images }}"></div>
+                    <span class="at_cost"></span>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock nav %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-                <div class="page_heading">
-                    <div class="page_title text-center">{{ gallery }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="gallery_image_container">
                 {% for image in gallery_images %}
                     <div class="gallery_image_item {% if image.is_selected %}selected{% endif %}" data-pk="{{ image.pk }}">
-                        <div>{{ image.is_selected }}</div>
                         <div class="gallery_image_item_inner">
                             <img class="gallery_large" src="{{ image.thumb_large }}">
                             <img class="gallery_thumbnail" src="{{ image.thumb_small }}">
                             <span class="favorite"><i class="fa fa-heart-o"></i></span>
+                            <div class="gallery_thumbnail_overlay"></div>
+                            <div class="image_selected">{{ image.is_selected }}</div>
                         </div>
                     </div>
                 {% endfor %}

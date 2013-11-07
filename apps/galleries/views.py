@@ -66,7 +66,7 @@ def gallery_detail(request, pk=None, passcode=None):
     else:
         try:
             gallery = Gallery.objects.get(pk=pk)
-            gallery_images_qs = GalleryImage.objects.filter(gallery=pk)
+            gallery_images_qs = GalleryImage.objects.order_by('-is_selected').filter(gallery=pk)
             gallery_images = []
 
             for image_object in gallery_images_qs:
@@ -132,20 +132,20 @@ def new_gallery_image(request):
     return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
 
 
-def select_gallery_image(request):
+def toggle_select_gallery_image(request):
     if request.is_ajax() and request.method == 'POST':
         try:
             image_pk = request.POST.get('image_pk')
             image = GalleryImage.objects.get(pk=image_pk)
 
-            image.is_selected = True
+            image.is_selected = not image.is_selected
             image.save()
 
-            return HttpResponse(content="Image selected", content_type=None, status=200)
+            return HttpResponse(content=image.is_selected, content_type=None, status=200)
 
         except GalleryImage.DoesNotExist:
 
-            return HttpResponse(content="Could find image with id " + image_pk, content_type=None, status=400)
+            return HttpResponse(content="Could find image with id: " + image_pk, content_type=None, status=400)
 
 
 def client_access(request):
