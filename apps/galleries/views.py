@@ -75,16 +75,16 @@ def gallery_detail(request, pk=None, passcode=None):
 
                 # landscape/portrait thumbs
                 if image.width > image.height:
-                    thumb_large = get_thumbnail(image, "960x480", quality=99)
-                    thumb_small = get_thumbnail(image, "320x240", quality=99)
+                    #thumb_large = get_thumbnail(image, "960x480", quality=80)
+                    thumb_small = get_thumbnail(image, "320x240", quality=80)
                 else:
-                    thumb_large = get_thumbnail(image, "480x960", quality=99)
-                    thumb_small = get_thumbnail(image, "240x320", quality=99)
+                    #thumb_large = get_thumbnail(image, "480x960", quality=80)
+                    thumb_small = get_thumbnail(image, "240x320", quality=80)
 
                 gallery_image = {
                     "pk": image_object.pk,
                     "is_selected": image_object.is_selected,
-                    "thumb_large": thumb_large.url,
+                    #"thumb_large": thumb_large.url,
                     "thumb_small": thumb_small.url
                 }
                 gallery_images.append(gallery_image)
