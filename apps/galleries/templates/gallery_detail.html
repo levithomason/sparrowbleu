@@ -10,6 +10,8 @@
 {% endblock additional_head %}
 
 {% block nav %}
+    <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
+
     <div class="gallery_detail_nav">
         <div class="row">
             <div class="col-sm-3 col-xs-6">
@@ -21,7 +23,7 @@
             <div class="col-sm-3 col-xs-6">
                 <div id="selected_images">
                     <div class="included" data-max="{{ gallery.number_of_images }}"></div>
-                    <span class="at_cost"></span>
+                    <span class="extra"></span>
                 </div>
             </div>
         </div>

@@ -29,9 +29,22 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
-		    	{% for g, im, empty in galleries %}
+		    	{% for g, im, empty, selected_images, total_cost in galleries %}
 	    			 <div class="gallery_list_item panel panel-default" data-pk="{{ arr.gallery.pk }}">
-	    				<div class="panel-body">
+                         <div class="controls">
+                             <div class="delete btn btn-sm btn-danger">
+                                 <i class="fa fa-times"></i> delete
+                             </div>
+                             <div class="delete_confirm">
+                                 <div class="confirm_delete_yes btn btn-sm btn-danger">
+                                     <i class="fa fa-check"></i> delete
+                                 </div>
+                                 <div class="confirm_delete_no btn btn-sm btn-default">
+                                     never mind
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="panel-body">
                             <a href="{{ g.get_absolute_url }}">
                                 {% if empty %}
                                     <div class="gallery_empty"><i class="fa fa-picture-o"> </i></div>
@@ -39,26 +52,14 @@
                                         <img src="{{ im }}" class="gallery_list_item_image">
                                 {% endif %}
                             </a>
-                            <div class="controls">
-                                <div class="delete btn btn-sm btn-danger">
-                                    <i class="fa fa-times"></i> delete
-                                </div>
-                                <div class="delete_confirm">
-                                    <div class="confirm_delete_yes btn btn-sm btn-danger">
-                                        <i class="fa fa-check"></i> delete
-                                    </div>
-                                    <div class="confirm_delete_no btn btn-sm btn-default">
-                                        never mind
-                                    </div>
-                                </div>
-                            </div>
 	    				</div>
 	    				<div class="panel-footer">
 							<a href="{{ g.get_absolute_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
 							<div class="gallery_list_gallery_info">
-								<span  class="gallery_number_of_images pull-left"><i class="fa fa-picture-o"></i> {{ g.number_of_images }}</span >
-								<span class="gallery_passcode pull-right"><i class="fa fa-lock"></i> {{ g.passcode }}</span >
-							</div>
+                                <div class="gallery_passcode"><i class="fa fa-lock"></i>{{ g.passcode }}</div>
+                                <div class="gallery_number_of_images"><i class="fa fa-picture-o"></i>{{ selected_images }} | {{ g.number_of_images }}</div>
+                                <div class="gallery_cost_per_extra_image"><i class="fa fa-plus"></i>${{ total_cost }} @ ${{ g.cost_per_extra_image }}ea</div>
+                            </div>
 	    				</div>
 	    			</div>
 	    		{% endfor %}

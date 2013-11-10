@@ -25,9 +25,13 @@ def galleries(request):
             preview_image_thumbnail = ""
             gallery_empty = True
 
-        galleries.append([gallery, preview_image_thumbnail, gallery_empty])
+        selected_images = gallery.selected_images()
+        if selected_images > gallery.number_of_images:
+            total_cost = (selected_images - gallery.number_of_images) * gallery.cost_per_extra_image
+        else:
+            total_cost = 0
 
-
+        galleries.append([gallery, preview_image_thumbnail, gallery_empty, selected_images, total_cost])
 
     return render(request, 'galleries.html', {
       'galleries': galleries
@@ -45,11 +49,12 @@ def new_gallery(request):
             name = form.cleaned_data['name']
             passcode = form.cleaned_data['passcode']
             number_of_images = form.cleaned_data['number_of_images']
+            cost_per_extra_image = form.cleaned_data['cost_per_extra_image']
             
-            gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images)
+            gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images, cost_per_extra_image=cost_per_extra_image)
             gallery.save()
 
-            return redirect('/gallery/' + str(gallery.pk) + "/" + passcode)
+            return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
         
         errors = get_form_errors(form)
         return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
@@ -135,7 +140,7 @@ def new_gallery_image(request):
                 new_image.image.save(image_file.name, image_file)
                 counter += 1
 
-            return redirect('/gallery/' + str(gallery.pk))
+            return redirect('/gallery/%s/%s' % (gallery.pk, gallery.passcode))
             
         else:
             debug.append('form is invalid')
@@ -170,7 +175,7 @@ def client_access(request):
 
             try:
                 gallery = Gallery.objects.get(passcode=passcode)
-                return redirect('/gallery/' + str(gallery.pk) + "/" + passcode)
+                return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
 
             except Gallery.DoesNotExist:
                 return render(request, 'client_access.html', {
