@@ -15,24 +15,22 @@ def galleries(request):
         return redirect('/')
     
     galleries = []
-    preview_image = None
 
     for gallery in Gallery.objects.all():
         try:
             preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
             preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99).url
+            gallery_empty = False
         except GalleryImage.DoesNotExist:
-            preview_image_thumbnail = None
-        
-        galleries.append([gallery, preview_image_thumbnail])
-    
-    gallery_empty = True
-    for (gallery, image) in galleries:
-        gallery_empty = image == None
-    
+            preview_image_thumbnail = ""
+            gallery_empty = True
+
+        galleries.append([gallery, preview_image_thumbnail, gallery_empty])
+
+
+
     return render(request, 'galleries.html', {
-      'galleries': galleries,
-      'gallery_empty': gallery_empty,
+      'galleries': galleries
     })
 
 
@@ -50,14 +48,29 @@ def new_gallery(request):
             
             gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images)
             gallery.save()
-            
-            return redirect('/gallery/' + str(gallery.pk))
+
+            return redirect('/gallery/' + str(gallery.pk) + "/" + passcode)
         
         errors = get_form_errors(form)
         return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
     
     form = GalleryForm()
     return render(request, 'new_gallery.html', {'form': form})
+
+
+def delete_gallery(request):
+    if request.is_ajax() and request.method == 'POST':
+        try:
+            gallery_pk = request.POST.get('gallery_pk')
+            gallery = Gallery.objects.get(pk=gallery_pk)
+
+            gallery.delete()
+
+            return HttpResponse(content="Image deleted successfully", content_type=None, status=200)
+
+        except Gallery.DoesNotExist:
+
+            return HttpResponse(content="Could find gallery with id: " + gallery_pk, content_type=None, status=400)
 
 
 def gallery_detail(request, pk=None, passcode=None):

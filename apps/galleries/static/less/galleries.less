@@ -7,12 +7,13 @@
 .gallery_list {
     list-style: none;
 }
+
 .gallery_list_item {
 	.sbp_transition(background);
 	display: inline-block;
 	position: relative;
 	margin: 0.5%;
-	max-width: 250px;
+    overflow: hidden;
 	&:hover {
 		text-decoration: none;
 		background: hsl(hue(@sbp_blue), 30%, 96%);
@@ -20,10 +21,35 @@
 
 	.panel-body {
 		padding: 0;
-	    .gallery_list_item_image {
-			max-width: 100%;
-	    }
-	}
+        width: 250px;
+        height: 250px;
+        &:hover .controls {
+            top: 0;
+        }
+        .gallery_empty {
+            font-size: 10em;
+            padding: 25px;
+            color: #DDD;
+            background: #FEFEFE;
+        }
+        .gallery_list_item_image {
+            max-width: 100%;
+        }
+    .controls {
+        .sbp_transition(top);
+        position: absolute;
+        padding: 5px;
+        top: -40px;
+        width: 100%;
+        background: rgba(0,0,0,0.5);
+        .delete {
+
+        }
+        .delete_confirm {
+            display: none;
+        }
+    }
+}
 
 	.panel-footer{
 		background:none;

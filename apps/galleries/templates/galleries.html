@@ -29,16 +29,29 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
-		    	{% for g, im in galleries %}
-	    			 <div class="gallery_list_item panel panel-default">
+		    	{% for g, im, empty in galleries %}
+	    			 <div class="gallery_list_item panel panel-default" data-pk="{{ arr.gallery.pk }}">
 	    				<div class="panel-body">
-	    					{% if gallery_empty %}
-	    						<h1><a href="{{ g.get_absolute_url }}" class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Add Photos</a></h1>
-	    					{% else %}
-		    					<a href="{{ g.get_absolute_url }}">
-	    						<img src="{{ im }}" class="gallery_list_item_image">
-		    					</a>
-	    					{% endif %}
+                            <a href="{{ g.get_absolute_url }}">
+                                {% if empty %}
+                                    <div class="gallery_empty"><i class="fa fa-picture-o"> </i></div>
+                                {% else %}
+                                        <img src="{{ im }}" class="gallery_list_item_image">
+                                {% endif %}
+                            </a>
+                            <div class="controls">
+                                <div class="delete btn btn-sm btn-danger">
+                                    <i class="fa fa-times"></i> delete
+                                </div>
+                                <div class="delete_confirm">
+                                    <div class="confirm_delete_yes btn btn-sm btn-danger">
+                                        <i class="fa fa-check"></i> delete
+                                    </div>
+                                    <div class="confirm_delete_no btn btn-sm btn-default">
+                                        never mind
+                                    </div>
+                                </div>
+                            </div>
 	    				</div>
 	    				<div class="panel-footer">
 							<a href="{{ g.get_absolute_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
@@ -55,4 +68,6 @@
 {% endblock body %}
 
 {% block additional_script %}
+    <script src="../static/js/galleries.js"></script>
+
 {% endblock additional_script %}
