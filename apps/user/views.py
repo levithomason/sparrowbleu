@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
 from apps.user.forms import loginForm
-from apps.sparrow_bleu.views import get_form_errors
 
 def user_login(request):
     if request.method == "POST":
@@ -17,7 +16,7 @@ def user_login(request):
                 login(request, user)
                 return redirect('/galleries/')
 
-        return render(request, 'user_login.html', {'form': form, 'errors': get_form_errors(form)})
+        return render(request, 'user_login.html', {'form': form})
                      
     form = loginForm()
     return render(request, 'user_login.html', {'form': form})
