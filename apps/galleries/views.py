@@ -7,7 +7,6 @@ from sorl.thumbnail import get_thumbnail
 
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
-from apps.sparrow_bleu.views import get_form_errors
 
 
 def galleries(request):
@@ -44,19 +43,28 @@ def new_gallery(request):
     
     if request.method == 'POST':
         form = GalleryForm(request.POST or None)
+        errors = []
+
         if form.is_valid():
-            
+
             name = form.cleaned_data['name']
             passcode = form.cleaned_data['passcode']
             number_of_images = form.cleaned_data['number_of_images']
             cost_per_extra_image = form.cleaned_data['cost_per_extra_image']
-            
-            gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images, cost_per_extra_image=cost_per_extra_image)
-            gallery.save()
 
-            return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
+            try:
+                gallery = Gallery.objects.get(passcode=passcode)
+                errors.append('Gallery "%s" already has passcode "%s".' % (gallery, passcode))
+
+                return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
+
+            except Gallery.DoesNotExist:
+
+                gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images, cost_per_extra_image=cost_per_extra_image)
+                gallery.save()
+
+                return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
         
-        errors = get_form_errors(form)
         return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
     
     form = GalleryForm()
