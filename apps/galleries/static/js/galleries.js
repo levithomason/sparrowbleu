@@ -4,9 +4,11 @@
 
 // delete
 $('.delete').click(function() {
-    $(this).hide();
-    $(this).siblings('.delete_confirm').show()
-    $(this).parents('.controls').css({"top": "0"});
+    var gallery = $(this).parents('.gallery_list_item');
+
+    gallery.find('.edit_delete').hide();
+    gallery.find('.delete_confirm').show();
+    gallery.find('.controls').css({"top": "0"});
 });
 
 
@@ -29,11 +31,9 @@ $('.confirm_delete_yes').click(function() {
 
 // cancel delete
 $('.confirm_delete_no').click(function() {
-    var delete_confirm = $(this).parent('.delete_confirm');
+    var gallery = $(this).parents('.gallery_list_item');
 
-    delete_confirm.prev('.delete').show();
-    delete_confirm.hide();
-
-    $(this).parents('.controls').css({"top": ""});
-
+    gallery.find('.edit_delete').show();
+    gallery.find('.delete_confirm').hide();
+    gallery.find('.controls').css({"top": ""});
 });

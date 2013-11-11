@@ -71,6 +71,30 @@ def new_gallery(request):
     return render(request, 'new_gallery.html', {'form': form})
 
 
+def edit_gallery(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('/')
+
+    if request.method == 'GET':
+        try:
+            gallery = Gallery.objects.get(pk=pk)
+
+            data = {
+                'name': gallery.name,
+                'passcode': gallery.passcode,
+                'number_of_images': gallery.number_of_images,
+                'cost_per_extra_image': gallery.cost_per_extra_image
+            }
+
+            return render(request, 'new_gallery.html', {'data': data})
+
+        except Gallery.DoesNotExist:
+            errors = []
+            errors.append('Gallery ID %s could not be found' % pk)
+
+            return render(request, 'new_gallery.html', {'errors': errors})
+
+
 def delete_gallery(request):
     if request.is_ajax() and request.method == 'POST':
         try:

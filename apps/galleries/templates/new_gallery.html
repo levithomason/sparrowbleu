@@ -21,7 +21,8 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
+
+        <div class="col-sm-8 col-sm-offset-2">
             {% if errors %}
                 <div class="alert alert-danger">
                     {% for error in errors %}
@@ -31,19 +32,19 @@
             {% endif %}
             <form id="new_gallery_form" action="/new-gallery/" method="post" enctype="multipart/form-data">{% csrf_token %}
 		        <div class="form-group">
-	        		<input type="text" class="form-control input-lg" name="name" placeholder="Name" {% if form.name.value %}value="{{ form.name.value }}"{% endif %} autofocus>
+	        		<input type="text" class="form-control input-lg" name="name" placeholder="Name"  {% if data.name %}value="{{ data.name }}"{% endif %} autofocus>
     				{% for error in form.name.errors %}
     					<div class="text-danger text-left">{{ error }} </div>
 					{% endfor %}
 	        	</div>
 		        <div class="form-group">
-	        		<input type="text" class="form-control input-lg" name="passcode" placeholder="Passcode" {% if form.passcode.value %}value="{{ form.passcode.value }}"{% endif %}>
+	        		<input type="text" class="form-control input-lg" name="passcode" placeholder="Passcode"  {% if data.passcode %}value="{{ data.passcode }}"{% endif %}>
     				{% for error in form.passcode.errors %}
     					<div class="text-danger text-left">{{ error }} </div>
 					{% endfor %}
 				</div>
                 <div class="form-group">
-                    <input type="number" class="form-control input-lg" name="number_of_images" placeholder="Number of images" {% if form.number_of_images.value %}value="{{ form.number_of_images.value }}"{% endif %}>
+                    <input type="number" class="form-control input-lg" name="number_of_images" placeholder="Number of images"  {% if data.number_of_images %}value="{{ data.number_of_images }}"{% endif %}>
                     {% for error in form.number_of_images.errors %}
                         <div class="text-danger text-left">{{ error }} </div>
                     {% endfor %}
@@ -51,7 +52,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="number" class="form-control input-lg" name="cost_per_extra_image" placeholder="Cost per extra image" {% if form.cost_per_extra_image.value %}value="{{ form.cost_per_extra_image.value }}"{% endif %}>
+                        <input type="number" class="form-control input-lg" name="cost_per_extra_image" placeholder="Cost per extra image"  {% if data.cost_per_extra_image %}value="{{ data.cost_per_extra_image }}"{% endif %}>
                         <span class="input-group-addon">.00</span>
                     </div>
                     {% for error in form.cost_per_extra_image.errors %}

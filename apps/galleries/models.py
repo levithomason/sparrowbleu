@@ -3,6 +3,7 @@ import os
 from django.contrib import admin
 from django.db import models
 
+
 class Gallery(models.Model):
     name = models.CharField(max_length=60)
     passcode = models.CharField(max_length=60)
