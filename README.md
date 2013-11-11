@@ -12,6 +12,32 @@ SparrowBleu Photography
 ===========
 This site will be the main site for SparrowBleu Photography.  It will showcase images and allow clients to select images from their photo shoots which they would like the photographer to further process.
 
+# Environment variables
+
+In Windows edit your venv/scripts/activate.bat to have
+```
+set DATABASE_NAME=sbp
+set DATABASE_USERNAME=sbp
+set DATABASE_PASSWORD=sbp
+
+set DJANGULAR_TEMPLATE_PATH=ggnore_project/
+
+set SENTRY_DSN=https://92u34943login:21234password@app.getsentry.com/123
+
+set FACEBOOK_API_CLIENT_ID=123id
+set FACEBOOK_API_SECRET=asdf123secret
+```
+
+# Running
+
+If you want to run production, then explicitly run it like runserver --settings settings.production.py, instead of in __init__.py, much prettier!
+
+# Management commands
+
+```
+init -> Creates admin user and userprofile (but that doesn't exist yet)
+```
+
 # Goals
 
 1. Private proofing galleries
