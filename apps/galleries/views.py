@@ -37,7 +37,7 @@ def galleries(request):
     })
 
 
-def save_gallery(request):
+def create_gallery(request):
     if not request.user.is_authenticated():
         return redirect('/')
 
@@ -58,7 +58,7 @@ def save_gallery(request):
                 gallery = Gallery.objects.get(passcode=passcode)
                 errors.append('Gallery "%s" already has passcode "%s".' % (gallery, passcode))
 
-                return render(request, 'save_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
+                return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
 
             except Gallery.DoesNotExist:
 
@@ -67,10 +67,10 @@ def save_gallery(request):
 
                 return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
         
-        return render(request, 'save_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
+        return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
     
     form = GalleryForm()
-    return render(request, 'save_gallery.html', {'form': form, 'editing': editing})
+    return render(request, 'create_edit_gallery.html', {'form': form, 'editing': editing})
 
 
 def edit_gallery(request, pk):
@@ -95,13 +95,13 @@ def edit_gallery(request, pk):
                 },
             }
 
-            return render(request, 'save_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
+            return render(request, 'create_edit_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
 
         except Gallery.DoesNotExist:
             errors = []
             errors.append('Gallery ID %s could not be found' % pk)
 
-            return render(request, 'save_gallery.html', {'errors': errors})
+            return render(request, 'create_edit_gallery.html', {'errors': errors})
 
     if request.method == 'POST':
         form = GalleryForm(request.POST or None)
@@ -136,7 +136,7 @@ def edit_gallery(request, pk):
                                 'value': gallery.cost_per_extra_image,
                             },
                         }
-                        return render(request, 'save_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
+                        return render(request, 'create_edit_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
 
                 except Gallery.DoesNotExist:
                     pass
@@ -148,11 +148,11 @@ def edit_gallery(request, pk):
                 gallery.save()
                 return redirect('/galleries/')
 
-            return render(request, 'save_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
+            return render(request, 'create_edit_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
 
         except Gallery.DoesNotExist:
             errors.append("Sorry, couldn't find a Gallery with id %s." % pk)
-            return render(request, 'save_gallery.html', {'form': form, 'errors': errors, 'editing': True})
+            return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors, 'editing': True})
 
 
 def delete_gallery(request):
@@ -208,7 +208,7 @@ def gallery_detail(request, pk=None, passcode=None):
             return redirect('/galleries/')
 
 
-def new_gallery_image(request):
+def create_gallery_image(request):
     debug = []
     debug.append('checking method...')
     if request.method == 'POST':
