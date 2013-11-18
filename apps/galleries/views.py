@@ -1,7 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from sorl.thumbnail import get_thumbnail
 

@@ -1,4 +1,5 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
+
 urlpatterns = patterns('',
    # Galleries
     url(r'^new-gallery/', 'apps.galleries.views.create_gallery', name='create_gallery'),
