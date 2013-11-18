@@ -15,7 +15,7 @@ def galleries(request):
     
     galleries = []
 
-    for gallery in Gallery.objects.all():
+    for gallery in Gallery.objects.all().order_by('name'):
         try:
             preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
             preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99).url
@@ -37,10 +37,12 @@ def galleries(request):
     })
 
 
-def new_gallery(request):
+def save_gallery(request):
     if not request.user.is_authenticated():
         return redirect('/')
-    
+
+    editing = False
+
     if request.method == 'POST':
         form = GalleryForm(request.POST or None)
         errors = []
@@ -56,7 +58,7 @@ def new_gallery(request):
                 gallery = Gallery.objects.get(passcode=passcode)
                 errors.append('Gallery "%s" already has passcode "%s".' % (gallery, passcode))
 
-                return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
+                return render(request, 'save_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
 
             except Gallery.DoesNotExist:
 
@@ -65,10 +67,10 @@ def new_gallery(request):
 
                 return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
         
-        return render(request, 'new_gallery.html', {'form': form, 'errors': errors})
+        return render(request, 'save_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
     
     form = GalleryForm()
-    return render(request, 'new_gallery.html', {'form': form})
+    return render(request, 'save_gallery.html', {'form': form, 'editing': editing})
 
 
 def edit_gallery(request, pk):
@@ -78,21 +80,79 @@ def edit_gallery(request, pk):
     if request.method == 'GET':
         try:
             gallery = Gallery.objects.get(pk=pk)
-
-            data = {
-                'name': gallery.name,
-                'passcode': gallery.passcode,
-                'number_of_images': gallery.number_of_images,
-                'cost_per_extra_image': gallery.cost_per_extra_image
+            form = {
+                'name': {
+                    'value': gallery.name,
+                },
+                'passcode': {
+                    'value': gallery.passcode,
+                },
+                'number_of_images': {
+                    'value': gallery.number_of_images,
+                },
+                'cost_per_extra_image': {
+                    'value': gallery.cost_per_extra_image,
+                },
             }
 
-            return render(request, 'new_gallery.html', {'data': data})
+            return render(request, 'save_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
 
         except Gallery.DoesNotExist:
             errors = []
             errors.append('Gallery ID %s could not be found' % pk)
 
-            return render(request, 'new_gallery.html', {'errors': errors})
+            return render(request, 'save_gallery.html', {'errors': errors})
+
+    if request.method == 'POST':
+        form = GalleryForm(request.POST or None)
+        errors = []
+
+        try:
+            gallery = Gallery.objects.get(pk=pk)
+
+            if form.is_valid():
+                name = form.cleaned_data['name']
+                passcode = form.cleaned_data['passcode']
+                number_of_images = form.cleaned_data['number_of_images']
+                cost_per_extra_image = form.cleaned_data['cost_per_extra_image']
+
+                # make sure there isn't a different gallery with the edited passcode
+                try:
+                    duplicate = Gallery.objects.get(passcode=passcode)
+
+                    if duplicate.pk != gallery.pk:
+                        form = {
+                            'name': {
+                                'value': gallery.name,
+                            },
+                            'passcode': {
+                                'value': duplicate.passcode,
+                                'errors': ['%s\'s passcode is already "%s"' % (duplicate.name, duplicate.passcode)]
+                            },
+                            'number_of_images': {
+                                'value': gallery.number_of_images,
+                            },
+                            'cost_per_extra_image': {
+                                'value': gallery.cost_per_extra_image,
+                            },
+                        }
+                        return render(request, 'save_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
+
+                except Gallery.DoesNotExist:
+                    pass
+
+                gallery.name = name
+                gallery.passcode = passcode
+                gallery.number_of_images = number_of_images
+                gallery.cost_per_extra_image = cost_per_extra_image
+                gallery.save()
+                return redirect('/galleries/')
+
+            return render(request, 'save_gallery.html', {'gallery': gallery, 'form': form, 'editing': True})
+
+        except Gallery.DoesNotExist:
+            errors.append("Sorry, couldn't find a Gallery with id %s." % pk)
+            return render(request, 'save_gallery.html', {'form': form, 'errors': errors, 'editing': True})
 
 
 def delete_gallery(request):
@@ -107,7 +167,7 @@ def delete_gallery(request):
 
         except Gallery.DoesNotExist:
 
-            return HttpResponse(content="Could find gallery with id: " + gallery_pk, content_type=None, status=400)
+            return HttpResponse(content="Sorry, couldn't find that gallery!", content_type=None, status=400)
 
 
 def gallery_detail(request, pk=None, passcode=None):
@@ -195,7 +255,7 @@ def toggle_select_gallery_image(request):
 
         except GalleryImage.DoesNotExist:
 
-            return HttpResponse(content="Could find image with id: " + image_pk, content_type=None, status=400)
+            return HttpResponse(content="Could find image.", content_type=None, status=400)
 
 
 def client_access(request):

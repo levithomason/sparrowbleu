@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
    # Galleries
-    url(r'^new-gallery/', 'apps.galleries.views.new_gallery', name='new_gallery'),
+    url(r'^new-gallery/', 'apps.galleries.views.save_gallery', name='save_gallery'),
     url(r'^edit-gallery/(?P<pk>\d+)', 'apps.galleries.views.edit_gallery', name='edit_gallery'),
     url(r'^delete-gallery/', 'apps.galleries.views.delete_gallery', name='delete_gallery'),
     url(r'^galleries/', 'apps.galleries.views.galleries', name='galleries'),
