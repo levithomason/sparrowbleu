@@ -38,12 +38,14 @@ body {
     #selected_images {
         padding-right: 10px;
         text-align: right;
-        .included {
-            font-size: 21px;
-            color: hsl(187, 47%, 69%);
-        }
-        .at_cost {
-            font-size: 16PX;
+        font-size: 16PX;
+        .included,
+        .extra {
+            .sbp_transition(all);
+            &.primary {
+                font-size: 21px;
+                color: hsl(187, 47%, 69%);
+            }
         }
     }
 }
