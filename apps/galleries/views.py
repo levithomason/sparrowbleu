@@ -39,8 +39,6 @@ def create_gallery(request):
     if not request.user.is_authenticated():
         return redirect('/')
 
-    editing = False
-
     if request.method == 'POST':
         form = GalleryForm(request.POST or None)
         errors = []
@@ -56,7 +54,7 @@ def create_gallery(request):
                 gallery = Gallery.objects.get(passcode=passcode)
                 errors.append('Gallery "%s" already has passcode "%s".' % (gallery, passcode))
 
-                return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
+                return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors})
 
             except Gallery.DoesNotExist:
 
@@ -65,10 +63,10 @@ def create_gallery(request):
 
                 return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
         
-        return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors, 'editing': editing})
+        return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors})
     
     form = GalleryForm()
-    return render(request, 'create_edit_gallery.html', {'form': form, 'editing': editing})
+    return render(request, 'create_edit_gallery.html', {'form': form})
 
 
 def edit_gallery(request, pk):
