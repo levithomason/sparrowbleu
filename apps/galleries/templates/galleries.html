@@ -29,12 +29,17 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
-		    	{% for g, im, empty, selected_images, total_cost in galleries %}
+                {% for g, im, empty, selected_images, total_cost in galleries %}
 	    			 <div class="gallery_list_item panel panel-default" data-pk="{{ g.pk }}">
                          <div class="controls">
-                             <div class="delete btn btn-sm btn-danger">
-                                 <i class="fa fa-times"></i> delete
-                             </div>
+                            <div class="edit_delete">
+                                <a href="/edit-gallery/{{ g.pk }}" class="edit btn btn-sm btn-warning">
+                                    <i class="fa fa-pencil"></i> edit
+                                </a>
+                                <div class="delete btn btn-sm btn-danger">
+                                    <i class="fa fa-times"></i> delete
+                                </div>
+                            </div>
                              <div class="delete_confirm">
                                  <div class="confirm_delete_yes btn btn-sm btn-danger">
                                      <i class="fa fa-check"></i> delete

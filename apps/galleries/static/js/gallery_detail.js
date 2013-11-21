@@ -53,14 +53,14 @@ $(document).ready(function() {
     // Selected images widget
     function update_selected_images() {
         var widget_included = $('#selected_images .included');
-        var widget_at_cost = $('#selected_images .extra');
+        var widget_extra = $('#selected_images .extra');
         var max = widget_included.data('max');
         var current = $('.gallery_image_item.selected').length;
         var cost_per_extra_image = $('#cost_per_extra_image').data('cost');
 
         var remaining;
         var extra;
-        var at_cost_text;
+        var extra_text;
 
         // update remaining images, min of 0
         if (current <= max) {
@@ -78,13 +78,26 @@ $(document).ready(function() {
 
         // update the widget readout
         if (extra > 0) {
-            at_cost_text = extra + " extra = $" + extra * cost_per_extra_image;
+            extra_text = extra + " extra = $" + extra * cost_per_extra_image;
+
+            widget_included.removeClass('primary');
+
+            if (!widget_extra.hasClass('primary')) {
+                widget_extra.addClass('primary');
+            }
+
         } else {
-            at_cost_text = extra + " extra";
+            extra_text = extra + " extra";
+
+            widget_extra.removeClass('primary');
+
+            if (!widget_included.hasClass('primary')) {
+                widget_included.addClass('primary');
+            }
         }
 
         widget_included.text( remaining + " remaining");
-        widget_at_cost.text(at_cost_text);
+        widget_extra.text(extra_text);
 
     }
     update_selected_images();
