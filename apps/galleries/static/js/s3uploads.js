@@ -86,7 +86,6 @@
                 this.onError('CORS not supported');
             } else {
                 xhr.onload = function() {
-                    console.log('onLoad');
                     if (xhr.status === 200) {
                         this_s3upload.onProgress(100, 'Upload completed.');
                         return this_s3upload.onFinishS3Put(public_url);
@@ -95,11 +94,9 @@
                     }
                 };
                 xhr.onerror = function() {
-                    console.log('onError');
                     return this_s3upload.onError('XHR error.');
                 };
                 xhr.upload.onprogress = function(e) {
-                    console.log('onProgress');
                     var percentLoaded;
                     if (e.lengthComputable) {
                         percentLoaded = Math.round((e.loaded / e.total) * 100);
@@ -109,7 +106,6 @@
             }
             xhr.setRequestHeader('Content-Type', file.type);
             xhr.setRequestHeader('x-amz-acl', 'public-read');
-            console.log('...sending');
             return xhr.send(file);
         };
 
