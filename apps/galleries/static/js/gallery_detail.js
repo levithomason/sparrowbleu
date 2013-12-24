@@ -116,7 +116,7 @@ function s3_upload() {
         },
         onFinishS3Put: function(url) {
             $('#status').html('Upload completed.');
-            $("#image_url").href(url);
+            $("#image_url").attr('href', url);
             $("#preview").html('<img src="' + url + '" />');
         },
         onError: function(status) {

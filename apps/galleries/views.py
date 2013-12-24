@@ -250,8 +250,8 @@ def s3_sign_upload(request):
     AWS_SECRET_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     S3_BUCKET = os.environ['S3_BUCKET']
 
-    object_name = request.GET.__getitem__('s3_object_name')
-    mime_type = request.GET.__getitem__('s3_object_type')
+    object_name = request.GET.get('s3_object_name')
+    mime_type = request.GET.get('s3_object_type')
 
     expires = int(time.time() + 10)
     amz_headers = "x-amz-acl:public-read"
