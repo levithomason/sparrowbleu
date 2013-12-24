@@ -56,7 +56,6 @@
         };
 
         S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
-            console.log(file);
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = new XMLHttpRequest();
@@ -64,7 +63,6 @@
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
-                console.log(this.readyState);
                 if (this.readyState === 4 && this.status === 200) {
                     try {
                         result = JSON.parse(this.responseText);
