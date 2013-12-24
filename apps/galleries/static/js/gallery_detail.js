@@ -101,6 +101,26 @@ $(document).ready(function() {
 
     }
     update_selected_images();
-
 });
 
+/**
+ * Amazon S3 uploads
+ */
+function s3_upload() {
+    var s3upload = new S3Upload({
+        file_dom_selector: 'image',
+        s3_sign_put_url: '/s3-sign-upload/',
+
+        onProgress: function(percent, message) {
+            $('#status').html('Upload progress: ' + percent + '%' + message);
+        },
+        onFinishS3Put: function(url) {
+            $('#status').html('Upload completed.');
+            $("#image_url").href(url);
+            $("#preview").html('<img src="' + url + '" />');
+        },
+        onError: function(status) {
+            $('#status').html('Upload error: ' + status);
+        }
+    });
+}

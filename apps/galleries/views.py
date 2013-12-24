@@ -1,3 +1,10 @@
+import os
+import base64
+import hmac
+import json
+import hashlib
+import urllib
+import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -236,6 +243,34 @@ def create_gallery_image(request):
     
     form = GalleryImageForm()
     return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
+
+
+def s3_sign_upload(request):
+    AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    S3_BUCKET = os.environ['S3_BUCKET']
+
+    object_name = request.GET.__getitem__('s3_object_name')
+    mime_type = request.GET.__getitem__('s3_object_type')
+
+    expires = int(time.time() + 10)
+    amz_headers = "x-amz-acl:public-read"
+
+    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
+
+    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request, hashlib.sha1).digest())
+    signature = urllib.quote_plus(signature.strip())
+
+    url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
+
+    print "returning json"
+    data = json.dumps({
+        'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (
+            url, AWS_ACCESS_KEY, expires, signature),
+        'url': url
+    })
+
+    return HttpResponse(data, mimetype='application/json')
 
 
 def toggle_select_gallery_image(request):

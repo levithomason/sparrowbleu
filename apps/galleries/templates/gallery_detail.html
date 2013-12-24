@@ -49,7 +49,8 @@
     </div>
 
     {% if perms.Gallery.can_change %}
-        <form action="/new-gallery-image" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
+        <!--
+        <form action="/new-gallery-image/" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
             <div class="uploaded_photos_form_container">
                 <h3 class="drag_drop_title"><i class="fa fa-cloud-upload"></i> Drag n' Drop Photos Here</h3>
                 <input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="images" multiple/>
@@ -57,11 +58,51 @@
                 <button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="fa fa-cloud-upload"></i> Upload</button>
             </div>
         </form>
+        -->
+
+        <!--
+        {# template from amazon #}
+        <form action="https://sbp-proofing-galleries.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
+            {# ${filename} is an AWS variable auto-replaced with the name of the file being uploaded #}
+            <input type="hidden" name="key" value="uploads/${filename}">
+            {# name=Access Key ID, value=Secret Access Key #}
+            <input type="hidden" name="ID" value="KEY+PqFxdEeh9fbax8cT">
+            <input type="hidden" name="acl" value="public-read">
+            <input type="hidden" name="policy" value="YOUR_POLICY_DOCUMENT_BASE64_ENCODED">
+            <input type="hidden" name="signature" value="YOUR_CALCULATED_SIGNATURE">
+            <input type="hidden" name="Content-Type" value="image/jpeg">
+            {# Include any additional input fields here #}
+
+        File to upload to S3: <input name="file" type="file"> <br> <input type="submit" value="Upload File to S3">
+        </form>
+        -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div id="status" class="alert alert-info"></div>
+                            <div class="well well-sm">
+                                <a id="image_url" href="#">
+                                    <div id="preview"></div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            Select images: <input id="image" type="file" onchange="s3_upload();" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% endif %}
 
 {% endblock body %}
 
 {% block additional_script %}
+    <script src="{% static 'js/lodash.min.js' %}"></script>
+    <script src="{% static 'js/s3uploads.js' %}"></script>
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}

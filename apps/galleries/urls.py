@@ -14,8 +14,7 @@ urlpatterns = patterns('',
     url(r'^client-access/', 'apps.galleries.views.client_access', name='client_access'),
 
     # Gallery Images
-    url(r'^new-gallery-image', 'apps.galleries.views.create_gallery_image', name='create_gallery_image'),
+    url(r'^new-gallery-image/', 'apps.galleries.views.create_gallery_image', name='create_gallery_image'),
+    url(r'^s3-sign-upload/', 'apps.galleries.views.s3_sign_upload', name='s3_sign_upload'),
     url(r'^toggle-select-gallery-image/', 'apps.galleries.views.toggle_select_gallery_image', name='toggle_select_gallery_image'),
 )
-
-
