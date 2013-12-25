@@ -1,8 +1,8 @@
-@import "/static/less/variables.less";
-@import "/static/less/mixins.less";
+@import "../../../../static/less/variables.less";
+@import "../../../../static/less/mixins.less";
 
 body {
-    background: url('../img/zigzag_dark_highres.png') repeat center center;
+    background: url('../../../../static/img/zigzag_dark_highres.png') repeat center center;
     background-size: 53px 19px;
 }
 
@@ -13,9 +13,9 @@ body {
     width: 100%;
     top: 0;
     left: 0;
-    background: hsla(25,4%,10%,0.80);
-    color: rgba(255,255,255,0.65);
-    text-shadow: 0 1px rgba(0,0,0,0.75);
+    background: hsla(25, 4%, 10%, 0.80);
+    color: rgba(255, 255, 255, 0.65);
+    text-shadow: 0 1px rgba(0, 0, 0, 0.75);
     z-index: 9999;
 
     .gallery_detail_done_btn {
@@ -38,7 +38,7 @@ body {
     #selected_images {
         padding-right: 10px;
         text-align: right;
-        font-size: 16PX;
+        font-size: 16px;
         .included,
         .extra {
             .sbp_transition(all);
@@ -106,47 +106,44 @@ body {
     }
 }
 
-
-
 .upload_photos_form {
-	.sbp_transition(height);
-	position: fixed;
-	left: 0px;
-	right: 0px;
-	bottom: 0;
-	height: 60px;
-	background: rgba(0, 0, 0, 0.5);
-	text-align: center;
-	overflow: hidden;
-	z-index: 9999;
-	&:hover, &:active, &focus {
-		height: 250px;
-	}
+    .sbp_transition(height);
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    overflow: hidden;
+    z-index: 9999;
+    &:hover, &:active, &focus {
+        height: 250px;
+    }
 
-	.drag_drop_title {
-		margin-bottom: 80px;
-		color: inheit;
-		.sbp_text_shadow_sm();
-	}
+    .drag_drop_title {
+        margin-bottom: 80px;
+        color: inheit;
+        .sbp_text_shadow_sm();
+    }
 
-	.gallery_deatil_upload_drop_area {
-		position: absolute;
-		padding: 70px 0 0 50%;
-		margin-left: -126px;
-		top: 0;
-		left: 0;
-		right: 0;
-		width: auto;
-		height: 100%;
-		color: @sbp_heading_color;
-		text-indent: 100%;
-		background: none;
-		border: none;
-		box-shadow: none;
-	}
-	.upload_photos_submit_btn {
-		position: relative;
-	}
+    .gallery_deatil_upload_drop_area {
+        position: absolute;
+        padding: 70px 0 0 50%;
+        margin-left: -126px;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 100%;
+        color: @sbp_heading_color;
+        text-indent: 100%;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+    .upload_photos_submit_btn {
+        position: relative;
+    }
 
 }
-

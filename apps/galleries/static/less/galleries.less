@@ -1,5 +1,5 @@
-@import "/static/less/variables.less";
-@import "/static/less/mixins.less";
+@import "../../../../static/less/variables.less";
+@import "../../../../static/less/mixins.less";
 
 /***************************************************************************************************
  * galleries page
@@ -9,15 +9,15 @@
 }
 
 .gallery_list_item {
-	.sbp_transition(background);
+    .sbp_transition(background);
     display: inline-block;
-	position: relative;
-	margin: 0.5%;
+    position: relative;
+    margin: 0.5%;
     max-width: 252px;
     overflow: hidden;
     &:hover {
-		text-decoration: none;
-		background: hsl(hue(@sbp_blue), 30%, 96%);
+        text-decoration: none;
+        background: hsl(hue(@sbp_blue), 30%, 96%);
         .controls {
             top: 0;
         }
@@ -28,7 +28,7 @@
         padding: 5px;
         top: -40px;
         width: 100%;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0, 0, 0, 0.5);
         .delete {
 
         }
@@ -37,42 +37,44 @@
         }
     }
     .panel-body {
-		padding: 0;
+        padding: 0;
         width: 250px;
         height: 250px;
-         .gallery_empty {
+        .gallery_empty {
             font-size: 10em;
             padding: 25px;
-             color: #FFF;
-             background: #EEE;
-         }
+            color: #FFF;
+            background: #EEE;
+        }
         .gallery_list_item_image {
             max-width: 100%;
         }
     }
 
-	.panel-footer{
-		background:none;
-		overflow: hidden;
-		a:hover {
-			text-decoration: none;
-		}
-		hr { margin: 15px 0; }
-		.gallery_list_gallery_title {
-			display: block;
-			margin: 15px 0 20px 0;
-			width: 100%;
-			overflow: hidden;
-			font-size: 21px;
-			color: #74736E;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			text-decoration: none;
-		}
+    .panel-footer {
+        background: none;
+        overflow: hidden;
+        a:hover {
+            text-decoration: none;
+        }
+        hr {
+            margin: 15px 0;
+        }
+        .gallery_list_gallery_title {
+            display: block;
+            margin: 15px 0 20px 0;
+            width: 100%;
+            overflow: hidden;
+            font-size: 21px;
+            color: #74736E;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-decoration: none;
+        }
 
-		.gallery_list_gallery_info {
-			font-size: 14px;
-			color: fade(@sbp_font_color, 40%);
+        .gallery_list_gallery_info {
+            font-size: 14px;
+            color: fade(@sbp_font_color, 40%);
             text-align: left;
             .gallery_passcode {
             }
@@ -86,5 +88,5 @@
                 text-align: right;
             }
         }
-	}
+    }
 }

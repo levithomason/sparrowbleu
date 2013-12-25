@@ -1,0 +1,110 @@
+/***************************************************************************************************
+ * sbp variables
+ ***************************************************************************************************/
+/***************************************************************************************************
+ * bootstrap overrides
+ ***************************************************************************************************/
+/***************************************************************************************************
+ * utilities
+ ***************************************************************************************************/
+/***************************************************************************************************
+* shadows
+***************************************************************************************************/
+.sbp_text_shadow_sm {
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+}
+.sbp_text_shadow_md {
+  text-shadow: 2px 3px rgba(0, 0, 0, 0.1);
+}
+.sbp_box_shadow_lg {
+  box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.1);
+}
+/***************************************************************************************************
+ * special styles
+ ***************************************************************************************************/
+/***************************************************************************************************
+ * transitions
+ ***************************************************************************************************/
+/***************************************************************************************************
+ * galleries page
+ ***************************************************************************************************/
+.gallery_list {
+  list-style: none;
+}
+.gallery_list_item {
+  -webkit-transition: background 0.1s ease-in-out;
+  -moz-transition: background 0.1s ease-in-out;
+  -o-transition: background 0.1s ease-in-out;
+  transition: background 0.1s ease-in-out;
+  display: inline-block;
+  position: relative;
+  margin: 0.5%;
+  max-width: 252px;
+  overflow: hidden;
+}
+.gallery_list_item:hover {
+  text-decoration: none;
+  background: #f2f8f7;
+}
+.gallery_list_item:hover .controls {
+  top: 0;
+}
+.gallery_list_item .controls {
+  -webkit-transition: top 0.1s ease-in-out;
+  -moz-transition: top 0.1s ease-in-out;
+  -o-transition: top 0.1s ease-in-out;
+  transition: top 0.1s ease-in-out;
+  position: absolute;
+  padding: 5px;
+  top: -40px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.gallery_list_item .controls .delete_confirm {
+  display: none;
+}
+.gallery_list_item .panel-body {
+  padding: 0;
+  width: 250px;
+  height: 250px;
+}
+.gallery_list_item .panel-body .gallery_empty {
+  font-size: 10em;
+  padding: 25px;
+  color: #FFF;
+  background: #EEE;
+}
+.gallery_list_item .panel-body .gallery_list_item_image {
+  max-width: 100%;
+}
+.gallery_list_item .panel-footer {
+  background: none;
+  overflow: hidden;
+}
+.gallery_list_item .panel-footer a:hover {
+  text-decoration: none;
+}
+.gallery_list_item .panel-footer hr {
+  margin: 15px 0;
+}
+.gallery_list_item .panel-footer .gallery_list_gallery_title {
+  display: block;
+  margin: 15px 0 20px 0;
+  width: 100%;
+  overflow: hidden;
+  font-size: 21px;
+  color: #74736E;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.gallery_list_item .panel-footer .gallery_list_gallery_info {
+  font-size: 14px;
+  color: rgba(116, 115, 110, 0.4);
+  text-align: left;
+}
+.gallery_list_item .panel-footer .gallery_list_gallery_info i {
+  width: 15px;
+  margin-right: 10px;
+  text-align: right;
+}
