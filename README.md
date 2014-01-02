@@ -2,18 +2,31 @@ Setup
 ===========
 1. Clone repo
 2. Rename /settings/development(dot).py to development.py
-  - Update static files dir to your project location
+
+
+**Windows:**
+
 3. Copy fresdb from helper_files to your env scripts folder or somewhere else on your path.
   - update the local paths to your local paths
 4. If you cant compile, copy PIL from helper_files to your env site-packages
-5. Set the following AWS environment variables on virtualenv activate (remember to clear them on deactivate):
+5. Run ```freshdb```
+
+
+**Mac**
+
+3. run ```python manage.py freshdb```
+4. smile :)
+
+
+**AWS Config**
+
+Set the following AWS environment variables on virtualenv activate (remember to clear them on deactivate):
 ```
 set AWS_ACCESS_KEY_ID=<your_s3_access_id>
 set AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
 set S3_BUCKET=<your_s3_bucket_name>
 ```
 
-6. Run ```freshdb```
 
 SparrowBleu Photography
 ===========

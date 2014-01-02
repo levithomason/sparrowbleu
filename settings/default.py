@@ -1,4 +1,4 @@
-import os
+from os.path import abspath, join, curdir
 
 # Django settings for sbp project.
 
@@ -52,18 +52,18 @@ USE_TZ = True
 
 
 # Static asset configuration
-PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+PROJECT_PATH = abspath(curdir)
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'mediafiles'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = abspath(join(PROJECT_PATH, 'mediafiles'))
+MEDIA_URL = abspath(join(PROJECT_PATH, 'media')) + '/'
 
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+STATIC_ROOT = abspath(join(PROJECT_PATH, 'staticfiles'))
+STATIC_URL = abspath(join(PROJECT_PATH, 'static')) + '/'
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_PATH, 'static'),
+    join(PROJECT_PATH, 'static'),
 )
 
 # List of finder classes that know how to find static files in
