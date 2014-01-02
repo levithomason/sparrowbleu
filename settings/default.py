@@ -56,14 +56,14 @@ PROJECT_PATH = abspath(curdir)
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = abspath(join(PROJECT_PATH, 'mediafiles'))
-MEDIA_URL = abspath(join(PROJECT_PATH, 'media')) + '/'
+MEDIA_ROOT = '/medafiles/'
+MEDIA_URL = '/media/'
 
-STATIC_ROOT = abspath(join(PROJECT_PATH, 'staticfiles'))
-STATIC_URL = abspath(join(PROJECT_PATH, 'static')) + '/'
+STATIC_ROOT = '/staticfiles/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    join(PROJECT_PATH, 'static'),
+    '/static/',
 )
 
 # List of finder classes that know how to find static files in

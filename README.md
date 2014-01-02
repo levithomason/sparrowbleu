@@ -35,6 +35,7 @@ This site will be the main site for SparrowBleu Photography.  It will showcase i
 # Goals
 
 1. Private proofing galleries
+
 ~~2. Image galleries for various types of photography~~
 
 ## Private Proofing Galleries
