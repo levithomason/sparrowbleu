@@ -33,13 +33,14 @@ body {
   font-family: "Raleway Light", sans-serif;
   position: fixed;
   padding: 5px;
-  width: 100%;
+  height: 60px;
   top: 0;
   left: 0;
+  right: 0;
   background: rgba(27, 25, 24, 0.8);
   color: rgba(255, 255, 255, 0.65);
   text-shadow: 0 1px rgba(0, 0, 0, 0.75);
-  z-index: 9999;
+  z-index: 900;
 }
 .gallery_detail_nav .gallery_detail_done_btn {
   display: block;
@@ -125,46 +126,92 @@ body {
 .gallery_image_container .gallery_image_item.selected .favorite {
   opacity: 1;
 }
+/*
 .upload_photos_form {
-  -webkit-transition: height 0.1s ease-in-out;
-  -moz-transition: height 0.1s ease-in-out;
-  -o-transition: height 0.1s ease-in-out;
-  transition: height 0.1s ease-in-out;
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  bottom: 0;
-  height: 60px;
+    .sbp_transition(height);
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    overflow: hidden;
+    z-index: 9999;
+    &:hover, &:active, &focus {
+        height: 250px;
+    }
+
+    .drag_drop_title {
+        margin-bottom: 80px;
+        color: inheit;
+        .sbp_text_shadow_sm();
+    }
+
+    .gallery_deatil_upload_drop_area {
+        position: absolute;
+        padding: 70px 0 0 50%;
+        margin-left: -126px;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 100%;
+        color: @sbp_heading_color;
+        text-indent: 100%;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+    .upload_photos_submit_btn {
+        position: relative;
+    }
+}
+*/
+#dropzone {
+  display: none;
   background: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  overflow: hidden;
-  z-index: 9999;
-}
-.upload_photos_form:hover,
-.upload_photos_form:active,
-.upload_photos_formfocus {
-  height: 250px;
-}
-.upload_photos_form .drag_drop_title {
-  margin-bottom: 80px;
-  color: inheit;
-  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
-}
-.upload_photos_form .gallery_deatil_upload_drop_area {
-  position: absolute;
-  padding: 70px 0 0 50%;
-  margin-left: -126px;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: auto;
-  height: 100%;
-  color: #8e8d87;
-  text-indent: 100%;
-  background: none;
-  border: none;
-  box-shadow: none;
+  bottom: 0;
+  line-height: 1;
+  color: #8bccd5;
+  text-align: center;
+  text-shadow: 0 1px #333;
+  border: 10px solid #8bccd5;
+  z-index: 9999;
 }
-.upload_photos_form .upload_photos_submit_btn {
-  position: relative;
+#dropzone .message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 132px;
+}
+#dropzone .message .icon {
+  font-size: 6em;
+}
+#dropzone .message .text {
+  font-size: 3em;
+}
+#status {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+#status .progress {
+  display: none;
+  margin: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: #333;
+  border-radius: 0;
 }

@@ -10,6 +10,7 @@
 {% endblock additional_head %}
 
 {% block nav %}
+    <div id="gallery_id" style="display: none;">{{ gallery.pk }}</div>
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
 
     <div class="gallery_detail_nav">
@@ -31,73 +32,34 @@
 {% endblock nav %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="gallery_image_container">
-                {% for image in gallery_images %}
-                    <div class="gallery_image_item {% if image.is_selected %}selected{% endif %}" data-pk="{{ image.pk }}">
-                        <div class="gallery_image_item_inner">
-                            {# <img class="gallery_large" src="{{ image.thumb_large }}"> #}
-                            <img class="gallery_thumbnail" src="{{ image.thumb_small }}">
-                            <span class="favorite"><i class="fa fa-heart-o"></i></span>
-                            <div class="gallery_thumbnail_overlay"></div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    {% if perms.Gallery.can_change %}
-        <!--
-        <form action="/new-gallery-image/" method="post" class="upload_photos_form" enctype="multipart/form-data">{% csrf_token %}
-            <div class="uploaded_photos_form_container">
-                <h3 class="drag_drop_title"><i class="fa fa-cloud-upload"></i> Drag n' Drop Photos Here</h3>
-                <input type="file" class="gallery_deatil_upload_drop_area form-control btn btn-default" name="images" multiple/>
-                <input type="number" class="hidden invisible" name="gallery" value="{{ gallery.pk }}"/>
-                <button class="btn btn-primary btn-lg upload_photos_submit_btn" type="submit"><i class="fa fa-cloud-upload"></i> Upload</button>
-            </div>
-        </form>
-        -->
-
-        <!--
-        {# template from amazon #}
-        <form action="https://sbp-proofing-galleries.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
-            {# ${filename} is an AWS variable auto-replaced with the name of the file being uploaded #}
-            <input type="hidden" name="key" value="uploads/${filename}">
-            {# name=Access Key ID, value=Secret Access Key #}
-            <input type="hidden" name="ID" value="KEY+PqFxdEeh9fbax8cT">
-            <input type="hidden" name="acl" value="public-read">
-            <input type="hidden" name="policy" value="YOUR_POLICY_DOCUMENT_BASE64_ENCODED">
-            <input type="hidden" name="signature" value="YOUR_CALCULATED_SIGNATURE">
-            <input type="hidden" name="Content-Type" value="image/jpeg">
-            {# Include any additional input fields here #}
-
-        File to upload to S3: <input name="file" type="file"> <br> <input type="submit" value="Upload File to S3">
-        </form>
-        -->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <div id="status" class="alert alert-info"></div>
-                            <div class="well well-sm">
-                                <a id="image_url" href="#">
-                                    <div id="preview"></div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            Select images: <input id="image" type="file" onchange="s3_upload();" multiple>
-                        </div>
-                    </div>
+    <div class="gallery_image_container">
+        {% for image in gallery_images %}
+            <div class="gallery_image_item {% if image.is_selected %}selected{% endif %}" data-pk="{{ image.pk }}">
+                <div class="gallery_image_item_inner">
+                    {# <img class="gallery_large" src="{{ image.thumb_large }}"> #}
+                    <img class="gallery_thumbnail" src="{{ image.thumb_small }}">
+                    <span class="favorite"><i class="fa fa-heart-o"></i></span>
+                    <div class="gallery_thumbnail_overlay"></div>
                 </div>
             </div>
+        {% endfor %}
+
+        {% if perms.Gallery.can_change %}
+        <div id="dropzone">
+            <div class="message">
+                <div class="icon"><i class="fa fa-cloud-upload"></i></div>
+                <div class="text">Drop to Upload</div>
+            </div>
         </div>
+        <div id="status">
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" role="progressbar"></div>
+            </div>
+        </div>
+        <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
+        {% endif %}
 
-    {% endif %}
-
+    </div>
 {% endblock body %}
 
 {% block additional_script %}

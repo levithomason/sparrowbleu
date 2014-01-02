@@ -2,7 +2,7 @@
 
     window.S3Upload = (function() {
 
-        S3Upload.prototype.s3_object_name = 'default_name';
+        S3Upload.prototype.gallery_id = '';
 
         S3Upload.prototype.s3_sign_put_url = '/signS3put';
 
@@ -59,7 +59,7 @@
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = new XMLHttpRequest();
-            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.s3_object_name, true);
+            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.gallery_id + "/" + encodeURIComponent(file.name), true);
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
@@ -88,19 +88,19 @@
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         this_s3upload.onProgress(100, 'Upload completed.');
-                        return this_s3upload.onFinishS3Put(public_url);
+                        return this_s3upload.onFinishS3Put(public_url, file.name);
                     } else {
                         return this_s3upload.onError('Upload error: ' + xhr.status);
                     }
                 };
                 xhr.onerror = function() {
-                    return this_s3upload.onError('XHR error.');
+                    return this_s3upload.onError(file, 'XHR error.');
                 };
                 xhr.upload.onprogress = function(e) {
                     var percentLoaded;
                     if (e.lengthComputable) {
                         percentLoaded = Math.round((e.loaded / e.total) * 100);
-                        return this_s3upload.onProgress(percentLoaded, percentLoaded === 100 ? 'Finalizing.' : 'Uploading.');
+                        return this_s3upload.onProgress(file.name, e.loaded, percentLoaded, percentLoaded === 100 ? 'Finalizing.' : 'Uploading.');
                     }
                 };
             }
