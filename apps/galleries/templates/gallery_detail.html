@@ -45,18 +45,18 @@
         {% endfor %}
 
         {% if perms.Gallery.can_change %}
-        <div id="dropzone">
-            <div class="message">
-                <div class="icon"><i class="fa fa-cloud-upload"></i></div>
-                <div class="text">Drop to Upload</div>
+            <div id="dropzone">
+                <div class="message">
+                    <div class="icon"><i class="fa fa-cloud-upload"></i></div>
+                    <div class="text">Drop to Upload</div>
+                </div>
             </div>
-        </div>
-        <div id="status">
-            <div class="progress progress-striped active">
-                <div class="progress-bar progress-bar-info" role="progressbar"></div>
+            <div id="status">
+                <div class="progress progress-striped active">
+                    <div class="progress-bar progress-bar-info" role="progressbar"></div>
+                </div>
             </div>
-        </div>
-        <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
+            <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
     </div>
@@ -66,9 +66,9 @@
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}
-    <script src="{% static 'js/lodash.min.js' %}"></script>
-    <script src="{% static 'js/s3uploads.js' %}"></script>
-    <script src="{% static 'js/gallery_detail_admin.js' %}"></script>
+        <script src="{% static 'js/lodash.min.js' %}"></script>
+        <script src="{% static 'js/s3uploads.js' %}"></script>
+        <script src="{% static 'js/gallery_detail_admin.js' %}"></script>
     {% endif %}
 
 {% endblock additional_script %}

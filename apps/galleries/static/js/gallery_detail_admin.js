@@ -23,7 +23,6 @@ function hideDropzone() {
 }
 function transferFilesToFileInput(files) {
     fileInput.prop('files', files);
-    updateFileList();
 }
 
 $(window)
@@ -93,10 +92,22 @@ function setImageUploads(callback) {
         callback.call();
     }
 }
-function updateImageUpload(name, loaded) {
+function updateImageUploadData(name, loaded, callback) {
     if (typeof(imageUploads[name]) !== 'undefined') {
-        console.log(name + " (" + imageUploads[name].percent_uploaded() + ")");
+        // console.log(name + " (" + imageUploads[name].percent_uploaded() + ")");
         imageUploads[name].uploaded = loaded;
+    }
+    console.log('(+' + loaded + ' ' + name + ')');
+    for (data in imageUploads) {
+        console.log(imageUploads[data].uploaded + ' | ' + imageUploads[data].total + ' | ' + imageUploads[data].name);
+    }
+    if (typeof(callback) === 'function') {
+        callback.call();
+    }
+}
+function resetImageUploadData(name) {
+    if (typeof(imageUploads[name]) !== 'undefined') {
+        imageUploads[name].uploaded = 0;
     }
 }
 function incrementCurrentUpload() {
@@ -111,21 +122,41 @@ function s3_upload() {
             file_dom_selector: 'image',
             s3_sign_put_url: '/s3-sign-upload/',
 
-            onProgress: function(file_name, loaded) {
-                updateProgressBar();
-                updateImageUpload(file_name, loaded);
+            onUploadStart: function() {
+                console.log('Upload Started');
             },
-            onFinishS3Put: function(url, file_name) {
-                incrementCurrentUpload();
-                appendGalleryImage(url, file_name);
+            onProgress: function(file, loaded) {
+                updateImageUploadData(file.name, loaded, function() {
+                    updateTotalPercentUploaded(function() {
+                        updateProgressBar();
+                    });
+                });
+            },
+            onFinishS3Put: function(file, url) {
+                /**
+                 // update the image uploaded to 100% as there is no on progress event for the final put
+                 updateImageUploadData(file.name, (imageUploads[file.name].total - imageUploads[file.name].uploaded), function() {
+                    updateTotalPercentUploaded(function() {
+                        updateProgressBar();
+                    });
+                });
+                 incrementCurrentUpload();
+                 */
+                console.log('###');
+                console.log('Final Put: ' + file.name);
+                console.log(file);
+                console.log(imageUploads[file.name]);
+                console.log('###');
+                console.log(' ');
+                appendGalleryImage(file, url);
             },
             onError: function(file, status) {
                 incrementCurrentUpload();
-
+                resetImageUploadData(file.name);
                 if (imageUploads[file.name].retries > 0) {
                     this.uploadFile(file);
                     imageUploads[file.name].retries -= 1;
-                    $('.gallery_image_container').append('<div class="text-warning">Retry #' + (max_retries - imageUploads[file.name].retries) + ': ' + file.name + '</div>');
+                    $('.gallery_image_container').append('<div class="text-warning">Retry ' + (max_retries - imageUploads[file.name].retries) + ': ' + file.name + '</div>');
                 } else {
                     $('.gallery_image_container').append('<div class="text-danger">' + status + ': ' + file.name + '</div>');
                 }
@@ -136,40 +167,47 @@ function s3_upload() {
 
 // Visual feedback
 function updateProgressBar() {
-    updateTotalUploaded(function() {
-        var progress = $('#status .progress');
-        var bar = $('#status .progress-bar');
+    var progress = $('#status .progress');
+    var bar = $('#status .progress-bar');
 
-        if (total_percent_uploaded < 100) {
-            progress.show();
-            bar.css("width", total_percent_uploaded + "%");
-        } else if (total_percent_uploaded === 100) {
-            bar.css("width", '0%');
-            progress.fadeOut(50);
-        }
-    })
+    if (total_percent_uploaded < 100) {
+        progress.show();
+    } else if (total_percent_uploaded >= 100) {
+        bar.css("width", "100%");
+        window.setTimeout(function() {
+            progress.fadeOut(200);
+        }, 1000)
+    }
+    bar.css("width", total_percent_uploaded + "%");
 }
-function updateTotalUploaded(callback) {
-    var total_data = 0;
-    var total_data_uploaded = 0;
+function updateTotalPercentUploaded(callback) {
+    var total = 0;
+    var uploaded = 0;
+    total_percent_uploaded = 0;
 
     for (var image in imageUploads) {
-        total_data += imageUploads[image].total;
-        total_data_uploaded += imageUploads[image].uploaded;
+        total += imageUploads[image].total;
+        uploaded += imageUploads[image].uploaded;
+
+        total_percent_uploaded += (imageUploads[image].percent_uploaded() / total_uploads);
     }
 
-    total_percent_uploaded = Math.ceil(total_data_uploaded / total_data * 10000) / 100;
+    total_percent_uploaded = Math.ceil(total_percent_uploaded * 100) / 100;
+    console.log('--------------------------------------');
+    console.log(uploaded + ' | ' + total + ' | ' + total_percent_uploaded);
+    console.log('');
+
     if (typeof(callback) === 'function') {
         callback.call();
     }
 }
-function appendGalleryImage(image_url, file_name) {
-    var retries = imageUploads[file_name].retries;
+function appendGalleryImage(file, url) {
+    var retries = imageUploads[file.name].retries;
     var retry_string = '';
     if (retries < max_retries) {
         retry_string = '(retries: ' + (max_retries - retries) + ')';
     }
-    $('.gallery_image_container').append('<div><a target="_blank" href="' + image_url + '"> ' + file_name + ' ' + retry_string + '</a></div>');
+    $('.gallery_image_container').append('<div><a target="_blank" href="' + url + '"> ' + file.name + ' ' + retry_string + '</a></div>');
     /*
      '<div class="gallery_image_item" data-pk="{{ image.pk }}">' +
      '<div class="gallery_image_item_inner">' +
