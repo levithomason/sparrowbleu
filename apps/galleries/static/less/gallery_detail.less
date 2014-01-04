@@ -56,9 +56,6 @@ body {
 
     .gallery_image_item {
         float: left;
-        background: #FFF;
-        border: 2px solid #555;
-        cursor: pointer;
         width: 100%;
         height: 240px;
         @media screen and (min-width: 480px) {
@@ -78,16 +75,22 @@ body {
             height: 240px;
         }
         .user-select(none);
-        .sbp_box_shadow_lg();
         .gallery_image_item_inner {
             position: relative;
-            img {
+            display: block;
+            height: 100%;
+            text-align: center;
+            .gallery_thumbnail {
+                position: absolute;
+                margin: auto;
                 top: 0;
                 left: 0;
-                max-width: 100%;
-                max-height: 100%;
-            }
-            .gallery_thumbnail {
+                right: 0;
+                bottom: 0;
+                background: #FFF;
+                border: 2px solid #555;
+                cursor: pointer;
+                .sbp_box_shadow_lg();
             }
             .gallery_large {
                 position: absolute;

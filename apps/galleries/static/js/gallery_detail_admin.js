@@ -121,9 +121,8 @@ function s3_upload() {
             s3_sign_put_url: '/s3-sign-upload/',
 
             onUploadStart: function() {
-                console.log('Starting to upload ' + total_uploads + ' images.');
+                console.log('Uploading ' + total_uploads + ' images.');
                 for (var file in file_list) {
-                    console.log(file);
                     if (file_list[file].hasOwnProperty('lastModifiedDate')) {
                         appendGalleryThumbnail(file_list[file]);
                     }
@@ -217,15 +216,22 @@ function appendGalleryImage(file, url) {
 }
 
 function appendGalleryThumbnail(file) {
-    $('.gallery_image_container').append(
-        '<div class="gallery_image_item" data-pk="{{ image.pk }}" data-name="' + file.name + '">' +
-            '<div class="gallery_image_item_inner">' +
-                //'<img class="gallery_thumbnail" src="' + url + '">' +
-                '<span class="favorite">' +
-                    '<i class="fa fa-heart-o"></i>' +
-                '</span>' +
-                '<div class="gallery_thumbnail_overlay"></div>' +
-            '</div>' +
-        '</div>'
-    );
+    thumbDimension(file, 200, false, function(thumbnail) {
+
+        var template =
+            '<div class="gallery_image_item" data-pk="{{ image.pk }}" data-name="' + file.name + '">' +
+                '<div class="gallery_image_item_inner">' +
+                    '<span class="favorite">' +
+                        '<i class="fa fa-heart-o"></i>' +
+                    '</span>' +
+                    '<div class="gallery_thumbnail_overlay"></div>' +
+                '</div>' +
+            '</div>'
+
+        $('.gallery_image_container').append(template);
+
+        $(thumbnail).addClass('gallery_thumbnail');
+        $('.gallery_image_item_inner').append(thumbnail);
+
+    });
 }
