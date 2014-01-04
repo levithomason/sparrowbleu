@@ -97,38 +97,22 @@ function createImage(dataURL, callback) {
 // TODO: doc this, maybe break it up or reorganize this whole js file to be better name spaced
 var createThumbnail = {
     /**
-     * Creates a canvas property if it does not yet exist
-     *
-     * @param callback
-     */
-    'createCanvas': function(callback) {
-        if (typeof(this.canvas) === 'undefined') {
-            this.canvas = document.createElement("canvas");
-        }
-        if (typeof(callback) === 'function') {
-            callback();
-        }
-    },
-
-    /**
      * Creates a canvas thumbnail with specified scale
      * @param image     - a File API image file
      * @param scale     - an integer scale multiplier
      * @param callback  - a function which is passed the thumbnail
      */
     'byScale': function(image, scale, callback) {
-        var root = this;
+        var canvas = document.createElement("canvas");
 
-        root.createCanvas(function() {
-            root.canvas.width = image.width * scale;
-            root.canvas.height = image.height * scale;
+        canvas.width = image.width * scale;
+        canvas.height = image.height * scale;
 
-            root.canvas.getContext("2d").drawImage(image, 0, 0, root.canvas.width, root.canvas.height);
+        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            if (typeof(callback) === 'function') {
-                callback(root.canvas);
-            }
-        });
+        if (typeof(callback) === 'function') {
+            callback(canvas);
+        }
     },
 
     /**
@@ -139,17 +123,15 @@ var createThumbnail = {
      * @param callback     - a function which is passed the thumbnail
      */
     'byDimensions': function(image, x, y, callback) {
-        var root = this;
+        var canvas = document.createElement("canvas");
 
-        root.createCanvas(function() {
-            root.canvas.width = x;
-            root.canvas.height = y | (x / image.width) * image.height;
+        canvas.width = x;
+        canvas.height = y | (x / image.width) * image.height;
 
-            root.canvas.getContext("2d").drawImage(image, 0, 0, root.canvas.width, root.canvas.height);
+        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            if (typeof(callback) === 'function') {
-                callback(root.canvas);
-            }
-        });
+        if (typeof(callback) === 'function') {
+            callback(canvas);
+        }
     }
 };

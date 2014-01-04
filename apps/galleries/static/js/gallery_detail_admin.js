@@ -216,6 +216,7 @@ function appendGalleryImage(file, url) {
 }
 
 function appendGalleryThumbnail(file) {
+    console.log('appending');
     thumbDimension(file, 200, false, function(thumbnail) {
 
         var template =
@@ -231,6 +232,8 @@ function appendGalleryThumbnail(file) {
         $('.gallery_image_container').append(template);
 
         $(thumbnail).addClass('gallery_thumbnail');
+
+        // TODO: need to select JUST the inner div for this thumb, use file name?
         $('.gallery_image_item_inner').append(thumbnail);
 
     });
