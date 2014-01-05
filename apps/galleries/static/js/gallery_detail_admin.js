@@ -10,6 +10,16 @@ var total_percent_uploaded = 0;
 var current_upload;
 var image_uploads = {};
 var max_retries = 10;
+// TODO: add the actual object pk at data-pk
+var gallery_image_template =
+    '<div class="gallery_image_item" data-pk="{{ image.pk }}">' +
+        '<div class="gallery_image_item_inner">' +
+            '<span class="favorite">' +
+                '<i class="fa fa-heart-o"></i>' +
+            '</span>' +
+            '<div class="gallery_thumbnail_overlay"></div>' +
+        '</div>' +
+    '</div>'
 
 // Dropzone
 function showDropzone() {
@@ -19,7 +29,7 @@ function showDropzone() {
 function hideDropzone() {
     hide_dropzone_timer = window.setTimeout(function() {
         dropzone.fadeOut(100);
-    });
+    }, 50);
 }
 function transferFilesToFileInput(files) {
     file_input.prop('files', files);
@@ -80,6 +90,7 @@ function setImageUploads(callback) {
     for (var i = 0; i < file_list.length; i++) {
         image_uploads[file_list[i].name] = {
             'name': file_list[i].name,
+            'thumbnail_appended': false,
             'total': file_list[i].size,
             'uploaded': 0,
             'percent_uploaded': function() {
@@ -94,14 +105,16 @@ function setImageUploads(callback) {
 }
 function updateImageUploadData(name, loaded, callback) {
     if (typeof(image_uploads[name]) !== 'undefined') {
-        // console.log(name + " (" + image_uploads[name].percent_uploaded() + ")");
         image_uploads[name].uploaded = loaded;
     }
-    console.log('(+' + loaded + ' ' + name + ')');
+    // console.log('(+' + loaded + ' ' + name + ')');
 
     if (typeof(callback) === 'function') {
         callback.call();
     }
+}
+function setImageUploadThumbnailAppended(file) {
+    image_uploads[file.name].thumbnail_appended = true;
 }
 function resetImageUploadData(name) {
     if (typeof(image_uploads[name]) !== 'undefined') {
@@ -122,13 +135,12 @@ function s3_upload() {
 
             onUploadStart: function() {
                 console.log('Uploading ' + total_uploads + ' images.');
-                for (var file in file_list) {
-                    if (file_list[file].hasOwnProperty('lastModifiedDate')) {
-                        appendGalleryThumbnail(file_list[file]);
-                    }
-                }
             },
             onProgress: function(file, loaded) {
+                if (image_uploads[file.name].thumbnail_appended === false) {
+                    setImageUploadThumbnailAppended(file);
+                    appendGalleryThumbnail(file);
+                }
                 updateImageUploadData(file.name, loaded, function() {
                     updateTotalPercentUploaded(function() {
                         updateProgressBar();
@@ -136,22 +148,22 @@ function s3_upload() {
                 });
             },
             onFinishS3Put: function(file, url) {
-                /**
-                 // update the image uploaded to 100% as there is no on progress event for the final put
-                 updateImageUploadData(file.name, (image_uploads[file.name].total - image_uploads[file.name].uploaded), function() {
-                    updateTotalPercentUploaded(function() {
-                        updateProgressBar();
-                    });
-                });
                  incrementCurrentUpload();
-                 */
-                console.log('###');
-                console.log('Final Put: ' + file.name);
-                console.log(file);
-                console.log(image_uploads[file.name]);
-                console.log('###');
-                console.log(' ');
-                appendGalleryImage(file, url);
+                // console.log('###');
+                // console.log('Final Put: ' + file.name);
+                // console.log(file);
+                // console.log(image_uploads[file.name]);
+                // console.log('###');
+                // console.log(' ');
+                imageUploadComplete(file, url);
+
+                var retries = image_uploads[file.name].retries;
+                var retry_string = '';
+                if (retries < max_retries) {
+                    retry_string = ' (' + (max_retries - retries) + ' retries)';
+                }
+                console.debug('Uploaded: ' + file.name + retry_string);
+
             },
             onError: function(file, status) {
                 incrementCurrentUpload();
@@ -159,9 +171,9 @@ function s3_upload() {
                 if (image_uploads[file.name].retries > 0) {
                     this.uploadFile(file);
                     image_uploads[file.name].retries -= 1;
-                    $('.gallery_image_container').append('<div class="text-warning">Retry ' + (max_retries - image_uploads[file.name].retries) + ': ' + file.name + '</div>');
+                    console.warn('Retry ' + (max_retries - image_uploads[file.name].retries) + ': ' + file.name);
                 } else {
-                    $('.gallery_image_container').append('<div class="text-danger">' + status + ': ' + file.name + '</div>');
+                    console.error(status + ': ' + file.name);
                 }
             }
         });
@@ -193,48 +205,40 @@ function updateTotalPercentUploaded(callback) {
         //uploaded += image_uploads[image].uploaded;
 
         total_percent_uploaded += (image_uploads[image].percent_uploaded() / total_uploads);
-        console.log(image_uploads[image].uploaded + ' | ' + image_uploads[image].total + ' | ' + image_uploads[image].name);
+        // console.log(image_uploads[image].uploaded + ' | ' + image_uploads[image].total + ' | ' + image_uploads[image].name);
     }
 
     total_percent_uploaded = Math.ceil(total_percent_uploaded * 100) / 100;
-    console.log('--------------------------------------');
-    console.log('Total: ' + total_percent_uploaded + '%');
-    //console.log(uploaded + ' | ' + total + ' | ' + total_percent_uploaded);
-    console.log('');
+    // console.log('--------------------------------------');
+    // console.log('Total: ' + total_percent_uploaded + '%');
+    //// console.log(uploaded + ' | ' + total + ' | ' + total_percent_uploaded);
+    // console.log('');
 
     if (typeof(callback) === 'function') {
         callback.call();
     }
 }
-function appendGalleryImage(file, url) {
-    var retries = image_uploads[file.name].retries;
-    var retry_string = '';
-    if (retries < max_retries) {
-        retry_string = '(retries: ' + (max_retries - retries) + ')';
-    }
-    $('.gallery_image_container').append('<div><a target="_blank" href="' + url + '"> ' + file.name + ' ' + retry_string + '</a></div>');
+function imageUploadComplete(file, url) {
+    $('#' + safeString(file.name) + '.uploading').removeClass('uploading');
 }
 
 function appendGalleryThumbnail(file) {
-    console.log('appending');
-    thumbDimension(file, 200, false, function(thumbnail) {
+    thumbDimension(file, 240, false, function(thumbnail) {
 
-        var template =
-            '<div class="gallery_image_item" data-pk="{{ image.pk }}" data-name="' + file.name + '">' +
-                '<div class="gallery_image_item_inner">' +
-                    '<span class="favorite">' +
-                        '<i class="fa fa-heart-o"></i>' +
-                    '</span>' +
-                    '<div class="gallery_thumbnail_overlay"></div>' +
-                '</div>' +
-            '</div>'
-
-        $('.gallery_image_container').append(template);
+        $('.gallery_image_container').append(gallery_image_template);
 
         $(thumbnail).addClass('gallery_thumbnail');
 
-        // TODO: need to select JUST the inner div for this thumb, use file name?
-        $('.gallery_image_item_inner').append(thumbnail);
-
+        $('.gallery_image_item').last()
+            .attr('id', safeString(file.name))
+            .addClass('uploading')
+            .find('.gallery_image_item_inner')
+                .prepend(thumbnail);
     });
+}
+
+function safeString(string) {
+    return string
+        .replace(/[\/\\()~%'"*?<>{}\[\]; ]/g, "")
+        .replace(/[@#$&:+,. ]/g, "-")
 }

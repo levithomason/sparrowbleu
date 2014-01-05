@@ -31,6 +31,8 @@ function thumbDimension(file, x, y, callback) {
 
             createThumbnail.byDimensions(image, x, y, function(thumb) {
                 if (typeof(callback) === 'function') {
+                    // console.log('thumb:');
+                    // console.log(thumb);
                     callback(thumb);
                 }
             });
@@ -56,7 +58,7 @@ function thumbDimension(file, x, y, callback) {
 function readFile(file, callback) {
     if (file.hasOwnProperty('type') && file.type.match('image/').length) {
         var reader = new FileReader();
-        console.log('reading the file returns undefined here:  why???');
+        // console.log('reading the file returns undefined here:  why???');
         reader.readAsDataURL(file);
 
         reader.onload = function(e) {
@@ -94,8 +96,21 @@ function createImage(dataURL, callback) {
     };
 }
 
-// TODO: doc this, maybe break it up or reorganize this whole js file to be better name spaced
+// TODO: doc this properly, maybe break it up or reorganize this whole js file to be better name spaced
 var createThumbnail = {
+    /**
+     * Creates a canvas property if it does not yet exist
+     *
+     * @param callback
+     */
+    'withCanvas': function(callback) {
+        if (typeof(this.canvas) === 'undefined') {
+            this.canvas = document.createElement("canvas");
+        }
+        if (typeof(callback) === 'function') {
+            callback();
+        }
+    },
     /**
      * Creates a canvas thumbnail with specified scale
      * @param image     - a File API image file
@@ -103,16 +118,19 @@ var createThumbnail = {
      * @param callback  - a function which is passed the thumbnail
      */
     'byScale': function(image, scale, callback) {
-        var canvas = document.createElement("canvas");
+        var root = this;
 
-        canvas.width = image.width * scale;
-        canvas.height = image.height * scale;
+        this.withCanvas(function() {
+            var canvas = root.canvas;
+            canvas.width = image.width * scale;
+            canvas.height = image.height * scale;
 
-        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+            canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
 
-        if (typeof(callback) === 'function') {
-            callback(canvas);
-        }
+            if (typeof(callback) === 'function') {
+                callback(canvas);
+            }
+        });
     },
 
     /**
@@ -124,7 +142,6 @@ var createThumbnail = {
      */
     'byDimensions': function(image, x, y, callback) {
         var canvas = document.createElement("canvas");
-
         canvas.width = x;
         canvas.height = y | (x / image.width) * image.height;
 

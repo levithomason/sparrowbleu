@@ -45,51 +45,34 @@ body {
             .sbp_transition(all);
             &.primary {
                 font-size: 21px;
-                color: hsl(187, 47%, 69%);
+                color: @sbp_blue;
             }
         }
     }
 }
 
 .gallery_image_container {
-    padding-top: 60px;
+    @padding: 3%;
+
+    padding: 80px @padding @padding @padding;
+    text-align: center;
 
     .gallery_image_item {
-        float: left;
-        width: 100%;
-        height: 240px;
-        @media screen and (min-width: 480px) {
-            width: 50%;
-            height: 240px;
-        }
-        @media screen and (min-width: 768px) {
-            width: 33.333%;
-            height: 240px;
-        }
-        @media screen and (min-width: 1200px) {
-            width: 25%;
-            height: 240px;
-        }
-        @media screen and (min-width: 1500px) {
-            width: 20%;
-            height: 240px;
-        }
+        display: inline-block;
+        margin: @padding;
+        vertical-align: middle;
         .user-select(none);
+
         .gallery_image_item_inner {
             position: relative;
-            display: block;
-            height: 100%;
-            text-align: center;
+            line-height: 0;
+
             .gallery_thumbnail {
-                position: absolute;
+                position: relative;
                 margin: auto;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: #FFF;
-                border: 2px solid #555;
+                vertical-align: middle;
                 cursor: pointer;
+                .sbp_transition(top, left;);
                 .sbp_box_shadow_lg();
             }
             .gallery_large {
@@ -125,51 +108,13 @@ body {
                 opacity: 1;
             }
         }
+        &.uploading {
+            .gallery_thumbnail {
+                opacity: 0.5;
+            }
+        }
     }
 }
-
-/*
-.upload_photos_form {
-    .sbp_transition(height);
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    bottom: 0;
-    height: 60px;
-    background: rgba(0, 0, 0, 0.5);
-    text-align: center;
-    overflow: hidden;
-    z-index: 9999;
-    &:hover, &:active, &focus {
-        height: 250px;
-    }
-
-    .drag_drop_title {
-        margin-bottom: 80px;
-        color: inheit;
-        .sbp_text_shadow_sm();
-    }
-
-    .gallery_deatil_upload_drop_area {
-        position: absolute;
-        padding: 70px 0 0 50%;
-        margin-left: -126px;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: auto;
-        height: 100%;
-        color: @sbp_heading_color;
-        text-indent: 100%;
-        background: none;
-        border: none;
-        box-shadow: none;
-    }
-    .upload_photos_submit_btn {
-        position: relative;
-    }
-}
-*/
 
 #dropzone {
     display: none;
@@ -180,10 +125,10 @@ body {
     right: 0;
     bottom: 0;
     line-height: 1;
-    color: hsl(187, 47%, 69%);
+    color: @sbp_blue;
     text-align: center;
     text-shadow: 0 1px #333;
-    border: 10px solid hsl(187, 47%, 69%);
+    border: 10px solid @sbp_blue;
     z-index: 9999;
 
     .message {

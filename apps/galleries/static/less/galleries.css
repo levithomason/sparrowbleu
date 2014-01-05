@@ -32,10 +32,15 @@
   list-style: none;
 }
 .gallery_list_item {
-  -webkit-transition: background 0.1s ease-in-out;
-  -moz-transition: background 0.1s ease-in-out;
-  -o-transition: background 0.1s ease-in-out;
-  transition: background 0.1s ease-in-out;
+  -webkit-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -webkit-transition-timing-function: ease-in-out;
+  -o-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  -webkit-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  transition-duration: 0.1s;
   display: inline-block;
   position: relative;
   margin: 0.5%;
@@ -50,10 +55,15 @@
   top: 0;
 }
 .gallery_list_item .controls {
-  -webkit-transition: top 0.1s ease-in-out;
-  -moz-transition: top 0.1s ease-in-out;
-  -o-transition: top 0.1s ease-in-out;
-  transition: top 0.1s ease-in-out;
+  -webkit-transition-property: top;
+  -o-transition-property: top;
+  transition-property: top;
+  -webkit-transition-timing-function: ease-in-out;
+  -o-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  -webkit-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  transition-duration: 0.1s;
   position: absolute;
   padding: 5px;
   top: -40px;

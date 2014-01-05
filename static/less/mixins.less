@@ -1,3 +1,5 @@
+@import "variables.less";
+
 /***************************************************************************************************
  * utilities
  ***************************************************************************************************/
@@ -40,9 +42,16 @@
  * transitions
  ***************************************************************************************************/
 
-.sbp_transition(@property) {
-    -webkit-transition: @property @sbp_transition_speed @sbp_transition_easing;
-    -moz-transition: @property @sbp_transition_speed @sbp_transition_easing;
-    -o-transition: @property @sbp_transition_speed @sbp_transition_easing;
-    transition: @property @sbp_transition_speed @sbp_transition_easing;
+.sbp_transition(@properties...) {
+    -webkit-transition-property: @properties;
+    -o-transition-property: @properties;
+    transition-property: @properties;
+
+    -webkit-transition-timing-function: @sbp_transition_easing;
+    -o-transition-timing-function: @sbp_transition_easing;
+    transition-timing-function: @sbp_transition_easing;
+
+    -webkit-transition-duration: @sbp_transition_speed;
+    -o-transition-duration: @sbp_transition_speed;
+    transition-duration: @sbp_transition_speed;
 }
