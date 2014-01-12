@@ -5,7 +5,7 @@ Setup
     - *If you use virtualenvs make one now and activate it.*
 3. Install the requirements ```pip install -r <path_to_the_repo>/requirements.dev.txt```
 
-**Mac**
+**Mac (continued from above):**
 
 4. Install PostgreSQL ```brew install postgres```
     - *If you do not have homebrew: http://brew.sh/*
@@ -14,7 +14,7 @@ Setup
     - *If you get postgres errors, make sure postgres is running!  Try ```brew info postgres``` for help*
 
 
-**Windows:**
+**Windows (continued from above):**
 
 4. Download and install postgreSQL >= v9.2
 5. Copy fresdb from helper_files to your env scripts folder or somewhere else on your path.
