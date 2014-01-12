@@ -8,6 +8,7 @@ Setup
 3. Install the requirements ```pip install -r <path_to_the_repo>/requirements.dev.txt```
 
 **Mac**
+
 4. Install PostgreSQL ```brew install postgres```
     - if you do not have homebrew: http://brew.sh/
 5. run ```python manage.py freshdb```
@@ -15,7 +16,9 @@ Setup
 *If you get libssl errors try [this blog post](http://joshuakehn.com/2013/10/13/Postgresapp-and-psycopg2-on-OS-X.html)*
 *If you get postgres errors, make sure postgres is running!  Try ```brew info postgres``` for help*
 
+
 **Windows:**
+
 4. Download and install postgreSQL >= v9.2
 5. Copy fresdb from helper_files to your env scripts folder or somewhere else on your path.
   - update the local paths to your local paths
