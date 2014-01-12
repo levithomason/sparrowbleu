@@ -2,28 +2,25 @@ Setup
 ===========
 1. Clone repo
 2. Rename /settings/development(dot).py to development.py
-
-*If you use virtualenvs make one now and activate it.*
-
+    - *If you use virtualenvs make one now and activate it.*
 3. Install the requirements ```pip install -r <path_to_the_repo>/requirements.dev.txt```
 
 **Mac**
 
 4. Install PostgreSQL ```brew install postgres```
-    - if you do not have homebrew: http://brew.sh/
-5. run ```python manage.py freshdb```
-
-*If you get libssl errors try [this blog post](http://joshuakehn.com/2013/10/13/Postgresapp-and-psycopg2-on-OS-X.html)*
-*If you get postgres errors, make sure postgres is running!  Try ```brew info postgres``` for help*
+    - *If you do not have homebrew: http://brew.sh/*
+5. Create and sync a database: ```python manage.py freshdb```
+    - *If you get libssl errors try [this blog post](http://joshuakehn.com/2013/10/13/Postgresapp-and-psycopg2-on-OS-X.html)*
+    - *If you get postgres errors, make sure postgres is running!  Try ```brew info postgres``` for help*
 
 
 **Windows:**
 
 4. Download and install postgreSQL >= v9.2
 5. Copy fresdb from helper_files to your env scripts folder or somewhere else on your path.
-  - update the local paths to your local paths
+  - Update the local paths to your local paths
 6. If you cant compile, copy PIL from helper_files to your env site-packages
-7. Run ```freshdb```
+7. Create and sync a database: ```freshdb```
 
 
 **AWS Config**
