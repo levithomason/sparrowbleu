@@ -91,6 +91,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background: #333;
 }
 .gallery_image_container .gallery_image_item .gallery_image_item_inner {
   position: relative;

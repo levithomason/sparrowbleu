@@ -1,7 +1,8 @@
 import os
-from time import sleep
 from django.core.management.base import NoArgsCommand
 from subprocess import call
+from django.db import DEFAULT_DB_ALIAS as database
+from django.contrib.auth.models import User
 
 
 class Command(NoArgsCommand):
@@ -32,11 +33,12 @@ class Command(NoArgsCommand):
             'creating db user'
         )
 
-        # sync db and make super user
+        # sync db & make super user
         run(
             ['python', 'manage.py', 'syncdb', '--migrate', '--noinput'],
-            'syncing db'
+            'syncing db and making superuser'
         )
+        create_super_user('admin', 'admin@sparrowbleuphotography.com', 'admin')
 
         write('=============================================')
         write("\n  It's on Donkey Kong!\n")
@@ -50,3 +52,6 @@ def run(command, friendly_output):
 def write(string):
     os.sys.stdout.write(string + '\n')
 
+
+def create_super_user(name, email, password):
+    User.objects.db_manager(database).create_superuser(name, email, password)
