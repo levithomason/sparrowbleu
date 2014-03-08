@@ -1,15 +1,15 @@
+"use strict"
+
 /**
  * Drag and drop uploads
  */
 var dropzone = $('#dropzone');
 var hide_dropzone_timer;
 var file_input = $('#image');
-var file_list = file_input.prop('files');
-var total_uploads = file_list.length;
 var total_percent_uploaded = 0;
-var current_upload;
 var image_uploads = {};
-var max_retries = 10;
+var current_upload;
+var max_retries = 20;
 // TODO: add the actual object pk at data-pk
 var gallery_image_template =
     '<div class="gallery_image_item" data-pk="{{ image.pk }}">' +
@@ -21,7 +21,9 @@ var gallery_image_template =
         '</div>' +
     '</div>'
 
-// Dropzone
+/**
+ Dropzone
+ */
 function showDropzone() {
     dropzone.show();
     window.clearTimeout(hide_dropzone_timer);
@@ -62,36 +64,15 @@ $(window)
         }
     });
 
-// File input
-function updateFileList(callback) {
-    file_list = $('#image').prop('files');
-    if (typeof(callback) === 'function') {
-        callback.call();
-    }
-}
-function updateTotalUploads() {
-    total_uploads = file_list.length;
-}
-
-// Upload metrics
-function initUploadMetrics(callback) {
-    updateFileList(function() {
-        total_uploads = file_list.length;
-        current_upload = 1;
-        updateTotalUploads();
-        setImageUploads();
-
-        if (typeof(callback) === 'function') {
-            callback.call();
-        }
-    });
-}
+/**
+ Upload metrics
+ */
 function setImageUploads(callback) {
-    for (var i = 0; i < file_list.length; i++) {
-        image_uploads[file_list[i].name] = {
-            'name': file_list[i].name,
+    for (var i = 0; i < file_input.prop('files').length; i++) {
+        image_uploads[file_input.prop('files')[i].name] = {
+            'name': file_input.prop('files')[i].name,
             'thumbnail_appended': false,
-            'total': file_list[i].size,
+            'total': file_input.prop('files')[i].size,
             'uploaded': 0,
             'percent_uploaded': function() {
                 return Math.ceil(this.uploaded / this.total * 100);
@@ -124,8 +105,20 @@ function resetImageUploadData(name) {
 function incrementCurrentUpload() {
     current_upload += 1;
 }
+function initUploadMetrics(callback) {
+    current_upload = 1;
+    setImageUploads();
 
-// Amazon S3 upload
+    if (typeof(callback) === 'function') {
+        callback.call();
+    }
+}
+
+
+
+/**
+ Amazon S3 upload
+ */
 function s3_upload() {
     initUploadMetrics(function() {
         var s3upload = new S3Upload({
@@ -134,7 +127,7 @@ function s3_upload() {
             s3_sign_put_url: '/s3-sign-upload/',
 
             onUploadStart: function() {
-                console.log('Uploading ' + total_uploads + ' images.');
+                console.log('Uploading ' + file_input.prop('files').length + ' images.');
             },
             onProgress: function(file, loaded) {
                 if (image_uploads[file.name].thumbnail_appended === false) {
@@ -148,13 +141,7 @@ function s3_upload() {
                 });
             },
             onFinishS3Put: function(file, url) {
-                 incrementCurrentUpload();
-                // console.log('###');
-                // console.log('Final Put: ' + file.name);
-                // console.log(file);
-                // console.log(image_uploads[file.name]);
-                // console.log('###');
-                // console.log(' ');
+                incrementCurrentUpload();
                 imageUploadComplete(file, url);
 
                 var retries = image_uploads[file.name].retries;
@@ -166,7 +153,6 @@ function s3_upload() {
 
             },
             onError: function(file, status) {
-                incrementCurrentUpload();
                 resetImageUploadData(file.name);
                 if (image_uploads[file.name].retries > 0) {
                     this.uploadFile(file);
@@ -179,6 +165,25 @@ function s3_upload() {
         });
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Visual feedback
 function updateProgressBar() {
@@ -196,23 +201,13 @@ function updateProgressBar() {
     bar.css("width", total_percent_uploaded + "%");
 }
 function updateTotalPercentUploaded(callback) {
-    // var total = 0;
-    // var uploaded = 0;
     total_percent_uploaded = 0;
 
     for (var image in image_uploads) {
-        //total += image_uploads[image].total;
-        //uploaded += image_uploads[image].uploaded;
-
-        total_percent_uploaded += (image_uploads[image].percent_uploaded() / total_uploads);
-        // console.log(image_uploads[image].uploaded + ' | ' + image_uploads[image].total + ' | ' + image_uploads[image].name);
+        total_percent_uploaded += (image_uploads[image].percent_uploaded() / file_input.prop('files').length);
     }
 
     total_percent_uploaded = Math.ceil(total_percent_uploaded * 100) / 100;
-    // console.log('--------------------------------------');
-    // console.log('Total: ' + total_percent_uploaded + '%');
-    //// console.log(uploaded + ' | ' + total + ' | ' + total_percent_uploaded);
-    // console.log('');
 
     if (typeof(callback) === 'function') {
         callback.call();

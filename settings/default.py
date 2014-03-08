@@ -1,3 +1,4 @@
+import os
 from os.path import abspath, join, curdir
 
 # Django settings for sbp project.
@@ -77,8 +78,9 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '*blhedyelf3m-y90by&0@4ta0&6$k#@70qy93dn#-2&or5d(l1'
 
-# Used to authenticate client access requests in addition to passcode
-CLIENT_ACCESS_KEY = 'uien1nQW74Ezx63cvCl8aCXVBw5e2y1pq4welA5n4M4HG4'
+AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+S3_BUCKET = os.environ['S3_BUCKET']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
