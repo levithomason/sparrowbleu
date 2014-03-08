@@ -3,34 +3,34 @@
 {% load thumbnail %}
 
 {% block additional_head %}
-	<link rel="stylesheet" href="{{ STATIC_URL }}less/galleries.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}less/galleries.css" type="text/css" />
 {% endblock additional_head %}
 
 {% block nav %}
 
-	{% include "_navbar.html" %}
+    {% include "_navbar.html" %}
 
 {% endblock nav %}
 
 {% block body %}
-	<div class="sbp_panel container text-center">
-		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2">
-	    		<div class="page_heading">
-	    			<i class="page_icon fa fa-picture-o"> </i>
-	    			<div class="page_title">Galleries</div>
-    			</div>
-			</div>
-		</div>
-		<div class="tool_bar row">
-			<div class="col-sm-12 text-left">
-				<a href="/new-gallery/" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> New Gallery</a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
+    <div class="sbp_panel container text-center">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="page_heading">
+                    <i class="page_icon fa fa-picture-o"> </i>
+                    <div class="page_title">Galleries</div>
+                </div>
+            </div>
+        </div>
+        <div class="tool_bar row">
+            <div class="col-sm-12 text-left">
+                <a href="/create-gallery/" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> New Gallery</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 {% for g, im, empty, selected_images, total_cost in galleries %}
-	    			 <div class="gallery_list_item panel panel-default" data-pk="{{ g.pk }}">
+                     <div class="gallery_list_item panel panel-default" data-pk="{{ g.pk }}">
                          <div class="controls">
                             <div class="edit_delete">
                                 <a href="/edit-gallery/{{ g.pk }}" class="edit btn btn-sm btn-warning">
@@ -57,20 +57,20 @@
                                     <img src="{{ im }}" class="gallery_list_item_image">
                                 {% endif %}
                             </a>
-	    				</div>
-	    				<div class="panel-footer">
-							<a href="{{ g.get_absolute_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
-							<div class="gallery_list_gallery_info">
+                        </div>
+                        <div class="panel-footer">
+                            <a href="{{ g.get_absolute_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
+                            <div class="gallery_list_gallery_info">
                                 <div class="gallery_passcode"><i class="fa fa-lock"></i>{{ g.passcode }}</div>
-                                <div class="gallery_number_of_images"><i class="fa fa-picture-o"></i>{{ selected_images }} | {{ g.number_of_images }}</div>
+                                <div class="gallery_number_of_images"><i class="fa fa-picture-o"></i>{{ selected_images }} / {{ g.number_of_images }} selected</div>
                                 <div class="gallery_cost_per_extra_image"><i class="fa fa-plus"></i>${{ total_cost }} @ ${{ g.cost_per_extra_image }}ea</div>
                             </div>
-	    				</div>
-	    			</div>
-	    		{% endfor %}
-			</div>
-		</div>
-	</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock body %}
 
 {% block additional_script %}

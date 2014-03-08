@@ -10,16 +10,15 @@ var total_percent_uploaded = 0;
 var image_uploads = {};
 var current_upload;
 var max_retries = 20;
-// TODO: add the actual object pk at data-pk
 var gallery_image_template =
-    '<a href="" class="gallery_image_item" data-pk="{{ image.pk }}">' +
+    '<div class="gallery_image_item">' +
         '<div class="gallery_image_item_inner">' +
             '<span class="favorite">' +
                 '<i class="fa fa-heart-o"></i>' +
             '</span>' +
             '<div class="gallery_thumbnail_overlay"></div>' +
         '</div>' +
-    '</a>'
+    '</div>'
 
 /**
  Dropzone
@@ -141,8 +140,7 @@ function s3_upload() {
                 });
             },
             onFinishS3Put: function(file, url) {
-                incrementCurrentUpload();
-                imageUploadComplete(file, url);
+                uploadImageToServer(file, url);
 
                 var retries = image_uploads[file.name].retries;
                 var retry_string = '';
@@ -213,13 +211,13 @@ function updateTotalPercentUploaded(callback) {
         callback.call();
     }
 }
-function imageUploadComplete(file, url) {
-    console.log(safeString(file.name) + " completing");
-
+function imageUploadComplete(file, pk) {
     $('#' + safeString(file.name))
         .removeClass('uploading')
-        .attr('href', url)
-        .attr('target', "_blank");
+        .attr('target', "_blank")
+        .attr('data-pk', pk);
+
+    incrementCurrentUpload();
 }
 
 function appendGalleryThumbnail(file) {
@@ -229,7 +227,6 @@ function appendGalleryThumbnail(file) {
 
         $(thumbnail).addClass('gallery_thumbnail');
 
-        console.log(safeString(file.name) + " appending");
         $('.gallery_image_item').last()
             .attr('id', safeString(file.name))
             .addClass('uploading')
@@ -249,5 +246,15 @@ function safeString(string) {
  */
 
 function uploadImageToServer(file, url) {
-    $.ajax()
+    $.ajax({
+        url: "/create-gallery-image/",
+        method: "POST",
+        data: {
+            gallery: $('#gallery_id').text(),
+            amazon_s3_url: url
+        },
+        complete: function(data) {
+            imageUploadComplete(file, data.responseText);
+        }
+    })
 }

@@ -17,7 +17,7 @@ from settings import AWS_ACCESS_KEY, AWS_SECRET_KEY, S3_BUCKET
 
 def galleries(request):
     if not request.user.is_authenticated():
-        return redirect('/')
+        return redirect('/client-access')
     
     galleries = []
 
@@ -180,28 +180,28 @@ def gallery_detail(request, pk=None, passcode=None):
     else:
         try:
             gallery = Gallery.objects.get(pk=pk)
-            gallery_images_qs = GalleryImage.objects.order_by('-is_selected').filter(gallery=pk)
-            gallery_images = []
+            #gallery_images_qs = GalleryImage.objects.order_by('-is_selected').filter(gallery=pk)
+            gallery_images = GalleryImage.objects.filter(gallery=pk)
 
-            for image_object in gallery_images_qs:
+            #for image_object in gallery_images_qs:
 
-                image = GalleryImage.objects.get(pk=image_object.pk).image
+                #image = GalleryImage.objects.get(pk=image_object.pk).image
 
                 # landscape/portrait thumbs
-                if image.width > image.height:
-                    #thumb_large = get_thumbnail(image, "960x480", quality=80)
-                    thumb_small = get_thumbnail(image, "320x240", quality=80)
-                else:
-                    #thumb_large = get_thumbnail(image, "480x960", quality=80)
-                    thumb_small = get_thumbnail(image, "240x320", quality=80)
+                #if image.width > image.height:
+                    ##thumb_large = get_thumbnail(image, "960x480", quality=80)
+                    #thumb_small = get_thumbnail(image, "320x240", quality=80)
+                #else:
+                    ##thumb_large = get_thumbnail(image, "480x960", quality=80)
+                    #thumb_small = get_thumbnail(image, "240x320", quality=80)
 
-                gallery_image = {
-                    "pk": image_object.pk,
-                    "is_selected": image_object.is_selected,
-                    #"thumb_large": thumb_large.url,
-                    "thumb_small": thumb_small.url
-                }
-                gallery_images.append(gallery_image)
+                #gallery_image = {
+                    #"pk": image_object.pk,
+                    #"is_selected": image_object.is_selected,
+                    ##"thumb_large": thumb_large.url,
+                    #"thumb_small": thumb_small.url
+                #}
+                #gallery_images.append(gallery_image)
 
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
@@ -212,38 +212,49 @@ def gallery_detail(request, pk=None, passcode=None):
             return redirect('/galleries/')
 
 
+#def create_gallery_image(request):
+    #if request.method == 'POST':
+        #form = GalleryImageForm(request.POST, request.FILES)
+        #gallery = Gallery.objects.get(pk=request.POST['gallery'])
+
+        #if form.is_valid():
+
+            #counter = 0
+            #for image_file in request.FILES.getlist('images'):
+                #is_first_gallery_image = (gallery.galleryimage_set.count() == 0 and counter == 0)
+
+                #new_image = GalleryImage.objects.create(gallery=gallery)
+
+                #if is_first_gallery_image:
+                    #new_image.is_preview_image = True
+
+                    #new_image.image.save(image_file.name, image_file)
+                    #counter += 1
+
+            #return redirect('/gallery/%s/%s' % (gallery.pk, gallery.passcode))
+
+
+        #else:
+            #return render(request, 'gallery_image_failed.html', {'form': form, 'gallery': gallery})
+
+    #form = GalleryImageForm()
+    #return render(request, 'gallery_detail.html', {'form': form})
+
+
 def create_gallery_image(request):
-    debug = []
-    debug.append('checking method...')
-    if request.method == 'POST':
-        debug.append('method is post')
-        form = GalleryImageForm(request.POST, request.FILES)
+    if request.method == "POST":
+        form = GalleryImageForm(request.POST)
         gallery = Gallery.objects.get(pk=request.POST['gallery'])
-        debug.append('gallery is ' + str(gallery))
+        amazon_s3_url = request.POST['amazon_s3_url']
 
-        debug.append('checking form valid...')
         if form.is_valid():
+            new_image = GalleryImage.objects.create(amazon_s3_url=amazon_s3_url, gallery=gallery)
+            new_image.save()
 
-            counter = 0
-            for image_file in request.FILES.getlist('images'):
-                is_first_gallery_image = (gallery.galleryimage_set.count() == 0 and counter == 0)
-                
-                new_image = GalleryImage.objects.create(gallery=gallery)
-                
-                if is_first_gallery_image:
-                    new_image.is_preview_image = True
-                    
-                new_image.image.save(image_file.name, image_file)
-                counter += 1
+            return HttpResponse(content=new_image.pk, content_type=None, status=200)
 
-            return redirect('/gallery/%s/%s' % (gallery.pk, gallery.passcode))
-            
         else:
-            debug.append('form is invalid')
-            return render(request, 'gallery_image_failed.html', {'form': form, 'gallery': gallery, 'debug': debug})
-    
-    form = GalleryImageForm()
-    return render(request, 'gallery_detail.html', {'form': form, 'debug': debug})
+            return HttpResponse(content="The request form is invalid:\n\n" + str(form.errors), content_type=None, status=400)
 
 
 def s3_sign_upload(request):
