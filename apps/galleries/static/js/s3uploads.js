@@ -63,7 +63,7 @@
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = new XMLHttpRequest();
-            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.gallery_id + "/" + encodeURIComponent(file.name.replace(' ','+')), true);
+            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.gallery_id + "/" + window.btoa(file.name), true);
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
@@ -74,7 +74,7 @@
                         this_s3upload.onError('Signing server returned some ugly/empty JSON: "' + this.responseText + '"');
                         return false;
                     }
-                    return callback(decodeURIComponent(result.signed_request), result.url);
+                    return callback(result.signed_request, result.url);
                 } else if (this.readyState === 4 && this.status !== 200) {
                     return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status);
                 }
