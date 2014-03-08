@@ -14,6 +14,7 @@ from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from settings import AWS_ACCESS_KEY, AWS_SECRET_KEY, S3_BUCKET
 
+
 def galleries(request):
     if not request.user.is_authenticated():
         return redirect('/')

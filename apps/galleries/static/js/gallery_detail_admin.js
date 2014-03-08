@@ -12,14 +12,14 @@ var current_upload;
 var max_retries = 20;
 // TODO: add the actual object pk at data-pk
 var gallery_image_template =
-    '<div class="gallery_image_item" data-pk="{{ image.pk }}">' +
+    '<a href="" class="gallery_image_item" data-pk="{{ image.pk }}">' +
         '<div class="gallery_image_item_inner">' +
             '<span class="favorite">' +
                 '<i class="fa fa-heart-o"></i>' +
             '</span>' +
             '<div class="gallery_thumbnail_overlay"></div>' +
         '</div>' +
-    '</div>'
+    '</a>'
 
 /**
  Dropzone
@@ -214,7 +214,12 @@ function updateTotalPercentUploaded(callback) {
     }
 }
 function imageUploadComplete(file, url) {
-    $('#' + safeString(file.name) + '.uploading').removeClass('uploading');
+    console.log(safeString(file.name) + " completing");
+
+    $('#' + safeString(file.name))
+        .removeClass('uploading')
+        .attr('href', url)
+        .attr('target', "_blank");
 }
 
 function appendGalleryThumbnail(file) {
@@ -224,11 +229,12 @@ function appendGalleryThumbnail(file) {
 
         $(thumbnail).addClass('gallery_thumbnail');
 
+        console.log(safeString(file.name) + " appending");
         $('.gallery_image_item').last()
             .attr('id', safeString(file.name))
             .addClass('uploading')
             .find('.gallery_image_item_inner')
-                .prepend(thumbnail);
+            .prepend(thumbnail);
     });
 }
 
@@ -236,4 +242,12 @@ function safeString(string) {
     return string
         .replace(/[\/\\()~%'"*?<>{}\[\]; ]/g, "")
         .replace(/[@#$&:+,. ]/g, "-")
+}
+
+/**
+ Upload to our server
+ */
+
+function uploadImageToServer(file, url) {
+    $.ajax()
 }
