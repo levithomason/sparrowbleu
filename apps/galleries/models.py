@@ -26,6 +26,6 @@ class GalleryImage(models.Model):
     amazon_s3_url = models.URLField(max_length=200, null=True)
 
     def __unicode__(self):
-        return self.image.url
+        return self.amazon_s3_url
 
-admin.site.register(Gallery)
+    admin.site.register(Gallery)

@@ -29,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                {% for g, im, empty, selected_images, total_cost in galleries %}
+                {% for g, im, selected_images, total_cost in galleries %}
                      <div class="gallery_list_item panel panel-default" data-pk="{{ g.pk }}">
                          <div class="controls">
                             <div class="edit_delete">
@@ -51,7 +51,7 @@
                          </div>
                          <div class="panel-body">
                             <a href="{{ g.get_absolute_url }}">
-                                {% if empty %}
+                                {% if im != "None" %}
                                     <div class="gallery_empty"><i class="fa fa-picture-o"> </i></div>
                                 {% else %}
                                     <img src="{{ im }}" class="gallery_list_item_image">

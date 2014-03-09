@@ -11,7 +11,7 @@ var image_uploads = {};
 var current_upload;
 var max_retries = 20;
 var gallery_image_template =
-    '<div class="gallery_image_item">' +
+    '<div class="gallery_image_item" data-pk="">' +
         '<div class="gallery_image_item_inner">' +
             '<span class="favorite">' +
                 '<i class="fa fa-heart-o"></i>' +
@@ -19,6 +19,7 @@ var gallery_image_template =
             '<div class="gallery_thumbnail_overlay"></div>' +
         '</div>' +
     '</div>'
+
 
 /**
  Dropzone
@@ -214,14 +215,14 @@ function updateTotalPercentUploaded(callback) {
 function imageUploadComplete(file, pk) {
     $('#' + safeString(file.name))
         .removeClass('uploading')
-        .attr('target', "_blank")
+        .removeAttr('id')
         .attr('data-pk', pk);
 
     incrementCurrentUpload();
 }
 
 function appendGalleryThumbnail(file) {
-    thumbDimension(file, 240, false, function(thumbnail) {
+    thumbDimension(file, 320, false, function(thumbnail) {
 
         $('.gallery_image_container').append(gallery_image_template);
 
@@ -231,7 +232,7 @@ function appendGalleryThumbnail(file) {
             .attr('id', safeString(file.name))
             .addClass('uploading')
             .find('.gallery_image_item_inner')
-            .prepend(thumbnail);
+                .prepend(thumbnail);
     });
 }
 

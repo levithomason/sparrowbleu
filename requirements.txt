@@ -11,4 +11,5 @@ psycopg2==2.5.1
 static==0.4
 wsgiref==0.1.2
 raven==3.5.0
+requests==2.2.1
 sorl-thumbnail==11.12

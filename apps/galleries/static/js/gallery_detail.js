@@ -6,8 +6,9 @@ $(document).ready(function() {
     // Selecting images
     $('.gallery_image_item').click(function() {
         var ele = $(this);
+        console.log(ele);
         var image_pk = ele.data('pk');
-        var thumb_overlay = ele.find('.gallery_thumbnail_overlay')
+        var thumb_overlay = ele.find('.gallery_thumbnail_overlay');
 
         thumb_overlay.show();
         thumb_overlay.fadeOut(400);
