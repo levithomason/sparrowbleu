@@ -1,22 +1,22 @@
 {% load static %}
 
 <div class="sbp_panel navbar navbar-default">
-	<div class="container">
-		<div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		    </button>
-		    <a class="navbar-brand" href="/">
-		    	<span id="brand_logo"><img src="{% static "img/logo_small.png" %}" alt="SparrowBleu Photography" /></span>
-		    	<span id="brand_sparrow_bleu">SparrowBleu</span>
-	    	</a>
-		</div>
-		<div class="collapse navbar-collapse">
-		    <ul class="nav navbar-nav">
-		        <li class="{% ifequal request.path '/client-access/'%}active{% endifequal %}"><a href="/client-access"><i class="fa fa-key"></i>Client Access</a></li>
-		    </ul>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span id="brand_logo"><img src="{% static "img/logo_small.png" %}" alt="SparrowBleu Photography" /></span>
+                <span id="brand_sparrow_bleu">SparrowBleu</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% ifequal request.path '/client-access/'%}active{% endifequal %}"><a href="/client-access"><i class="fa fa-key"></i>Client Access</a></li>
+            </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
@@ -24,13 +24,13 @@
                     <li class="{% ifequal request.path '/galleries/'%}active{% endifequal %}"><a href="/galleries"><i class="fa fa-picture-o"></i>Galleries</a></li>
                     {% endif %}
                     {% if perms.Gallery.can_add %}
-                    <li class="{% ifequal request.path '/new-gallery/'%}active{% endifequal %}"><a href="/new-gallery"><i class="fa fa-plus"></i>New Gallery</a></li>
-			        {% endif %}
-		    		<li><a href="/user_logout"><i class="fa fa-power-off"></i> Logout</a></li>
-		        {% else %}
-			        <li><a href="/user_login"><i class="fa fa-user"></i> Login</a></li>
-		        {% endif %}
-			</ul>
-		</div>
-	</div>
+                    <li class="{% ifequal request.path '/create-gallery/'%}active{% endifequal %}"><a href="/create-gallery"><i class="fa fa-plus"></i>New Gallery</a></li>
+                    {% endif %}
+                    <li><a href="/user_logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="/user_login"><i class="fa fa-user"></i> Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </div>

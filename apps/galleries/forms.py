@@ -12,7 +12,7 @@ class GalleryForm(forms.Form):
 class GalleryImageForm(forms.Form):
     gallery = forms.ModelChoiceField(Gallery.objects.all())
     is_preview_image = forms.BooleanField(required=False)
-    images = forms.FileField()
+    amazon_s3_url = forms.URLField(max_length=200)
 
 
 class ClientAccessForm(forms.Form):
