@@ -38,9 +38,11 @@
         }
     }
     .panel-body {
+        position: relative;
         padding: 0;
         width: 250px;
         height: 250px;
+
         .gallery_empty {
             font-size: 10em;
             padding: 25px;
@@ -48,6 +50,12 @@
             background: #EEE;
         }
         .gallery_list_item_image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
             max-width: 100%;
         }
     }

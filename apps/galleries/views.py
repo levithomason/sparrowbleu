@@ -19,19 +19,15 @@ def galleries(request):
     galleries = []
 
     for gallery in Gallery.objects.all().order_by('name'):
-        try:
-            preview_image = GalleryImage.objects.get(gallery=gallery, is_preview_image=True)
-            preview_image_thumbnail = get_thumbnail(preview_image.image, '500x500', crop='center', quality=99).url
-        except GalleryImage.DoesNotExist:
-            preview_image_thumbnail = None
-
+        preview_image_url = GalleryImage.objects.all().filter(gallery=gallery)[0]
         selected_images = gallery.selected_images()
+
         if selected_images > gallery.number_of_images:
             total_cost = (selected_images - gallery.number_of_images) * gallery.cost_per_extra_image
         else:
             total_cost = 0
 
-        galleries.append([gallery, preview_image_thumbnail, selected_images, total_cost])
+        galleries.append([gallery, preview_image_url, selected_images, total_cost])
 
     return render(request, 'galleries.html', {
       'galleries': galleries

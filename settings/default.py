@@ -62,7 +62,7 @@ PROJECT_PATH = abspath(curdir)
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/medafiles/'
+MEDIA_ROOT = 'mediafiles'
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = 'staticfiles'
