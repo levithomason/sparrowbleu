@@ -17,6 +17,11 @@ class Gallery(models.Model):
     def selected_images(self):
         return GalleryImage.objects.filter(gallery=self).filter(is_selected=True).count()
 
+    def get_s3_directory_name(self):
+        s3_dir = '%s/' % self.pk
+
+        return s3_dir
+
 
 class GalleryImage(models.Model):
     gallery = models.ForeignKey('Gallery')

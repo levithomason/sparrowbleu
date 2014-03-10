@@ -17,15 +17,14 @@ $('.confirm_delete_yes').click(function() {
     var gallery = $(this).parents('.gallery_list_item');
     var gallery_pk = gallery.data('pk');
 
+    gallery.fadeOut(200);
+
     var jqxhr = $.post('/delete-gallery/', {'gallery_pk': gallery_pk}, function() {
-        if (jqxhr.responseText = "Image deleted successfully") {
-            gallery.fadeOut(200);
-        }
+
     })
         .fail(function() {
-            alert(
-                "Oops, couldn't delete that gallery."
-            );
+            alert(jqxhr.responseText);
+            gallery.fadeIn(200);
         });
 });
 
