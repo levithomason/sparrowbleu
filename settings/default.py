@@ -11,6 +11,10 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+SUPERUSER_NAME = os.environ['SUPERUSER_NAME']
+SUPERUSER_EMAIL = os.environ['SUPERUSER_EMAIL']
+SUPERUSER_PASSWORD = os.environ['SUPERUSER_PASSWORD']
+
 MANAGERS = ADMINS
 
 DATABASES = {
