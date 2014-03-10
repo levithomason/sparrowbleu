@@ -61,11 +61,11 @@ PROJECT_PATH = abspath(curdir)
 MEDIA_ROOT = '/medafiles/'
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = '/staticfiles/'
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    './static/',
+    os.path.join(PROJECT_PATH, 'static'),
 )
 
 # List of finder classes that know how to find static files in
