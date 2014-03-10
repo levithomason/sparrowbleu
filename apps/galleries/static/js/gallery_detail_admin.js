@@ -9,7 +9,7 @@ var file_input = $('#image');
 var total_percent_uploaded = 0;
 var image_uploads = {};
 var current_upload;
-var max_retries = 20;
+var max_retries = 10;
 var gallery_image_template =
     '<div class="gallery_image_item" data-pk="">' +
         '<div class="gallery_image_item_inner">' +

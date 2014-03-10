@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from sorl.thumbnail import get_thumbnail
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
-from settings import AWS_ACCESS_KEY, AWS_SECRET_KEY, S3_BUCKET
+from settings import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, S3_BUCKET, boto_conn, boto_bucket, boto_key
 
 
 def galleries(request):
@@ -60,12 +60,19 @@ def create_gallery(request):
                 return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors})
 
             except Gallery.DoesNotExist:
-
                 gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images, cost_per_extra_image=cost_per_extra_image)
                 gallery.save()
 
-                return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
-        
+                try:
+                    boto_key.key = gallery.get_s3_directory_name()
+                    boto_key.set_contents_from_string('')
+
+                except:
+                    errors.append("Sorry couldn't create an S3 folder")
+                    gallery.delete()
+
+            return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
+
         return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors})
     
     form = GalleryForm()
@@ -156,17 +163,28 @@ def edit_gallery(request, pk):
 
 def delete_gallery(request):
     if request.is_ajax() and request.method == 'POST':
+        gallery_pk = request.POST.get('gallery_pk')
+
         try:
-            gallery_pk = request.POST.get('gallery_pk')
             gallery = Gallery.objects.get(pk=gallery_pk)
 
-            gallery.delete()
+            try:
+                for key in boto_bucket.list(prefix=gallery.get_s3_directory_name()):
+                    boto_key.key = key
+                    key.delete()
 
-            return HttpResponse(content="Image deleted successfully", content_type=None, status=200)
+                try:
+                    gallery.delete()
+                    return HttpResponse(content="Gallery deleted successfully", content_type=None, status=200)
+
+                except:
+                    return HttpResponse(content="Couldn't delete gallery images", content_type=None, status=400)
+
+            except:
+                return HttpResponse(content="Could not delete S3 bucket for the gallery", content_type=None, status=400)
 
         except Gallery.DoesNotExist:
-
-            return HttpResponse(content="Sorry, couldn't find that gallery!", content_type=None, status=400)
+            return HttpResponse(content="Sorry, this gallery doesn't exist anymore.", content_type=None, status=400)
 
 
 def gallery_detail(request, pk=None, passcode=None):
@@ -211,7 +229,7 @@ def s3_sign_upload(request):
 
     put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
 
-    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request, hashlib.sha1).digest())
+    signature = base64.encodestring(hmac.new(AWS_SECRET_ACCESS_KEY, put_request, hashlib.sha1).digest())
     signature = signature.replace(' ', '%20').replace('+', '%2B')
 
     url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)

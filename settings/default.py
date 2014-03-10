@@ -1,7 +1,8 @@
 import os
 from os.path import abspath, join, curdir
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
 
-# Django settings for sbp project.
 
 DEBUG = False
 TEMPLATE_DEBUG = False
@@ -78,9 +79,15 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '*blhedyelf3m-y90by&0@4ta0&6$k#@70qy93dn#-2&or5d(l1'
 
+# AWS
 AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 S3_BUCKET = os.environ['S3_BUCKET']
+
+# boto
+boto_conn = S3Connection(aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+boto_bucket = boto_conn.get_bucket(S3_BUCKET)
+boto_key = Key(boto_bucket)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
