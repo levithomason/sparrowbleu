@@ -252,7 +252,7 @@ function uploadImageToServer(file, url) {
         method: "POST",
         data: {
             gallery: $('#gallery_id').text(),
-            amazon_s3_url: url
+            full_size_url: url
         },
         complete: function(data) {
             imageUploadComplete(file, data.responseText);

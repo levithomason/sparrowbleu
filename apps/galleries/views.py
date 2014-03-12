@@ -204,10 +204,10 @@ def create_gallery_image(request):
     if request.method == "POST":
         form = GalleryImageForm(request.POST)
         gallery = Gallery.objects.get(pk=request.POST['gallery'])
-        amazon_s3_url = request.POST['amazon_s3_url']
+        full_size_url = request.POST['full_size_url']
 
         if form.is_valid():
-            new_image = GalleryImage.objects.create(amazon_s3_url=amazon_s3_url, gallery=gallery)
+            new_image = GalleryImage.objects.create(full_size_url=full_size_url, gallery=gallery)
             new_image.save()
 
             return HttpResponse(content=new_image.pk, content_type=None, status=200)

@@ -25,12 +25,13 @@ class Gallery(models.Model):
 
 class GalleryImage(models.Model):
     gallery = models.ForeignKey('Gallery')
-    image = models.ImageField(upload_to="gallery_images")
     is_preview_image = models.BooleanField(default=False)
     is_selected = models.BooleanField(default=False)
-    amazon_s3_url = models.URLField(max_length=200, null=True)
+    full_size_url = models.URLField(max_length=200, null=True)
+    large_thumb_url = models.URLField(max_length=200, null=True)
+    small_thumb_url = models.URLField(max_length=200, null=True)
 
     def __unicode__(self):
-        return self.amazon_s3_url
+        return self.full_size_url
 
     admin.site.register(Gallery)
