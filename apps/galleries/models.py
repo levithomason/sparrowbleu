@@ -1,5 +1,7 @@
+from django.db.models.signals import post_save
 from django.contrib import admin
 from django.db import models
+import urllib, urllib2
 
 
 class Gallery(models.Model):
@@ -34,4 +36,16 @@ class GalleryImage(models.Model):
     def __unicode__(self):
         return self.full_size_url
 
-    admin.site.register(Gallery)
+
+def make_thumbnails(sender, **kwargs):
+    if kwargs['created']:
+        print '------------------'
+        for k in kwargs:
+            print "%s: %s" % (k, kwargs[k])
+        gallery_image = kwargs['instance']
+        full_size_url = gallery_image.full_size_url
+
+        f = urllib.urlretrieve(full_size_url)
+        print f
+
+post_save.connect(make_thumbnails, sender=GalleryImage)
