@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save
-from django.contrib import admin
+from sorl.thumbnail import get_thumbnail
 from django.db import models
 import urllib, urllib2
+import StringIO
 
 
 class Gallery(models.Model):
@@ -45,7 +46,18 @@ def make_thumbnails(sender, **kwargs):
         gallery_image = kwargs['instance']
         full_size_url = gallery_image.full_size_url
 
-        f = urllib.urlretrieve(full_size_url)
-        print f
+        print 'Gallery Image: %s' % gallery_image
+        print 'Full Size URL: %s' % full_size_url
+        #request = urllib2.urlopen(full_size_url)
+        #image_data = request.read()
+
+        #image_file = StringIO.StringIO()
+        #image_file.write(image_data)
+
+        #thumb = get_thumbnail(image_file.getvalue(), '200x200')
+
+        #image_file.close()
+
+        #print thumb
 
 post_save.connect(make_thumbnails, sender=GalleryImage)

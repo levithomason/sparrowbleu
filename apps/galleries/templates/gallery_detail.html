@@ -48,6 +48,10 @@
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
+        {% for thumb in gallery_thumbs %}
+            <div>{{ thumb }}</div>
+        {% endfor %}
+        <hr/>
         {% for image in gallery_images %}
             <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
                 <div class="gallery_image_item_inner">

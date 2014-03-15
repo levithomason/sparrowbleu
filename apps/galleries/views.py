@@ -6,10 +6,12 @@ import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from sorl.thumbnail import get_thumbnail
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
-from settings import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, S3_BUCKET, boto_conn, boto_bucket, boto_key
+from settings import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, S3_BUCKET, boto_conn, boto_bucket, boto_key, MEDIA_ROOT
+import urllib
+from sorl.thumbnail import get_thumbnail
+from os.path import join
 
 
 def galleries(request):
@@ -19,7 +21,12 @@ def galleries(request):
     galleries = []
 
     for gallery in Gallery.objects.all().order_by('name'):
-        preview_image_url = GalleryImage.objects.all().filter(gallery=gallery)[0]
+        has_images = GalleryImage.objects.all().filter(gallery=gallery).count() > 0
+        if has_images:
+            preview_image_url = GalleryImage.objects.all().filter(gallery=gallery)[0]
+        else:
+            preview_image_url = None
+
         selected_images = gallery.selected_images()
 
         if selected_images > gallery.number_of_images:
@@ -29,9 +36,7 @@ def galleries(request):
 
         galleries.append([gallery, preview_image_url, selected_images, total_cost])
 
-    return render(request, 'galleries.html', {
-      'galleries': galleries
-    })
+    return render(request, 'galleries.html', {'galleries': galleries})
 
 
 def create_gallery(request):
@@ -191,9 +196,28 @@ def gallery_detail(request, pk=None, passcode=None):
             gallery = Gallery.objects.get(pk=pk)
             gallery_images = GalleryImage.objects.order_by('-is_selected').filter(gallery=pk)
 
+            gallery_thumbs = []
+            #############
+            for i in gallery_images:
+                url_opener = urllib.URLopener()
+                url_opener.open(i.full_size_url)
+                print 'url:\n%s' % url_opener
+
+
+                file_name = join(MEDIA_ROOT, 'full_size_s3_image')
+                request = urllib.urlretrieve(i.full_size_url, filename=file_name)
+                print 'Request name:\n%s' % request[0]
+                print 'Request headers:\n%s' % request[1]
+
+                thumb = get_thumbnail(file_name, '50x50')
+
+                gallery_thumbs.append(thumb)
+                #############
+
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
-                'gallery_images': gallery_images
+                'gallery_images': gallery_images,
+                'gallery_thumbs': gallery_thumbs
             })
 
         except Gallery.DoesNotExist:
