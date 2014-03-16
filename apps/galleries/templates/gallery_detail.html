@@ -14,26 +14,20 @@
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
 
     <div class="gallery_detail_nav">
-        <div class="row">
-            <div class="col-sm-3 col-xs-6">
-                <a href="/galleries" class="gallery_detail_done_btn"><i class="fa fa-angle-double-left"></i> Done</a>
-            </div>
-            <div class="col-sm-6 hidden-xs">
-                <div class="gallery_title">{{ gallery }}</div>
-            </div>
-            <div class="col-sm-3 col-xs-6">
-                <div id="selected_images">
-                    <div class="included" data-max="{{ gallery.number_of_images }}"></div>
-                    <span class="extra"></span>
-                </div>
+        <div class="controls">
+            <div class="btn-group">
+                {% if perms.Gallery.can_change %}
+                <a href="/galleries" class="gallery_detail_done_btn btn btn-lg btn-link"><i class="fa fa-angle-double-left"></i></a>
+                {% endif %}
+                <div class="small_thumbs btn btn-lg btn-link">sm</div>
+                <div class="medium_thumbs btn btn-lg btn-link">md</div>
+                <div class="large_thumbs btn btn-lg btn-link">lg</div>
             </div>
         </div>
-        <div class="thumb_size pull-right">
-            <div class="btn-group">
-                <div class="small btn btn-lg btn-link">SM</div>
-                <div class="medium btn btn-lg btn-link">MD</div>
-                <div class="large btn btn-lg btn-link">LG</div>
-            </div>
+        <div class="gallery_title">{{ gallery }}</div>
+        <div id="selected_images">
+            <div class="included" data-max="{{ gallery.number_of_images }}"></div>
+            <span class="extra"></span>
         </div>
     </div>
 {% endblock nav %}

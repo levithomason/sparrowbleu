@@ -32,7 +32,7 @@ body {
 .gallery_detail_nav {
   font-family: "Raleway Light", sans-serif;
   position: fixed;
-  padding: 5px;
+  padding: 5px 10px;
   height: 60px;
   top: 0;
   left: 0;
@@ -41,26 +41,49 @@ body {
   color: rgba(255, 255, 255, 0.65);
   text-shadow: 0 1px rgba(0, 0, 0, 0.75);
   z-index: 900;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.gallery_detail_nav .gallery_detail_done_btn {
+.gallery_detail_nav .controls {
+  float: left;
+}
+.gallery_detail_nav .controls .gallery_detail_done_btn,
+.gallery_detail_nav .controls .small_thumbs,
+.gallery_detail_nav .controls .medium_thumbs,
+.gallery_detail_nav .controls .large_thumbs {
   display: block;
   padding: 12px;
   line-height: normal;
   font-size: 24px;
   color: inherit;
+  z-index: 100;
 }
-.gallery_detail_nav .gallery_detail_done_btn:hover {
+.gallery_detail_nav .controls .gallery_detail_done_btn:hover,
+.gallery_detail_nav .controls .small_thumbs:hover,
+.gallery_detail_nav .controls .medium_thumbs:hover,
+.gallery_detail_nav .controls .large_thumbs:hover {
   text-decoration: none;
   color: #74736e;
 }
 .gallery_detail_nav .gallery_title {
-  text-align: center;
+  position: absolute;
+  width: 100%;
   font-size: 36px;
+  text-align: center;
+  cursor: default;
+}
+@media (max-width: 768px) {
+  .gallery_detail_nav .gallery_title {
+    display: none;
+  }
 }
 .gallery_detail_nav #selected_images {
-  padding-right: 10px;
+  float: right;
   text-align: right;
   font-size: 16px;
+  z-index: 100;
 }
 .gallery_detail_nav #selected_images .included,
 .gallery_detail_nav #selected_images .extra {
@@ -82,6 +105,10 @@ body {
 .gallery_image_container {
   padding: 80px 3% 3% 3%;
   text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .gallery_image_container.small_thumbs .gallery_thumbnail.small {
   display: block;
@@ -108,10 +135,6 @@ body {
   display: inline-block;
   margin: 3%;
   vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 .gallery_image_container .gallery_image_item .gallery_image_item_inner {
   position: relative;

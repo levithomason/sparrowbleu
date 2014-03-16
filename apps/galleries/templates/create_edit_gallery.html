@@ -36,7 +36,7 @@
                 </div>
             {% endif %}
 
-            <form id="gallery_form" action="{% if editing %}/edit-gallery/{{ gallery.pk }}{% else %}/create-gallery/{% endif %}" method="post" enctype="multipart/form-form">{% csrf_token %}
+            <form class="" id="gallery_form" action="{% if editing %}/edit-gallery/{{ gallery.pk }}{% else %}/create-gallery/{% endif %}" method="post" enctype="multipart/form-form">{% csrf_token %}
                 <div class="form-group {% if form.name.errors %}has-error{% endif %}">
                     {% for error in form.name.errors %}
                         <div class="text-danger text-left">{{ error }} </div>

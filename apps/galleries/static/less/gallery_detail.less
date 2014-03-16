@@ -9,7 +9,7 @@ body {
 .gallery_detail_nav {
     font-family: "Raleway Light", sans-serif;
     position: fixed;
-    padding: 5px;
+    padding: 5px 10px;
     height: 60px;
     top: 0;
     left: 0;
@@ -18,28 +18,43 @@ body {
     color: rgba(255, 255, 255, 0.65);
     text-shadow: 0 1px rgba(0, 0, 0, 0.75);
     z-index: 900;
+    .user-select(none);
 
-    .gallery_detail_done_btn {
-        display: block;
-        padding: 12px;
-        line-height: normal;
-        font-size: 24px;
-        color: inherit;
-        &:hover {
-            text-decoration: none;
-            color: darken(@sbp_heading_color, 10%);
+    .controls {
+        float: left;
+        .gallery_detail_done_btn,
+        .small_thumbs,
+        .medium_thumbs,
+        .large_thumbs {
+            display: block;
+            padding: 12px;
+            line-height: normal;
+            font-size: 24px;
+            color: inherit;
+            z-index: 100;
+            &:hover {
+                text-decoration: none;
+                color: darken(@sbp_heading_color, 10%);
+            }
         }
     }
 
     .gallery_title {
-        text-align: center;
+        position: absolute;
+        width: 100%;
         font-size: 36px;
+        text-align: center;
+        cursor: default;
+        @media (max-width: 768px) {
+            display: none;
+        }
     }
 
     #selected_images {
-        padding-right: 10px;
+        float: right;
         text-align: right;
         font-size: 16px;
+        z-index: 100;
         .included,
         .extra {
             .sbp_transition(all);
@@ -56,6 +71,7 @@ body {
 
     padding: 80px @padding @padding @padding;
     text-align: center;
+    .user-select(none);
 
     &.small_thumbs {
         .gallery_thumbnail {
@@ -97,7 +113,6 @@ body {
         display: inline-block;
         margin: @padding;
         vertical-align: middle;
-        .user-select(none);
 
         .gallery_image_item_inner {
             position: relative;

@@ -5,6 +5,8 @@ import urllib
 import os
 from settings import MEDIA_ROOT
 from PIL import Image
+import math
+
 
 class Gallery(models.Model):
     name = models.CharField(max_length=60)
@@ -36,33 +38,40 @@ class GalleryImage(models.Model):
     large_thumb_url = models.URLField(max_length=200, null=True)
     small_thumb_url = models.URLField(max_length=200, null=True)
     name = models.CharField(max_length=100, null=True)
+    width = models.PositiveIntegerField(null=True)
+    height = models.PositiveIntegerField(null=True)
 
     def __unicode__(self):
         return self.full_size_url
 
-    def small_thumb(self):
+    def _thumbnail(self, size):
+        print self.width
+        print self.height
+        w = self.width
+        h = self.height
         if self.is_portrait:
-            thumb = get_thumbnail(self.full_size_url, '270x360', quality=90, crop='center')
+            thumb_height = size
+            thumb_width = int(round((size / float(h)) * float(w)))
         else:
-            thumb = get_thumbnail(self.full_size_url, '360x270', quality=90, crop='center')
+            thumb_width = size
+            thumb_height = int(round((size / float(w)) * float(h)))
+
+        thumb_dimensions = '%sx%s' % (thumb_width, thumb_height)
+        print thumb_dimensions
+        thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=90, crop='center')
         return thumb.url
+
+    def small_thumb(self):
+        return self._thumbnail(360)
 
     def medium_thumb(self):
-        if self.is_portrait:
-            thumb = get_thumbnail(self.full_size_url, '360x480', quality=90, crop='center')
-        else:
-            thumb = get_thumbnail(self.full_size_url, '480x360', quality=90, crop='center')
-        return thumb.url
+        return self._thumbnail(480)
 
     def large_thumb(self):
-        if self.is_portrait:
-            thumb = get_thumbnail(self.full_size_url, '480x640', quality=90, crop='center')
-        else:
-            thumb = get_thumbnail(self.full_size_url, '640x480', quality=90, crop='center')
-        return thumb.url
+        return self._thumbnail(640)
 
 
-def make_thumbnails(sender, **kwargs):
+def process_gallery_image(sender, **kwargs):
     if kwargs['created']:
         gallery_image = kwargs['instance']
 
@@ -71,10 +80,14 @@ def make_thumbnails(sender, **kwargs):
         image_file = Image.open(file_name)
         image_size = image_file.size
 
+        gallery_image.width = image_size[0]
+        gallery_image.height = image_size[1]
         gallery_image.is_portrait = image_size[0] < image_size[1]
+
+        os.remove(file_name)
 
         gallery_image.small_thumb()
         gallery_image.medium_thumb()
         gallery_image.large_thumb()
 
-post_save.connect(make_thumbnails, sender=GalleryImage)
+post_save.connect(process_gallery_image, sender=GalleryImage)

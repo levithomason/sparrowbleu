@@ -193,7 +193,7 @@ def gallery_detail(request, pk=None, passcode=None):
     else:
         try:
             gallery = Gallery.objects.get(pk=pk)
-            gallery_images = GalleryImage.objects.order_by('-is_selected').filter(gallery=pk)
+            gallery_images = GalleryImage.objects.order_by('name').filter(gallery=pk)
 
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
