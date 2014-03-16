@@ -9,9 +9,6 @@ from django.shortcuts import render, redirect
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from settings import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, S3_BUCKET, boto_conn, boto_bucket, boto_key, MEDIA_ROOT
-import urllib
-from sorl.thumbnail import get_thumbnail
-from os.path import join
 
 
 def galleries(request):
@@ -196,28 +193,9 @@ def gallery_detail(request, pk=None, passcode=None):
             gallery = Gallery.objects.get(pk=pk)
             gallery_images = GalleryImage.objects.order_by('-is_selected').filter(gallery=pk)
 
-            gallery_thumbs = []
-            #############
-            for i in gallery_images:
-                url_opener = urllib.URLopener()
-                url_opener.open(i.full_size_url)
-                print 'url:\n%s' % url_opener
-
-
-                file_name = join(MEDIA_ROOT, 'full_size_s3_image')
-                request = urllib.urlretrieve(i.full_size_url, filename=file_name)
-                print 'Request name:\n%s' % request[0]
-                print 'Request headers:\n%s' % request[1]
-
-                thumb = get_thumbnail(file_name, '50x50')
-
-                gallery_thumbs.append(thumb)
-                #############
-
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
                 'gallery_images': gallery_images,
-                'gallery_thumbs': gallery_thumbs
             })
 
         except Gallery.DoesNotExist:
@@ -229,9 +207,10 @@ def create_gallery_image(request):
         form = GalleryImageForm(request.POST)
         gallery = Gallery.objects.get(pk=request.POST['gallery'])
         full_size_url = request.POST['full_size_url']
+        name = request.POST['name']
 
         if form.is_valid():
-            new_image = GalleryImage.objects.create(full_size_url=full_size_url, gallery=gallery)
+            new_image = GalleryImage.objects.create(full_size_url=full_size_url, gallery=gallery, name=name)
             new_image.save()
 
             return HttpResponse(content=new_image.pk, content_type=None, status=200)

@@ -252,7 +252,8 @@ function uploadImageToServer(file, url) {
         method: "POST",
         data: {
             gallery: $('#gallery_id').text(),
-            full_size_url: url
+            full_size_url: url,
+            name: file.name
         },
         complete: function(data) {
             imageUploadComplete(file, data.responseText);

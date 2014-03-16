@@ -62,10 +62,10 @@ PROJECT_PATH = abspath(curdir)
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'mediafiles'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'mediafiles')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (

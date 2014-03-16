@@ -48,14 +48,13 @@
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
-        {% for thumb in gallery_thumbs %}
-            <div>{{ thumb }}</div>
-        {% endfor %}
-        <hr/>
         {% for image in gallery_images %}
             <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
                 <div class="gallery_image_item_inner">
-                    <img class="gallery_thumbnail" src="{{ image.full_size_url }}">
+                    <span class="name">{{ image.name }}</span>
+                    <img class="gallery_thumbnail small" src="{{ image.small_thumb }}">
+                    <img class="gallery_thumbnail medium" src="{{ image.medium_thumb }}">
+                    <img class="gallery_thumbnail large" src="{{ image.large_thumb }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>
                     <div class="gallery_thumbnail_overlay"></div>
                 </div>

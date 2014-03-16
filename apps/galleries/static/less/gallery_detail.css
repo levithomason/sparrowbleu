@@ -92,8 +92,6 @@ body {
   -ms-user-select: none;
   user-select: none;
   background: #333;
-  max-width: 320px;
-  max-height: 320px;
 }
 .gallery_image_container .gallery_image_item .gallery_image_item_inner {
   position: relative;
