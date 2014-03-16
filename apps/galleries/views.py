@@ -5,11 +5,13 @@ import hashlib
 import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
-from settings import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, S3_BUCKET, boto_conn, boto_bucket, boto_key, MEDIA_ROOT
-from sorl.thumbnail import get_thumbnail
+from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key
+# sorl settings import required for sorl default to work properly
+from sorl.thumbnail.conf import settings
+from sorl.thumbnail import default, get_thumbnail
+
 
 def galleries(request):
     if not request.user.is_authenticated():
@@ -21,7 +23,7 @@ def galleries(request):
         has_images = GalleryImage.objects.all().filter(gallery=gallery).count() > 0
         if has_images:
             preview_image = GalleryImage.objects.all().filter(gallery=gallery)[0]
-            thumb = get_thumbnail(preview_image.full_size_url, '250x250', crop='center')
+            thumb = get_thumbnail(preview_image.full_size_url, '250x250', quality=90, crop='center')
             preview_image_url = thumb.url
         else:
             preview_image_url = None
@@ -62,14 +64,6 @@ def create_gallery(request):
             except Gallery.DoesNotExist:
                 gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images, cost_per_extra_image=cost_per_extra_image)
                 gallery.save()
-
-                try:
-                    boto_key.key = gallery.get_s3_directory_name()
-                    boto_key.set_contents_from_string('')
-
-                except:
-                    errors.append("Sorry couldn't create an S3 folder")
-                    gallery.delete()
 
             return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
 
@@ -175,6 +169,8 @@ def delete_gallery(request):
 
                 try:
                     gallery.delete()
+                    default.kvstore.cleanup()
+
                     return HttpResponse(content="Gallery deleted successfully", content_type=None, status=200)
 
                 except:
@@ -228,16 +224,16 @@ def s3_sign_upload(request):
     expires = int(time.time() + 3600)
     amz_headers = "x-amz-acl:public-read"
 
-    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
+    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, AWS_STORAGE_BUCKET_NAME, object_name)
 
     signature = base64.encodestring(hmac.new(AWS_SECRET_ACCESS_KEY, put_request, hashlib.sha1).digest())
     signature = signature.replace(' ', '%20').replace('+', '%2B')
 
-    url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
+    url = 'https://%s.s3.amazonaws.com/%s' % (AWS_STORAGE_BUCKET_NAME, object_name)
 
     data = json.dumps({
         'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (
-            url, AWS_ACCESS_KEY, expires, signature),
+            url, AWS_ACCESS_KEY_ID, expires, signature),
         'url': url
     })
 

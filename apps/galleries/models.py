@@ -1,11 +1,10 @@
-from django.db.models.signals import post_save
-from sorl.thumbnail import get_thumbnail
-from django.db import models
-import urllib
 import os
-from settings import MEDIA_ROOT
+import urllib
+from django.db.models.signals import post_save, pre_delete
+from django.db import models
+from sorl.thumbnail import get_thumbnail
 from PIL import Image
-import math
+from settings import MEDIA_ROOT, boto_key
 
 
 class Gallery(models.Model):
@@ -45,8 +44,6 @@ class GalleryImage(models.Model):
         return self.full_size_url
 
     def _thumbnail(self, size):
-        print self.width
-        print self.height
         w = self.width
         h = self.height
         if self.is_portrait:
@@ -55,9 +52,7 @@ class GalleryImage(models.Model):
         else:
             thumb_width = size
             thumb_height = int(round((size / float(w)) * float(h)))
-
         thumb_dimensions = '%sx%s' % (thumb_width, thumb_height)
-        print thumb_dimensions
         thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=90, crop='center')
         return thumb.url
 
@@ -75,16 +70,14 @@ def process_gallery_image(sender, **kwargs):
     if kwargs['created']:
         gallery_image = kwargs['instance']
 
-        file_name = os.path.join(MEDIA_ROOT, gallery_image.name)
-        urllib.urlretrieve(gallery_image.full_size_url, filename=file_name)
-        image_file = Image.open(file_name)
-        image_size = image_file.size
+        urllib.urlretrieve(gallery_image.full_size_url, filename=gallery_image.name)
+        image_file = Image.open(gallery_image.name)
 
-        gallery_image.width = image_size[0]
-        gallery_image.height = image_size[1]
-        gallery_image.is_portrait = image_size[0] < image_size[1]
+        gallery_image.width = image_file.size[0]
+        gallery_image.height = image_file.size[1]
+        gallery_image.is_portrait = image_file.size[0] < image_file.size[1]
 
-        os.remove(file_name)
+        os.remove(gallery_image.name)
 
         gallery_image.small_thumb()
         gallery_image.medium_thumb()

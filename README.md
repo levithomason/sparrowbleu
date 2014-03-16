@@ -29,7 +29,7 @@ Set the following AWS environment variables on virtualenv activate (remember to 
 ```
 set AWS_ACCESS_KEY_ID=<your_s3_access_id>
 set AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
-set S3_BUCKET=<your_s3_bucket_name>
+set AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
 ```
 
 

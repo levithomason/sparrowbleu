@@ -1,6 +1,6 @@
 import os
 from os.path import abspath, join, curdir
-from boto.s3.connection import S3Connection
+from boto.s3.connection import S3Connection, SubdomainCallingFormat
 from boto.s3.key import Key
 
 
@@ -84,14 +84,21 @@ STATICFILES_FINDERS = (
 SECRET_KEY = '*blhedyelf3m-y90by&0@4ta0&6$k#@70qy93dn#-2&or5d(l1'
 
 # AWS
-AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY_ID']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-S3_BUCKET = os.environ['S3_BUCKET']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 
 # boto
-boto_conn = S3Connection(aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-boto_bucket = boto_conn.get_bucket(S3_BUCKET)
+boto_conn = S3Connection(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+boto_bucket = boto_conn.get_bucket(AWS_STORAGE_BUCKET_NAME)
 boto_key = Key(boto_bucket)
+
+# Storages
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_CALLING_FORMAT = SubdomainCallingFormat
+
+# sorl thumbnail
+THUMBNAIL_PREFIX = 'thumbs/'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

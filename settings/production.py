@@ -87,6 +87,8 @@ INSTALLED_APPS = (
     'south',
     'sorl.thumbnail',
     'gunicorn',
+
+    'storages'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
