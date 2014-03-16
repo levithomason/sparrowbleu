@@ -28,11 +28,18 @@
                 </div>
             </div>
         </div>
+        <div class="thumb_size pull-right">
+            <div class="btn-group">
+                <div class="small btn btn-lg btn-link">SM</div>
+                <div class="medium btn btn-lg btn-link">MD</div>
+                <div class="large btn btn-lg btn-link">LG</div>
+            </div>
+        </div>
     </div>
 {% endblock nav %}
 
 {% block body %}
-    <div class="gallery_image_container">
+    <div class="gallery_image_container small_thumbs">
         {% if perms.Gallery.can_change %}
             <div id="dropzone">
                 <div class="message">
@@ -51,7 +58,6 @@
         {% for image in gallery_images %}
             <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
                 <div class="gallery_image_item_inner">
-                    <span class="name">{{ image.name }}</span>
                     <img class="gallery_thumbnail small" src="{{ image.small_thumb }}">
                     <img class="gallery_thumbnail medium" src="{{ image.medium_thumb }}">
                     <img class="gallery_thumbnail large" src="{{ image.large_thumb }}">

@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from settings import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, S3_BUCKET, boto_conn, boto_bucket, boto_key, MEDIA_ROOT
-
+from sorl.thumbnail import get_thumbnail
 
 def galleries(request):
     if not request.user.is_authenticated():
@@ -20,7 +20,9 @@ def galleries(request):
     for gallery in Gallery.objects.all().order_by('name'):
         has_images = GalleryImage.objects.all().filter(gallery=gallery).count() > 0
         if has_images:
-            preview_image_url = GalleryImage.objects.all().filter(gallery=gallery)[0]
+            preview_image = GalleryImage.objects.all().filter(gallery=gallery)[0]
+            thumb = get_thumbnail(preview_image.full_size_url, '250x250', crop='center')
+            preview_image_url = thumb.url
         else:
             preview_image_url = None
 

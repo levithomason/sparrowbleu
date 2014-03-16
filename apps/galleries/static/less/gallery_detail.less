@@ -57,16 +57,57 @@ body {
     padding: 80px @padding @padding @padding;
     text-align: center;
 
+    &.small_thumbs {
+        .gallery_thumbnail {
+            &.small {
+                display: block;
+            }
+            &.medium,
+            &.large {
+                display: none;
+            }
+        }
+    }
+
+    &.medium_thumbs {
+        .gallery_thumbnail {
+            &.medium {
+                display: block;
+            }
+            &.small,
+            &.large {
+                display: none;
+            }
+        }
+    }
+
+    &.large_thumbs {
+        .gallery_thumbnail {
+            &.large {
+                display: block;
+            }
+            &.medium,
+            &.small {
+                display: none;
+            }
+        }
+    }
+
     .gallery_image_item {
         display: inline-block;
         margin: @padding;
         vertical-align: middle;
         .user-select(none);
-        background: #333;
 
         .gallery_image_item_inner {
             position: relative;
             line-height: 0;
+
+            &:hover {
+                .name {
+                    opacity: 1;
+                }
+            }
 
             .gallery_thumbnail {
                 position: relative;

@@ -3,6 +3,24 @@
  */
 $(document).ready(function() {
 
+    // Image size controls
+    $('.thumb_size .small').click(function() {
+        $('.gallery_image_container')
+            .removeClass('medium_thumbs large_thumbs')
+            .addClass('small_thumbs');
+    });
+    $('.thumb_size .medium').click(function() {
+        $('.gallery_image_container')
+            .removeClass('small_thumbs large_thumbs')
+            .addClass('medium_thumbs');
+    });
+    $('.thumb_size .large').click(function() {
+        $('.gallery_image_container')
+            .removeClass('medium_thumbs small_thumbs')
+            .addClass('large_thumbs');
+    });
+
+
     // Selecting images
     $('.gallery_image_item').click(function() {
         var ele = $(this);
