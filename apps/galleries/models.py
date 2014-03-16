@@ -1,10 +1,9 @@
 import os
 import urllib
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save
 from django.db import models
 from sorl.thumbnail import get_thumbnail
 from PIL import Image
-from settings import MEDIA_ROOT, boto_key
 
 
 class Gallery(models.Model):
