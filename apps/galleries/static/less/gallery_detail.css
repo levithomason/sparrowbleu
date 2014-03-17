@@ -235,3 +235,21 @@ body {
   background: #333;
   border-radius: 0;
 }
+#status .files_uploading {
+  position: fixed;
+  display: none;
+  width: 300px;
+  top: 70px;
+  bottom: 10px;
+  overflow-x: scroll;
+  right: 10px;
+}
+#status .files_uploading .upload {
+  padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+  color: #74736e;
+  text-overflow: ellipsis;
+  background: rgba(27, 25, 24, 0.8);
+}

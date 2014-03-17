@@ -45,6 +45,8 @@
                 <div class="progress progress-striped active">
                     <div class="progress-bar progress-bar-info" role="progressbar"></div>
                 </div>
+                <div class="files_uploading"></div>
+
             </div>
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
@@ -60,7 +62,6 @@
                 </div>
             </div>
         {% endfor %}
-
     </div>
 {% endblock body %}
 
@@ -70,7 +71,6 @@
     {% if perms.Gallery.can_change %}
         <script src="{% static 'js/lodash.min.js' %}"></script>
         <script src="{% static 'js/s3uploads.js' %}"></script>
-        <script src="{% static 'js/thumbnailer.js' %}"></script>
         <script src="{% static 'js/gallery_detail_admin.js' %}"></script>
     {% endif %}
 
