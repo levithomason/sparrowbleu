@@ -8,17 +8,7 @@ var hide_dropzone_timer;
 var file_input = $('#image');
 var total_percent_uploaded = 0;
 var image_uploads = {};
-var current_upload;
 var max_retries = 10;
-var gallery_image_template =
-    '<div class="gallery_image_item" data-pk="">' +
-        '<div class="gallery_image_item_inner">' +
-            '<span class="favorite">' +
-                '<i class="fa fa-heart-o"></i>' +
-            '</span>' +
-            '<div class="gallery_thumbnail_overlay"></div>' +
-        '</div>' +
-    '</div>'
 
 
 /**
@@ -64,6 +54,7 @@ $(window)
         }
     });
 
+
 /**
  Upload metrics
  */
@@ -71,7 +62,6 @@ function setImageUploads(callback) {
     for (var i = 0; i < file_input.prop('files').length; i++) {
         image_uploads[file_input.prop('files')[i].name] = {
             'name': file_input.prop('files')[i].name,
-            'thumbnail_appended': false,
             'total': file_input.prop('files')[i].size,
             'uploaded': 0,
             'percent_uploaded': function() {
@@ -88,39 +78,23 @@ function updateImageUploadData(name, loaded, callback) {
     if (typeof(image_uploads[name]) !== 'undefined') {
         image_uploads[name].uploaded = loaded;
     }
-    // console.log('(+' + loaded + ' ' + name + ')');
 
     if (typeof(callback) === 'function') {
         callback.call();
     }
-}
-function setImageUploadThumbnailAppended(file) {
-    image_uploads[file.name].thumbnail_appended = true;
 }
 function resetImageUploadData(name) {
     if (typeof(image_uploads[name]) !== 'undefined') {
         image_uploads[name].uploaded = 0;
     }
 }
-function incrementCurrentUpload() {
-    current_upload += 1;
-}
-function initUploadMetrics(callback) {
-    current_upload = 1;
-    setImageUploads();
-
-    if (typeof(callback) === 'function') {
-        callback.call();
-    }
-}
-
 
 
 /**
  Amazon S3 upload
  */
 function s3_upload() {
-    initUploadMetrics(function() {
+    setImageUploads(function() {
         var s3upload = new S3Upload({
             gallery_pk: $('#gallery_pk').data('pk'),
             file_dom_selector: 'image',
@@ -128,12 +102,14 @@ function s3_upload() {
 
             onUploadStart: function() {
                 console.log('Uploading ' + file_input.prop('files').length + ' images.');
+
+                for (var upload in image_uploads) {
+                    $('.files_uploading')
+                        .fadeIn()
+                        .append('<div class="upload" id="' + safeString(upload) + '"><i class="fa fa-cloud-upload"></i> ' + upload + '</div>');
+                }
             },
             onProgress: function(file, loaded) {
-                if (image_uploads[file.name].thumbnail_appended === false) {
-                    setImageUploadThumbnailAppended(file);
-                    appendGalleryThumbnail(file);
-                }
                 updateImageUploadData(file.name, loaded, function() {
                     updateTotalPercentUploaded(function() {
                         updateProgressBar();
@@ -166,25 +142,9 @@ function s3_upload() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Visual feedback
+/**
+ Visual feedback
+ */
 function updateProgressBar() {
     var progress = $('#status .progress');
     var bar = $('#status .progress-bar');
@@ -212,27 +172,15 @@ function updateTotalPercentUploaded(callback) {
         callback.call();
     }
 }
-function imageUploadComplete(file, pk) {
-    $('#' + safeString(file.name))
-        .removeClass('uploading')
-        .removeAttr('id')
-        .attr('data-pk', pk);
+function imageUploadComplete(file) {
+    $('#' + safeString(file.name)).fadeOut(function() {
+        this.remove();
 
-    incrementCurrentUpload();
-}
+        var uploads_remaining = $('.files_uploading').children('.upload');
 
-function appendGalleryThumbnail(file) {
-    thumbDimension(file, 320, false, function(thumbnail) {
-
-        $('.gallery_image_container').append(gallery_image_template);
-
-        $(thumbnail).addClass('gallery_thumbnail');
-
-        $('.gallery_image_item').last()
-            .attr('id', safeString(file.name))
-            .addClass('uploading')
-            .find('.gallery_image_item_inner')
-                .prepend(thumbnail);
+        if (uploads_remaining.length === 0) {
+            location.reload();
+        }
     });
 }
 
@@ -242,11 +190,14 @@ function safeString(string) {
         .replace(/[@#$&:+,. ]/g, "-")
 }
 
+
 /**
  Upload to our server
  */
 
 function uploadImageToServer(file, url) {
+    $('#' + safeString(file.name)).html('<i class="fa fa-spin fa-spinner"></i> making thumbnails');
+
     $.ajax({
         url: "/create-gallery-image/",
         method: "POST",
@@ -256,7 +207,7 @@ function uploadImageToServer(file, url) {
             name: file.name
         },
         complete: function(data) {
-            imageUploadComplete(file, data.responseText);
+            imageUploadComplete(file);
         }
     })
 }

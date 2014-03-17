@@ -17,14 +17,14 @@ $('.confirm_delete_yes').click(function() {
     var gallery = $(this).parents('.gallery_list_item');
     var gallery_pk = gallery.data('pk');
 
-    gallery.fadeOut(200);
+    gallery.addClass('deleting');
 
     var jqxhr = $.post('/delete-gallery/', {'gallery_pk': gallery_pk}, function() {
-
+        gallery.fadeOut(200);
     })
         .fail(function() {
             alert(jqxhr.responseText);
-            gallery.fadeIn(200);
+            gallery.removeClass('deleting');
         });
 });
 
