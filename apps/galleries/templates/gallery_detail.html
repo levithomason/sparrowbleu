@@ -10,10 +10,10 @@
 {% endblock additional_head %}
 
 {% block nav %}
-    <div id="gallery_id" style="display: none;">{{ gallery.pk }}</div>
+    <div id="gallery_pk" data-pk="{{ gallery.pk }}"></div>
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
 
-    <div class="gallery_detail_nav">
+    <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
             <div class="btn-group">
                 {% if perms.Gallery.can_change %}
@@ -33,7 +33,7 @@
 {% endblock nav %}
 
 {% block body %}
-    <div class="gallery_image_container small_thumbs">
+    <div class="gallery_image_container small_thumbs" oncontextmenu="return false">
         {% if perms.Gallery.can_change %}
             <div id="dropzone">
                 <div class="message">
@@ -72,6 +72,7 @@
         <script src="{% static 'js/s3uploads.js' %}"></script>
         <script src="{% static 'js/thumbnailer.js' %}"></script>
         <script src="{% static 'js/gallery_detail_admin.js' %}"></script>
+        <script src="{% static 'js/context_menu.js' %}"></script>
     {% endif %}
 
 {% endblock additional_script %}

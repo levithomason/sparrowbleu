@@ -20,11 +20,9 @@ $(document).ready(function() {
             .addClass('large_thumbs');
     });
 
-
     // Selecting images
     $('.gallery_image_item').click(function() {
         var ele = $(this);
-        console.log(ele);
         var image_pk = ele.data('pk');
         var thumb_overlay = ele.find('.gallery_thumbnail_overlay');
 

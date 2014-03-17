@@ -122,7 +122,7 @@ function initUploadMetrics(callback) {
 function s3_upload() {
     initUploadMetrics(function() {
         var s3upload = new S3Upload({
-            gallery_id: $('#gallery_id').text(),
+            gallery_pk: $('#gallery_pk').data('pk'),
             file_dom_selector: 'image',
             s3_sign_put_url: '/s3-sign-upload/',
 
@@ -251,7 +251,7 @@ function uploadImageToServer(file, url) {
         url: "/create-gallery-image/",
         method: "POST",
         data: {
-            gallery: $('#gallery_id').text(),
+            gallery: $('#gallery_pk').data('pk'),
             full_size_url: url,
             name: file.name
         },
