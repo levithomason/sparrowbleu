@@ -16,13 +16,23 @@
     margin: 0.5%;
     max-width: 252px;
     overflow: hidden;
-    &:hover {
-        text-decoration: none;
-        background: hsl(hue(@sbp_blue), 30%, 96%);
-        .controls {
-            top: 0;
+    &:not(.deleting) {
+        &:hover {
+            text-decoration: none;
+            background: hsl(hue(@sbp_blue), 30%, 96%);
+            .controls {
+                top: 0;
+            }
         }
     }
+    &.deleting {
+        .user-select(none);
+
+        .deleting_overlay {
+            display: block;
+        }
+    }
+
     .controls {
         .sbp_transition(top);
         position: absolute;
@@ -32,9 +42,6 @@
         background: rgba(0, 0, 0, 0.5);
         z-index: 100;
 
-        .delete {
-
-        }
         .delete_confirm {
             display: none;
         }
@@ -99,5 +106,19 @@
                 text-align: right;
             }
         }
+    }
+
+    .deleting_overlay {
+        position: absolute;
+        display: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        line-height: 6;
+        background: rgba(255, 255, 255, 0.85);
+        font-size: 42px;
+        color: #999;
+        z-index: 900;
     }
 }

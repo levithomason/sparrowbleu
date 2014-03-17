@@ -47,12 +47,21 @@
   max-width: 252px;
   overflow: hidden;
 }
-.gallery_list_item:hover {
+.gallery_list_item:not(.deleting):hover {
   text-decoration: none;
   background: #f2f8f7;
 }
-.gallery_list_item:hover .controls {
+.gallery_list_item:not(.deleting):hover .controls {
   top: 0;
+}
+.gallery_list_item.deleting {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.gallery_list_item.deleting .deleting_overlay {
+  display: block;
 }
 .gallery_list_item .controls {
   -webkit-transition-property: top;
@@ -125,4 +134,17 @@
   width: 15px;
   margin-right: 10px;
   text-align: right;
+}
+.gallery_list_item .deleting_overlay {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 6;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 42px;
+  color: #999;
+  z-index: 900;
 }
