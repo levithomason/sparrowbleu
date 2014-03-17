@@ -16,7 +16,7 @@ from sorl.thumbnail import default, get_thumbnail
 def galleries(request):
     if not request.user.is_authenticated():
         return redirect('/client-access')
-    
+
     galleries = []
 
     for gallery in Gallery.objects.all().order_by('name'):

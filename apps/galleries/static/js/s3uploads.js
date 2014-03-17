@@ -2,7 +2,7 @@
 
     window.S3Upload = (function() {
 
-        S3Upload.prototype.gallery_id = '';
+        S3Upload.prototype.gallery_pk = '';
 
         S3Upload.prototype.s3_sign_put_url = '/signS3put';
 
@@ -63,7 +63,7 @@
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = new XMLHttpRequest();
-            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.gallery_id + "/" + window.btoa(file.name), true);
+            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.gallery_pk + "/" + window.btoa(file.name), true);
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
