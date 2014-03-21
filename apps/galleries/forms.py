@@ -11,7 +11,6 @@ class GalleryForm(forms.Form):
 
 class GalleryImageForm(forms.Form):
     gallery = forms.ModelChoiceField(Gallery.objects.all())
-    is_preview_image = forms.BooleanField(required=False)
     full_size_url = forms.URLField(max_length=200)
     name = forms.CharField(max_length=100)
 

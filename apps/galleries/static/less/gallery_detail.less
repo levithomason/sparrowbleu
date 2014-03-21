@@ -25,9 +25,7 @@ body {
     .controls {
         float: left;
         .gallery_detail_done_btn,
-        .small_thumbs,
-        .medium_thumbs,
-        .large_thumbs {
+        .medium_thumbs {
             display: block;
             padding: 12px;
             line-height: normal;
@@ -75,18 +73,6 @@ body {
     text-align: center;
     .user-select(none);
 
-    &.small_thumbs {
-        .gallery_thumbnail {
-            &.small {
-                display: block;
-            }
-            &.medium,
-            &.large {
-                display: none;
-            }
-        }
-    }
-
     &.medium_thumbs {
         .gallery_thumbnail {
             &.medium {
@@ -94,18 +80,6 @@ body {
             }
             &.small,
             &.large {
-                display: none;
-            }
-        }
-    }
-
-    &.large_thumbs {
-        .gallery_thumbnail {
-            &.large {
-                display: block;
-            }
-            &.medium,
-            &.small {
                 display: none;
             }
         }

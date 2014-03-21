@@ -29,12 +29,9 @@ class Gallery(models.Model):
 
 class GalleryImage(models.Model):
     gallery = models.ForeignKey('Gallery')
-    is_preview_image = models.BooleanField(default=False)
     is_selected = models.BooleanField(default=False)
     is_portrait = models.BooleanField()
     full_size_url = models.URLField(max_length=200, null=True)
-    large_thumb_url = models.URLField(max_length=200, null=True)
-    small_thumb_url = models.URLField(max_length=200, null=True)
     name = models.CharField(max_length=100, null=True)
     width = models.PositiveIntegerField(null=True)
     height = models.PositiveIntegerField(null=True)
@@ -55,14 +52,8 @@ class GalleryImage(models.Model):
         thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=90, crop='center')
         return thumb.url
 
-    def small_thumb(self):
-        return self._thumbnail(360)
-
     def medium_thumb(self):
         return self._thumbnail(480)
-
-    def large_thumb(self):
-        return self._thumbnail(640)
 
 
 def process_gallery_image(sender, **kwargs):
@@ -78,8 +69,6 @@ def process_gallery_image(sender, **kwargs):
 
         os.remove(gallery_image.name)
 
-        gallery_image.small_thumb()
         gallery_image.medium_thumb()
-        gallery_image.large_thumb()
 
 post_save.connect(process_gallery_image, sender=GalleryImage)
