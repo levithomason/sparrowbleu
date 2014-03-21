@@ -32,12 +32,6 @@ body {
 body.thumbnails .controls .thumbnails {
   display: none;
 }
-body.thumbnails .controls .fullscreen {
-  display: block;
-}
-body.fullscreen .controls .thumbnails {
-  display: block;
-}
 body.fullscreen .controls .fullscreen {
   display: none;
 }
@@ -120,8 +114,27 @@ body.fullscreen .controls .fullscreen {
   -ms-user-select: none;
   user-select: none;
 }
-.gallery_image_container.thumbnails .gallery_thumbnail {
-  display: block;
+.gallery_image_container .fullscreen_view {
+  position: fixed;
+  display: none;
+  padding: 60px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 800;
+  background: rgba(0, 0, 0, 0.85);
+}
+.gallery_image_container .fullscreen_view .image {
+  position: absolute;
+  padding: 10px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
 }
 .gallery_image_container .gallery_image_item {
   display: inline-block;

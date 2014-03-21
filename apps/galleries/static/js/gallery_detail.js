@@ -58,11 +58,15 @@
             $('body')
                 .removeClass('fullscreen')
                 .addClass('thumbnails');
+            $('.fullscreen_view').fadeOut();
+            $('.gallery_image_container').find('.gallery_image_item').fadeIn();
         });
         $('.controls .fullscreen').click(function() {
             $('body')
                 .removeClass('thumbnails')
                 .addClass('fullscreen');
+            $('.fullscreen_view').fadeIn();
+            $('.gallery_image_container').find('.gallery_image_item').fadeOut();
         });
 
         // Selecting images
@@ -91,9 +95,26 @@
                 });
         });
 
+        function fullscreen() {
+            var fullscreen_url_elements = $('#fullscreen_urls').find('.url'),
+                fullscreen_urls = [],
+                fullscreen_image = $('.fullscreen_view .image');
+
+            for (var i = 0; i < fullscreen_url_elements.length; i++) {
+                fullscreen_urls[i] = $(fullscreen_url_elements[i]).text();
+            }
+
+            fullscreen_image.attr('src', fullscreen_urls[0]);
+
+            function nextFullscreen() {
+                console.log(fullscreen_urls.indexOf());
+            }
+        }
+
         function init() {
             update_selected_images();
             $('.controls .thumbnails').click();
+            fullscreen();
         }
         init();
     });

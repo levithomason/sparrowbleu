@@ -12,16 +12,10 @@ body {
             .thumbnails {
                 display: none;
             }
-            .fullscreen {
-                display: block;
-            }
         }
     }
     &.fullscreen {
         .controls {
-            .thumbnails {
-                display: block;
-            }
             .fullscreen {
                 display: none;
             }
@@ -95,9 +89,27 @@ body {
     text-align: center;
     .user-select(none);
 
-    &.thumbnails {
-        .gallery_thumbnail {
-            display: block;
+    .fullscreen_view {
+        position: fixed;
+        display: none;
+        padding: 60px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 800;
+        background: rgba(0,0,0,0.85);
+
+        .image {
+            position: absolute;
+            padding: 10px;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            max-width: 100%;
+            max-height: 100%;
         }
     }
 

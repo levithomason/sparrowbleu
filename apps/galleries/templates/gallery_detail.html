@@ -5,13 +5,16 @@
 
 {% block additional_head %}
     <link rel="stylesheet" href="{% static 'less/gallery_detail.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/jquery.isotope.css' %}" type="text/css" />
-    {# <link rel="stylesheet" href="{% static 'css/dropzone.css' %}" type="text/css" /> #}
 {% endblock additional_head %}
 
 {% block nav %}
     <div id="gallery_pk" data-pk="{{ gallery.pk }}"></div>
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
+    <div id="fullscreen_urls" style="display: none;">
+        {% for image in gallery_images %}
+            <div class="url">{{ image.fullscreen }}</div>
+        {% endfor %}
+    </div>
 
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
@@ -32,7 +35,7 @@
 {% endblock nav %}
 
 {% block body %}
-    <div class="gallery_image_container thumbnails" oncontextmenu="return false">
+    <div class="gallery_image_container" oncontextmenu="return false">
         {% if perms.Gallery.can_change %}
             <div id="dropzone">
                 <div class="message">
@@ -55,7 +58,7 @@
         </div>
 
         {% for image in gallery_images %}
-            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
+            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" data-fullscreen-url="{{ image.fullscreen }}">
                 <div class="gallery_image_item_inner">
                     <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>

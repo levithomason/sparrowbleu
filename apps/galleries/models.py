@@ -39,22 +39,17 @@ class GalleryImage(models.Model):
     def __unicode__(self):
         return self.full_size_url
 
-    def thumbnail(self):
-        size = 480
-        w = self.width
-        h = self.height
-
-        if self.is_portrait:
-            thumb_height = size
-            thumb_width = int(round((size / float(h)) * float(w)))
-        else:
-            thumb_width = size
-            thumb_height = int(round((size / float(w)) * float(h)))
-
-        thumb_dimensions = '%sx%s' % (thumb_width, thumb_height)
-        thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=90, crop='center')
+    def _thumbnail(self, width, height):
+        thumb_dimensions = '%sx%s' % (width, height)
+        thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=90, crop='noop')
 
         return thumb.url
+
+    def thumbnail(self):
+        return self._thumbnail(480, 480)
+
+    def fullscreen(self):
+        return self._thumbnail(1920, 1200)
 
 
 def process_gallery_image(sender, **kwargs):
@@ -68,6 +63,7 @@ def process_gallery_image(sender, **kwargs):
         gallery_image.height = image_file.size[1]
         gallery_image.is_portrait = image_file.size[0] < image_file.size[1]
         gallery_image.thumbnail()
+        gallery_image.fullscreen()
 
         os.remove(gallery_image.name)
 
