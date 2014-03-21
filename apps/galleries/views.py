@@ -13,6 +13,26 @@ from sorl.thumbnail.conf import settings
 from sorl.thumbnail import default, get_thumbnail
 
 
+def client_access(request):
+    if request.method == 'POST':
+        form = ClientAccessForm(request.POST or None)
+
+        if form.is_valid():
+            passcode = form.cleaned_data['passcode']
+
+            try:
+                gallery = Gallery.objects.get(passcode=passcode)
+                return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
+
+            except Gallery.DoesNotExist:
+                return render(request, 'client_access.html', {
+                    'gallery_does_not_exist': True,
+                    'passcode': passcode
+                })
+
+    return render(request, 'client_access.html', locals())
+
+
 def galleries(request):
     if not request.user.is_authenticated():
         return redirect('/client-access')
@@ -191,9 +211,15 @@ def gallery_detail(request, pk=None, passcode=None):
             gallery = Gallery.objects.get(pk=pk)
             gallery_images = GalleryImage.objects.order_by('name').filter(gallery=pk)
 
+            fullscreen_urls = []
+            print gallery_images
+            for i in gallery_images:
+                fullscreen_urls.append(i.fullscreen())
+
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
                 'gallery_images': gallery_images,
+                'fullscreen_urls': fullscreen_urls
             })
 
         except Gallery.DoesNotExist:
@@ -254,23 +280,3 @@ def toggle_select_gallery_image(request):
         except GalleryImage.DoesNotExist:
 
             return HttpResponse(content="Could find image.", content_type=None, status=400)
-
-
-def client_access(request):
-    if request.method == 'POST':
-        form = ClientAccessForm(request.POST or None)
-        
-        if form.is_valid():
-            passcode = form.cleaned_data['passcode']
-
-            try:
-                gallery = Gallery.objects.get(passcode=passcode)
-                return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
-
-            except Gallery.DoesNotExist:
-                return render(request, 'client_access.html', {
-                    'gallery_does_not_exist': True,
-                    'passcode': passcode
-                })
-
-    return render(request, 'client_access.html', locals())

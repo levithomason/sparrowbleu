@@ -5,13 +5,16 @@
 
 {% block additional_head %}
     <link rel="stylesheet" href="{% static 'less/gallery_detail.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/jquery.isotope.css' %}" type="text/css" />
-    {# <link rel="stylesheet" href="{% static 'css/dropzone.css' %}" type="text/css" /> #}
 {% endblock additional_head %}
 
 {% block nav %}
     <div id="gallery_pk" data-pk="{{ gallery.pk }}"></div>
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
+    <div id="fullscreen_urls" style="display: none;">
+        {% for image in gallery_images %}
+            <div class="url">{{ image.fullscreen }}</div>
+        {% endfor %}
+    </div>
 
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
@@ -19,9 +22,8 @@
                 {% if perms.Gallery.can_change %}
                 <a href="/galleries" class="gallery_detail_done_btn btn btn-lg btn-link"><i class="fa fa-angle-double-left"></i></a>
                 {% endif %}
-                <div class="small_thumbs btn btn-lg btn-link">sm</div>
-                <div class="medium_thumbs btn btn-lg btn-link">md</div>
-                <div class="large_thumbs btn btn-lg btn-link">lg</div>
+                <div class="thumbnails btn btn-lg btn-link"><i class="fa fa-picture-o"></i> thumbnails</div>
+                <div class="fullscreen btn btn-lg btn-link"><i class="fa fa-fullscreen"></i> fullscreen</div>
             </div>
         </div>
         <div class="gallery_title">{{ gallery }}</div>
@@ -33,7 +35,7 @@
 {% endblock nav %}
 
 {% block body %}
-    <div class="gallery_image_container small_thumbs" oncontextmenu="return false">
+    <div class="gallery_image_container" oncontextmenu="return false">
         {% if perms.Gallery.can_change %}
             <div id="dropzone">
                 <div class="message">
@@ -51,12 +53,28 @@
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
+        <div class="fullscreen_view">
+            <div class="image_container">
+                <img class="image">
+            </div>
+            <div class="controls">
+                <div class="previous" onclick="fullscreen.previous()">
+                    <div class="icon">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                </div>
+                <div class="next" onclick="fullscreen.next()">
+                    <div class="icon">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% for image in gallery_images %}
             <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
                 <div class="gallery_image_item_inner">
-                    <img class="gallery_thumbnail small" src="{{ image.small_thumb }}">
-                    <img class="gallery_thumbnail medium" src="{{ image.medium_thumb }}">
-                    <img class="gallery_thumbnail large" src="{{ image.large_thumb }}">
+                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>
                     <div class="gallery_thumbnail_overlay"></div>
                 </div>
