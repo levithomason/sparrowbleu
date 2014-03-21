@@ -216,7 +216,7 @@ def gallery_detail(request, pk=None, passcode=None):
             for i in gallery_images:
                 fullscreen_urls.append(i.fullscreen())
 
-                return render(request, 'gallery_detail.html', {
+            return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
                 'gallery_images': gallery_images,
                 'fullscreen_urls': fullscreen_urls

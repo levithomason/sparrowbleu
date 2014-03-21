@@ -32,6 +32,12 @@ body {
 body.thumbnails .controls .thumbnails {
   display: none;
 }
+body.fullscreen .gallery_detail_nav {
+  background: none;
+}
+body.fullscreen .gallery_detail_nav .gallery_title {
+  display: none;
+}
 body.fullscreen .controls .fullscreen {
   display: none;
 }
@@ -85,6 +91,7 @@ body.fullscreen .controls .fullscreen {
 }
 .gallery_detail_nav #selected_images {
   float: right;
+  padding: 0 12px;
   text-align: right;
   font-size: 16px;
   z-index: 100;
@@ -117,17 +124,21 @@ body.fullscreen .controls .fullscreen {
 .gallery_image_container .fullscreen_view {
   position: fixed;
   display: none;
-  padding: 60px;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   z-index: 800;
-  background: rgba(0, 0, 0, 0.85);
 }
-.gallery_image_container .fullscreen_view .image {
+.gallery_image_container .fullscreen_view .image_container {
   position: absolute;
-  padding: 10px;
+  top: 10px;
+  left: 10px;
+  bottom: 10px;
+  right: 10px;
+}
+.gallery_image_container .fullscreen_view .image_container .image {
+  position: absolute;
   margin: auto;
   top: 0;
   left: 0;
@@ -135,6 +146,38 @@ body.fullscreen .controls .fullscreen {
   right: 0;
   max-width: 100%;
   max-height: 100%;
+  box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.1);
+}
+.gallery_image_container .fullscreen_view .controls .previous,
+.gallery_image_container .fullscreen_view .controls .next {
+  position: absolute;
+  padding: 20px;
+  top: 60px;
+  bottom: 0;
+  width: 150px;
+  font-size: 56px;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.gallery_image_container .fullscreen_view .controls .previous:hover,
+.gallery_image_container .fullscreen_view .controls .next:hover {
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+}
+.gallery_image_container .fullscreen_view .controls .previous .icon,
+.gallery_image_container .fullscreen_view .controls .next .icon {
+  position: absolute;
+  line-height: 0;
+  top: 50%;
+  left: 0;
+  right: 0;
+}
+.gallery_image_container .fullscreen_view .controls .previous {
+  left: 0;
+}
+.gallery_image_container .fullscreen_view .controls .next {
+  right: 0;
 }
 .gallery_image_container .gallery_image_item {
   display: inline-block;
@@ -257,4 +300,6 @@ body.fullscreen .controls .fullscreen {
   color: #74736e;
   text-overflow: ellipsis;
   background: rgba(27, 25, 24, 0.8);
+  border-radius: 3px;
+  margin-bottom: 1px;
 }

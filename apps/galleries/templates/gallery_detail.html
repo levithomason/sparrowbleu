@@ -54,7 +54,21 @@
         {% endif %}
 
         <div class="fullscreen_view">
-            <img class="image" src="">
+            <div class="image_container">
+                <img class="image">
+            </div>
+            <div class="controls">
+                <div class="previous" onclick="fullscreen.previous()">
+                    <div class="icon">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                </div>
+                <div class="next" onclick="fullscreen.next()">
+                    <div class="icon">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
         </div>
 
         {% for image in gallery_images %}
