@@ -13,13 +13,14 @@
     <div id="gallery_pk" data-pk="{{ gallery.pk }}"></div>
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
 
-    <div class="gallery_detail_nav" oncontextmenu="return false" onload="init()">
+    <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
             <div class="btn-group">
                 {% if perms.Gallery.can_change %}
                 <a href="/galleries" class="gallery_detail_done_btn btn btn-lg btn-link"><i class="fa fa-angle-double-left"></i></a>
                 {% endif %}
-                <div class="medium_thumbs btn btn-lg btn-link">md</div>
+                <div class="thumbnails btn btn-lg btn-link"><i class="fa fa-picture-o"></i> thumbnails</div>
+                <div class="fullscreen btn btn-lg btn-link"><i class="fa fa-fullscreen"></i> fullscreen</div>
             </div>
         </div>
         <div class="gallery_title">{{ gallery }}</div>
@@ -31,7 +32,7 @@
 {% endblock nav %}
 
 {% block body %}
-    <div class="gallery_image_container medium_thumbs" oncontextmenu="return false">
+    <div class="gallery_image_container thumbnails" oncontextmenu="return false">
         {% if perms.Gallery.can_change %}
             <div id="dropzone">
                 <div class="message">
@@ -49,10 +50,14 @@
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
+        <div class="fullscreen_view">
+            <img class="image" src="">
+        </div>
+
         {% for image in gallery_images %}
             <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
                 <div class="gallery_image_item_inner">
-                    <img class="gallery_thumbnail medium" src="{{ image.medium_thumb }}">
+                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>
                     <div class="gallery_thumbnail_overlay"></div>
                 </div>

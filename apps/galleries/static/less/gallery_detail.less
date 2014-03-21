@@ -6,6 +6,27 @@
 body {
     background: url('../../static/img/zigzag_dark_highres.png') repeat center center;
     background-size: 53px 19px;
+
+    &.thumbnails {
+        .controls {
+            .thumbnails {
+                display: none;
+            }
+            .fullscreen {
+                display: block;
+            }
+        }
+    }
+    &.fullscreen {
+        .controls {
+            .thumbnails {
+                display: block;
+            }
+            .fullscreen {
+                display: none;
+            }
+        }
+    }
 }
 
 .gallery_detail_nav {
@@ -25,7 +46,8 @@ body {
     .controls {
         float: left;
         .gallery_detail_done_btn,
-        .medium_thumbs {
+        .thumbnails,
+        .fullscreen {
             display: block;
             padding: 12px;
             line-height: normal;
@@ -73,15 +95,9 @@ body {
     text-align: center;
     .user-select(none);
 
-    &.medium_thumbs {
+    &.thumbnails {
         .gallery_thumbnail {
-            &.medium {
-                display: block;
-            }
-            &.small,
-            &.large {
-                display: none;
-            }
+            display: block;
         }
     }
 

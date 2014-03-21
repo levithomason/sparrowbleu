@@ -54,15 +54,15 @@
         }
 
         // Image size controls
-        $('.controls .medium_thumbs').click(function() {
-            $('.gallery_image_container')
-                .removeClass('full_screen')
-                .addClass('medium_thumbs');
+        $('.controls .thumbnails').click(function() {
+            $('body')
+                .removeClass('fullscreen')
+                .addClass('thumbnails');
         });
-        $('.controls .full_screen').click(function() {
-            $('.gallery_image_container')
-                .removeClass('medium_thumbs')
-                .addClass('full_screen');
+        $('.controls .fullscreen').click(function() {
+            $('body')
+                .removeClass('thumbnails')
+                .addClass('fullscreen');
         });
 
         // Selecting images
@@ -93,7 +93,8 @@
 
         function init() {
             update_selected_images();
+            $('.controls .thumbnails').click();
         }
+        init();
     });
-
 })();

@@ -39,21 +39,22 @@ class GalleryImage(models.Model):
     def __unicode__(self):
         return self.full_size_url
 
-    def _thumbnail(self, size):
+    def thumbnail(self):
+        size = 480
         w = self.width
         h = self.height
+
         if self.is_portrait:
             thumb_height = size
             thumb_width = int(round((size / float(h)) * float(w)))
         else:
             thumb_width = size
             thumb_height = int(round((size / float(w)) * float(h)))
+
         thumb_dimensions = '%sx%s' % (thumb_width, thumb_height)
         thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=90, crop='center')
-        return thumb.url
 
-    def medium_thumb(self):
-        return self._thumbnail(480)
+        return thumb.url
 
 
 def process_gallery_image(sender, **kwargs):
@@ -66,9 +67,9 @@ def process_gallery_image(sender, **kwargs):
         gallery_image.width = image_file.size[0]
         gallery_image.height = image_file.size[1]
         gallery_image.is_portrait = image_file.size[0] < image_file.size[1]
+        gallery_image.thumbnail()
 
         os.remove(gallery_image.name)
 
-        gallery_image.medium_thumb()
 
 post_save.connect(process_gallery_image, sender=GalleryImage)
