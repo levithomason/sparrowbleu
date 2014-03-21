@@ -72,7 +72,7 @@
         </div>
 
         {% for image in gallery_images %}
-            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" data-fullscreen-url="{{ image.fullscreen }}">
+            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
                 <div class="gallery_image_item_inner">
                     <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>
