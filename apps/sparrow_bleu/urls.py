@@ -3,7 +3,7 @@ from django.contrib import admin
 import settings
 
 urlpatterns = patterns('',
-    url(r'^$', 'apps.sparrow_bleu.views.home', name='Home'),
+    url(r'^$', 'apps.sparrow_bleu.views.home', name='home'),
 
     url(r'^', include('apps.user.urls')),
     url(r'^', include('apps.galleries.urls')),

@@ -432,11 +432,18 @@ label {
 .navbar {
   margin: 3px 3px 20px 3px;
 }
+.navbar .navbar-header {
+  margin-right: 20px;
+}
+.navbar .navbar-header .navbar-brand {
+  padding: 7px 8px 8px 8px;
+}
 .navbar i {
   margin-right: 6px;
 }
-.navbar-brand {
-  padding: 8px;
+.navbar li.active a {
+  background-color: #a1d1c9 !important;
+  color: #FFF !important;
 }
 #brand_sparrow_bleu {
   position: relative;

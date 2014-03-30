@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 
 def home(request):
-    return render(request, 'home.html', locals())
+    return redirect('/client-access')
