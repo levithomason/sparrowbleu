@@ -80,7 +80,8 @@ body.fullscreen .controls .fullscreen {
 .gallery_detail_nav .gallery_title {
   position: absolute;
   width: 100%;
-  font-size: 36px;
+  font-size: 28px;
+  line-height: 50px;
   text-align: center;
   cursor: default;
 }
@@ -145,6 +146,8 @@ body.fullscreen .controls .fullscreen {
   left: 0;
   bottom: 0;
   right: 0;
+  max-width: 100%;
+  max-height: 100%;
   cursor: pointer;
 }
 .gallery_image_container .fullscreen_view .image_container .fullscreen_image_item.active {
