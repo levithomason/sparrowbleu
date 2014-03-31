@@ -19,18 +19,6 @@ class Command(NoArgsCommand):
             'creating fresh db'
         )
 
-        # drop user if exists
-        run(
-            ['psql', '-d', 'sbp', '-c DROP ROLE IF EXISTS postgres'],
-            'dropping db user'
-        )
-
-        # create database super user
-        run(
-            ['psql', '-d', 'sbp', '-c', "CREATE ROLE postgres PASSWORD 'admin' SUPERUSER CREATEROLE CREATEDB LOGIN;"],
-            'creating db user'
-        )
-
         # sync db
         run(
             ['python', 'manage.py', 'syncdb', '--migrate', '--noinput'],
