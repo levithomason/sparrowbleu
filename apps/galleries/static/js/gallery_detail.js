@@ -132,8 +132,6 @@ var fullscreen = {
             if (e.keyCode === 32 || 13) {
                 selectImage($('.fullscreen_view .image_container .fullscreen_image_item.active'));
             }
-
-            console.log(e.keyCode);
         });
     }
 };
