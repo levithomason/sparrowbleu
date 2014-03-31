@@ -118,19 +118,21 @@ var fullscreen = {
         // controls
         $('body').on('keydown', function(e) {
 
-            // left
-            if (e.keyCode === 37) {
-                fullscreen.previous();
-            }
+            if ($('body').hasClass('fullscreen')) {
+                // left
+                if (e.keyCode === 37) {
+                    fullscreen.previous();
+                }
 
-            // right
-            if (e.keyCode === 39) {
-                fullscreen.next();
-            }
+                // right
+                if (e.keyCode === 39) {
+                    fullscreen.next();
+                }
 
-            // space || enter
-            if (e.keyCode === 32 || 13) {
-                selectImage($('.fullscreen_view .image_container .fullscreen_image_item.active'));
+                // space || enter
+                if (e.keyCode === 32 || e.keyCode === 13) {
+                    selectImage($('.fullscreen_view .image_container .fullscreen_image_item.active'));
+                }
             }
         });
     }
