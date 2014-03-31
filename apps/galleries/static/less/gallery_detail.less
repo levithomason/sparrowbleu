@@ -4,6 +4,7 @@
 @sbp_gallery_overlay_background: hsla(25, 4%, 10%, 0.80);
 
 body {
+    font-family: "Raleway Light", sans-serif;
     background: url('../../static/img/zigzag_dark_highres.png') repeat center center;
     background-size: 53px 19px;
 
@@ -26,11 +27,13 @@ body {
                 display: none;
             }
         }
+        .the_end {
+            display: none;
+        }
     }
 }
 
 .gallery_detail_nav {
-    font-family: "Raleway Light", sans-serif;
     position: fixed;
     padding: 5px 10px;
     height: 60px;
@@ -214,6 +217,8 @@ body {
         .gallery_image_item_inner {
             position: relative;
             line-height: 0;
+            width: 100%;
+            height: 100%;
 
             &:hover {
                 .name {
@@ -249,6 +254,16 @@ body {
                 height: 100%;
                 background: #FFF;
             }
+            .loading {
+                position: absolute;
+                display: inline-block;
+                margin: -21px 0 0 -21px;
+                width: 42px;
+                height: 42px;
+                top: 50%;
+                left: 50%;
+                font-size: 42px;
+            }
         }
         &.selected {
             .favorite {
@@ -260,6 +275,11 @@ body {
                 opacity: 0.35;
             }
         }
+    }
+
+    .the_end {
+        font-size: 42px;
+        margin: 150px 0 75px 0;
     }
 }
 

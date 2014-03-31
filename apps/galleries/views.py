@@ -1,3 +1,4 @@
+from __future__ import division
 import base64
 import hmac
 import json
@@ -209,17 +210,49 @@ def gallery_detail(request, pk=None, passcode=None):
     else:
         try:
             gallery = Gallery.objects.get(pk=pk)
-            gallery_images = GalleryImage.objects.order_by('name').filter(gallery=pk)
+            gallery_image_qs = GalleryImage.objects.order_by('name').filter(gallery=pk)
 
-            fullscreen_urls = []
-            print gallery_images
-            for i in gallery_images:
-                fullscreen_urls.append(i.fullscreen())
+            gallery_images = []
+            for image in gallery_image_qs:
+                if image.is_portrait:
+                    if image.width >= 360:
+                        thumb_width = 360
+                    else:
+                        thumb_width = image.width
+
+                    max_height = image.height * (360 / image.width)
+
+                    if image.height < max_height:
+                        thumb_height = image.height
+                    else:
+                        thumb_height = max_height
+                else:
+                    if image.height >= 360:
+                        thumb_height = 360
+                    else:
+                        thumb_height = image.height
+
+                    max_width = image.width * (360 / image.height)
+
+                    if image.width < max_width:
+                        thumb_width = image.width
+                    else:
+                        thumb_width = max_width
+
+                gallery_images.append({
+                    'pk': image.pk,
+                    'width': image.width,
+                    'height': image.height,
+                    'thumbnail': image.thumbnail,
+                    'fullscreen': image.fullscreen,
+                    'thumb_width': thumb_width,
+                    'thumb_height': thumb_height,
+                    'is_selected': image.is_selected
+                })
 
             return render(request, 'gallery_detail.html', {
                 'gallery': gallery,
                 'gallery_images': gallery_images,
-                'fullscreen_urls': fullscreen_urls
             })
 
         except Gallery.DoesNotExist:

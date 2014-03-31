@@ -75,14 +75,19 @@
         </div>
 
         {% for image in gallery_images %}
-            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}">
-                <div class="gallery_image_item_inner">
-                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
-                    <span class="favorite"><i class="fa fa-heart-o"></i></span>
-                    <div class="gallery_thumbnail_overlay"></div>
+        <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.thumb_width }}px; height: {{ image.thumb_height }}px;">
+            <div class="gallery_image_item_inner">
+                <div class="loading">
+                    <i class="fa fa-spin fa-spinner"></i>
                 </div>
+                <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
+                <span class="favorite"><i class="fa fa-heart-o"></i></span>
+
+                <div class="gallery_thumbnail_overlay"></div>
             </div>
+        </div>
         {% endfor %}
+        <div class="the_end">~ the end ~</div>
     </div>
 {% endblock body %}
 
