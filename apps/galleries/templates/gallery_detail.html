@@ -10,11 +10,6 @@
 {% block nav %}
     <div id="gallery_pk" data-pk="{{ gallery.pk }}"></div>
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
-    <div id="fullscreen_urls" style="display: none;">
-        {% for image in gallery_images %}
-            <div class="url">{{ image.fullscreen }}</div>
-        {% endfor %}
-    </div>
 
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
@@ -48,14 +43,22 @@
                     <div class="progress-bar progress-bar-info" role="progressbar"></div>
                 </div>
                 <div class="files_uploading"></div>
-
             </div>
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
         <div class="fullscreen_view">
             <div class="image_container">
-                <img class="image">
+                {% for image in gallery_images %}
+                <div class="fullscreen_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.width }}px; height: {{ image.height }}px">
+                    <div class="inner">
+                        <img class="image" src="{{ image.fullscreen }}">
+                        <span class="favorite"><i class="fa fa-heart-o"></i></span>
+
+                        <div class="gallery_thumbnail_overlay"></div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
             <div class="controls">
                 <div class="previous" onclick="fullscreen.previous()">

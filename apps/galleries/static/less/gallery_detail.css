@@ -137,7 +137,27 @@ body.fullscreen .controls .fullscreen {
   bottom: 10px;
   right: 10px;
 }
-.gallery_image_container .fullscreen_view .image_container .image {
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item {
+  position: absolute;
+  display: none;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item.active {
+  display: block;
+}
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item.selected .inner .favorite {
+  opacity: 1;
+}
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner {
+  position: relative;
+  height: 100%;
+}
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner .image {
   position: absolute;
   margin: auto;
   top: 0;
@@ -147,6 +167,24 @@ body.fullscreen .controls .fullscreen {
   max-width: 100%;
   max-height: 100%;
   box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.1);
+}
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner .favorite {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  color: #ffebee;
+  font-size: 36px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+}
+.gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner .gallery_thumbnail_overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFF;
 }
 .gallery_image_container .fullscreen_view .controls .previous,
 .gallery_image_container .fullscreen_view .controls .next {
@@ -164,6 +202,7 @@ body.fullscreen .controls .fullscreen {
 .gallery_image_container .fullscreen_view .controls .next:hover {
   color: rgba(255, 255, 255, 0.85);
   text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.1);
 }
 .gallery_image_container .fullscreen_view .controls .previous .icon,
 .gallery_image_container .fullscreen_view .controls .next .icon {
@@ -226,9 +265,6 @@ body.fullscreen .controls .fullscreen {
   width: 100%;
   height: 100%;
   background: #FFF;
-}
-.gallery_image_container .gallery_image_item.selected .gallery_large {
-  opacity: 0;
 }
 .gallery_image_container .gallery_image_item.selected .favorite {
   opacity: 1;
