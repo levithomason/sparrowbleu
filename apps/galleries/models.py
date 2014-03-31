@@ -64,6 +64,7 @@ def process_gallery_image(sender, **kwargs):
         gallery_image.is_portrait = image_file.size[0] < image_file.size[1]
         gallery_image.thumbnail()
         gallery_image.fullscreen()
+        gallery_image.save()
 
         os.remove(gallery_image.name)
 
