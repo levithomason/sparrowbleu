@@ -1,4 +1,5 @@
 from __future__ import division
+import operator
 import base64
 import hmac
 import json
@@ -210,10 +211,11 @@ def gallery_detail(request, pk=None, passcode=None):
     else:
         try:
             gallery = Gallery.objects.get(pk=pk)
-            gallery_image_qs = GalleryImage.objects.order_by('name').filter(gallery=pk)
+            gallery_image_qs = GalleryImage.objects.filter(gallery=pk)
+            naturally_sorted_qs = sorted(gallery_image_qs, key=operator.attrgetter('name'))
 
             gallery_images = []
-            for image in gallery_image_qs:
+            for image in naturally_sorted_qs:
                 if image.is_portrait:
                     if image.width >= 360:
                         thumb_width = 360
