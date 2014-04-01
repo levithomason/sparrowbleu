@@ -1,5 +1,4 @@
 from __future__ import division
-import operator
 import base64
 import hmac
 import json
@@ -9,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
+from apps.sparrow_bleu.utils import _human_key
 from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key
 # sorl settings import required for sorl default to work properly
 from sorl.thumbnail.conf import settings
@@ -212,7 +212,8 @@ def gallery_detail(request, pk=None, passcode=None):
         try:
             gallery = Gallery.objects.get(pk=pk)
             gallery_image_qs = GalleryImage.objects.filter(gallery=pk)
-            naturally_sorted_qs = sorted(gallery_image_qs, key=operator.attrgetter('name'))
+
+            naturally_sorted_qs = sorted(gallery_image_qs, key=lambda img: _human_key(img.name))
 
             gallery_images = []
             for image in naturally_sorted_qs:
