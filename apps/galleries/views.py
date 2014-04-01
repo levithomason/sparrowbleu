@@ -249,7 +249,8 @@ def gallery_detail(request, pk=None, passcode=None):
                     'fullscreen': image.fullscreen,
                     'thumb_width': thumb_width,
                     'thumb_height': thumb_height,
-                    'is_selected': image.is_selected
+                    'is_selected': image.is_selected,
+                    'name': image.name
                 })
 
             return render(request, 'gallery_detail.html', {
