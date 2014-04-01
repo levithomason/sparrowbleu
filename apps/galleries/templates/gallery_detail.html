@@ -14,11 +14,16 @@
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
             <div class="btn-group">
-                {% if perms.Gallery.can_change %}
-                <a href="/galleries" class="gallery_detail_done_btn btn btn-lg btn-link"><i class="fa fa-angle-double-left"></i></a>
-                {% endif %}
-                <div class="thumbnails btn btn-lg btn-link"><i class="fa fa-picture-o"></i> thumbnails</div>
-                <div class="fullscreen btn btn-lg btn-link"><i class="fa fa-fullscreen"></i> fullscreen</div>
+                <a href="/galleries" class="gallery_detail_done_btn btn btn-link">
+                    <i class="fa fa-angle-double-left"></i>
+                    done
+                </a>
+                <div class="thumbnails btn btn-lg btn-link">
+                    thumbnails
+                </div>
+                <div class="fullscreen btn btn-lg btn-link">
+                    fullscreen
+                </div>
             </div>
         </div>
         <div class="gallery_title">{{ gallery }}</div>
@@ -87,7 +92,22 @@
             </div>
         </div>
         {% endfor %}
+        {% if gallery_images %}
         <div class="the_end">~ the end ~</div>
+        {% else %}
+            {% if perms.Gallery.can_change %}
+                <div class="drop_images">
+                    drop images
+                    <i class="fa fa-hand-o-down"></i>
+                </div>
+            {% else %}
+            <div class="no_photos">
+                <i class="fa fa-camera-retro"></i>
+                <br/>
+                SparrowBleu will add your photos soon
+            </div>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock body %}
 

@@ -290,6 +290,8 @@ body.fullscreen .the_end {
 .gallery_image_container .gallery_image_item.uploading .gallery_thumbnail {
   opacity: 0.35;
 }
+.gallery_image_container .no_photos,
+.gallery_image_container .drop_images,
 .gallery_image_container .the_end {
   font-size: 42px;
   margin: 150px 0 75px 0;
@@ -347,7 +349,7 @@ body.fullscreen .the_end {
   width: 300px;
   top: 70px;
   bottom: 10px;
-  overflow-x: scroll;
+  overflow-y: auto;
   right: 10px;
 }
 #status .files_uploading .upload {
