@@ -93,15 +93,15 @@ body.fullscreen .the_end {
     display: none;
   }
 }
-.gallery_detail_nav #selected_images {
+.gallery_detail_nav .selected_images {
   float: right;
   padding: 0 12px;
   text-align: right;
   font-size: 16px;
   z-index: 100;
 }
-.gallery_detail_nav #selected_images .included,
-.gallery_detail_nav #selected_images .extra {
+.gallery_detail_nav .selected_images .selected,
+.gallery_detail_nav .selected_images .extra {
   -webkit-transition-property: all;
   -o-transition-property: all;
   transition-property: all;
@@ -112,8 +112,8 @@ body.fullscreen .the_end {
   -o-transition-duration: 0.1s;
   transition-duration: 0.1s;
 }
-.gallery_detail_nav #selected_images .included.primary,
-.gallery_detail_nav #selected_images .extra.primary {
+.gallery_detail_nav .selected_images .selected.primary,
+.gallery_detail_nav .selected_images .extra.primary {
   font-size: 21px;
   color: #a1d1c9;
 }
@@ -135,15 +135,15 @@ body.fullscreen .the_end {
   z-index: 800;
 }
 .gallery_image_container .fullscreen_view .image_container {
-  position: absolute;
+  position: fixed;
   top: 10px;
   left: 10px;
   bottom: 10px;
   right: 10px;
 }
 .gallery_image_container .fullscreen_view .image_container .fullscreen_image_item {
-  position: absolute;
   display: none;
+  position: absolute;
   margin: auto;
   top: 0;
   left: 0;
@@ -151,7 +151,6 @@ body.fullscreen .the_end {
   right: 0;
   max-width: 100%;
   max-height: 100%;
-  cursor: pointer;
 }
 .gallery_image_container .fullscreen_view .image_container .fullscreen_image_item.active {
   display: block;
@@ -161,18 +160,14 @@ body.fullscreen .the_end {
 }
 .gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner {
   position: relative;
-  height: 100%;
+  display: inline-block;
 }
 .gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner .image {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   max-width: 100%;
   max-height: 100%;
   box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: static;
 }
 .gallery_image_container .fullscreen_view .image_container .fullscreen_image_item .inner .favorite {
   position: absolute;
