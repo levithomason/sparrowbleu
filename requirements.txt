@@ -8,6 +8,7 @@ django-storages==1.1.8
 django-toolbelt==0.0.1
 gunicorn==18.0
 psycopg2==2.5.1
+python-postmark==0.4.1
 raven==3.5.0
 requests==2.2.1
 sorl-thumbnail==11.12

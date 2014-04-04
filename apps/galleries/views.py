@@ -6,13 +6,15 @@ import hashlib
 import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.core.mail import mail_managers
+from django.template.loader import render_to_string
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from apps.sparrow_bleu.utils import _human_key
-from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key
-# sorl settings import required for sorl default to work properly
-from sorl.thumbnail.conf import settings
+from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key, POSTMARK_API_KEY
+from sorl.thumbnail.conf import settings  # required for sorl default to work properly
 from sorl.thumbnail import default, get_thumbnail
+from postmark import PMMail
 
 
 def client_access(request):
@@ -206,9 +208,7 @@ def delete_gallery(request):
 
 
 def gallery_detail(request, pk=None, passcode=None):
-    if pk is None or passcode is None:
-        return redirect('/galleries/')
-    else:
+    if pk and passcode:
         try:
             gallery = Gallery.objects.get(pk=pk)
             gallery_image_qs = GalleryImage.objects.filter(gallery=pk)
@@ -260,6 +260,50 @@ def gallery_detail(request, pk=None, passcode=None):
 
         except Gallery.DoesNotExist:
             return redirect('/galleries/')
+    else:
+        return redirect('/galleries/')
+
+
+def gallery_done(request, pk=None):
+    if pk:
+        try:
+            gallery = Gallery.objects.get(pk=pk)
+            cost_per_extra_image = gallery.cost_per_extra_image
+            number_of_images = gallery.number_of_images
+            images = GalleryImage.objects.all().filter(gallery=gallery, is_selected=True)
+            selected_image_count = images.count()
+            if selected_image_count > number_of_images:
+                extra_images = selected_image_count - number_of_images
+                extra_cost = cost_per_extra_image * (selected_image_count - gallery.number_of_images)
+            else:
+                extra_images = 0
+                extra_cost = 0
+
+            context = {
+                'gallery': gallery,
+                'images': images,
+                'cost_per_extra_image': cost_per_extra_image,
+                'extra_images': extra_images,
+                'extra_cost': extra_cost
+            }
+
+            subject = 'Gallery Done: %s' % gallery.name
+            html_body = render_to_string('gallery_done_email.html', context)
+
+            message = PMMail(api_key=POSTMARK_API_KEY,
+                             subject=subject,
+                             sender="levi@sparrowbleuphotography.com",
+                             to="jerica@sparrowbleuphotography.com",
+                             html_body=html_body,
+                             tag="")
+            message.send()
+
+            return HttpResponse(status=200)
+
+        except Gallery.DoesNotExist:
+            return HttpResponse(content="Gallery with pk '%s' does not exist!" % pk, status=400)
+    else:
+        return redirect('/galleries/')
 
 
 def create_gallery_image(request):

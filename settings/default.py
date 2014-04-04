@@ -8,12 +8,17 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Levi Thomason', 'me@levithomason.com'),
+    ('Jerica Thomason', 'jerica@sparrowbleuphotography.com'),
 )
 
 SUPERUSER_NAME = os.environ['SUPERUSER_NAME']
 SUPERUSER_EMAIL = os.environ['SUPERUSER_EMAIL']
 SUPERUSER_PASSWORD = os.environ['SUPERUSER_PASSWORD']
+
+POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
+POSTMARK_SMTP_SERVER = os.environ['POSTMARK_SMTP_SERVER']
+POSTMARK_INBOUND_ADDRESS = os.environ['POSTMARK_INBOUND_ADDRESS']
 
 MANAGERS = ADMINS
 

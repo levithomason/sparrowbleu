@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     url(r'^gallery/(?P<pk>\d+)', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
     url(r'^gallery/', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
 
+    url(r'^gallery-done/(?P<pk>\d+)', 'apps.galleries.views.gallery_done', name='gallery_done'),
+    
     url(r'^client-access/', 'apps.galleries.views.client_access', name='client_access'),
 
     # Gallery Images

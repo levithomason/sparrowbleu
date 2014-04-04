@@ -150,6 +150,17 @@ $(document).ready(function() {
         $('.gallery_image_container').find('.gallery_image_item').fadeOut();
     });
 
+    $('.controls .view_all').click(function() {
+        $('body')
+            .removeClass('view_selected')
+            .addClass('view_all');
+    });
+    $('.controls .view_selected').click(function() {
+        $('body')
+            .removeClass('view_all')
+            .addClass('view_selected');
+    });
+
     // Selecting images
     $('.gallery_image_item').click(function() {
         selectImage(this);
@@ -164,6 +175,7 @@ $(document).ready(function() {
     function init() {
         update_selected_images();
         $('.controls .thumbnails').click();
+        $('.controls .view_all').click();
         fullscreen.init();
     }
     init();

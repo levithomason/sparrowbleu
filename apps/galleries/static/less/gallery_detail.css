@@ -45,6 +45,15 @@ body.fullscreen .controls .fullscreen {
 body.fullscreen .the_end {
   display: none;
 }
+body.view_all .controls .view_all {
+  display: none;
+}
+body.view_selected .controls .view_selected {
+  display: none;
+}
+body.view_selected .gallery_image_container .gallery_image_item:not(.selected) {
+  display: none;
+}
 .gallery_detail_nav {
   position: fixed;
   padding: 5px 10px;
@@ -65,6 +74,8 @@ body.fullscreen .the_end {
   float: left;
 }
 .gallery_detail_nav .controls .gallery_detail_done_btn,
+.gallery_detail_nav .controls .view_selected,
+.gallery_detail_nav .controls .view_all,
 .gallery_detail_nav .controls .thumbnails,
 .gallery_detail_nav .controls .fullscreen {
   display: block;
@@ -75,6 +86,8 @@ body.fullscreen .the_end {
   z-index: 100;
 }
 .gallery_detail_nav .controls .gallery_detail_done_btn:hover,
+.gallery_detail_nav .controls .view_selected:hover,
+.gallery_detail_nav .controls .view_all:hover,
 .gallery_detail_nav .controls .thumbnails:hover,
 .gallery_detail_nav .controls .fullscreen:hover {
   text-decoration: none;
@@ -357,4 +370,10 @@ body.fullscreen .the_end {
   background: rgba(27, 25, 24, 0.8);
   border-radius: 3px;
   margin-bottom: 1px;
+}
+#done_modal {
+  font-family: "Raleway Medium", sans-serif;
+}
+#done_modal .modal-body {
+  font-size: 16px;
 }

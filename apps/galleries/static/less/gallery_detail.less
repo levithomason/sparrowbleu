@@ -31,6 +31,28 @@ body {
             display: none;
         }
     }
+    &.view_all {
+        .controls {
+            .view_all {
+                display: none;
+            }
+        }
+    }
+    &.view_selected {
+        .controls {
+            .view_selected {
+                display: none;
+            }
+
+        }
+        .gallery_image_container {
+            .gallery_image_item {
+                &:not(.selected) {
+                    display: none;
+                }
+            }
+        }
+    }
 }
 
 .gallery_detail_nav {
@@ -49,6 +71,8 @@ body {
     .controls {
         float: left;
         .gallery_detail_done_btn,
+        .view_selected,
+        .view_all,
         .thumbnails,
         .fullscreen {
             display: block;
@@ -352,5 +376,13 @@ body {
             border-radius: 3px;
             margin-bottom: 1px;
         }
+    }
+}
+
+#done_modal {
+    font-family: "Raleway Medium", sans-serif;
+
+    .modal-body {
+        font-size: 16px;
     }
 }

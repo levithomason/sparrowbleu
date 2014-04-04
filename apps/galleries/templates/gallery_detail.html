@@ -14,15 +14,20 @@
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
             <div class="btn-group">
-                <a href="/galleries" class="gallery_detail_done_btn btn btn-link">
-                    <i class="fa fa-angle-double-left"></i>
-                    done
-                </a>
+                <div class="gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
+                    <i class="fa fa-check-square-o"></i> done
+                </div>
                 <div class="thumbnails btn btn-lg btn-link">
-                    thumbnails
+                    <i class="fa fa-resize-small"></i> small
                 </div>
                 <div class="fullscreen btn btn-lg btn-link">
-                    fullscreen
+                    <i class="fa fa-resize-full"></i> full
+                </div>
+                <div class="view_selected btn btn-lg btn-link">
+                    <i class="fa fa-heart"></i> favs
+                </div>
+                <div class="view_all btn btn-lg btn-link">
+                    <i class="fa fa-camera-retro"></i> all
                 </div>
             </div>
         </div>
@@ -108,6 +113,29 @@
             </div>
             {% endif %}
         {% endif %}
+    </div>
+
+    <div class="modal fade" id="done_modal" tabindex="-1" role="dialog" aria-labelledby="done_modal_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="done_modal_label">Send Images</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Selected all the images you would like to have edited? Click send.
+                        SparrowBleu Photography will notify you when your edited images are complete.
+                    </p>
+                    <p>If you would like to select more photos go back and do that first.</p>
+                    <p>By the way, wow, those are some beautiful photos!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Back</button>
+                    <a href="/gallery-done/{{ gallery.pk }}" type="button" class="btn btn-lg btn-primary">Send <i class="fa fa-angle-double-right"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock body %}
 
