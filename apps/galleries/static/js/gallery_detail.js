@@ -139,6 +139,16 @@ $(document).ready(function() {
         $('body')
             .removeClass('fullscreen')
             .addClass('thumbnails');
+
+        // swap controls
+        $('.controls .thumbnails').hide();
+        $('.controls .fullscreen').show();
+
+        // show all images, show view favs control
+        $('.controls .view_all').hide();
+        $('.controls .view_selected').show();
+        $('.gallery_image_container').find('.gallery_image_item:not(.selected)').fadeIn();
+
         $('.fullscreen_view').fadeOut();
         $('.gallery_image_container').find('.gallery_image_item').fadeIn();
     });
@@ -146,6 +156,15 @@ $(document).ready(function() {
         $('body')
             .removeClass('thumbnails')
             .addClass('fullscreen');
+
+        // swap controls
+        $('.controls .fullscreen').hide();
+        $('.controls .thumbnails').show();
+
+        // hide fav controls
+        $('.controls .view_all').hide();
+        $('.controls .view_selected').hide();
+
         $('.fullscreen_view').fadeIn();
         $('.gallery_image_container').find('.gallery_image_item').fadeOut();
     });
@@ -154,11 +173,25 @@ $(document).ready(function() {
         $('body')
             .removeClass('view_selected')
             .addClass('view_all');
+
+        // swap controls
+        $('.controls .view_all').hide();
+        $('.controls .view_selected').show();
+
+        // show non selected
+        $('.gallery_image_container').find('.gallery_image_item:not(.selected)').fadeIn();
     });
     $('.controls .view_selected').click(function() {
         $('body')
             .removeClass('view_all')
             .addClass('view_selected');
+
+        // swap controls
+        $('.controls .view_selected').hide();
+        $('.controls .view_all').show();
+
+        // hide non selected
+        $('.gallery_image_container').find('.gallery_image_item:not(.selected)').fadeOut();
     });
 
     // Selecting images
@@ -174,8 +207,12 @@ $(document).ready(function() {
     // Init
     function init() {
         update_selected_images();
-        $('.controls .thumbnails').click();
-        $('.controls .view_all').click();
+
+        $('.controls .view_all').hide();
+        $('.controls .thumbnails').hide();
+
+        $('.fullscreen_view').hide();
+
         fullscreen.init();
     }
     init();
