@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^gallery/', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
 
     url(r'^send-completed-gallery/(?P<pk>\d+)', 'apps.galleries.views.send_completed_gallery', name='send_completed_gallery'),
+    url(r'^gallery-completed-thanks/', 'apps.galleries.views.gallery_completed_thanks', name='gallery_completed_thanks'),
 
     url(r'^client-access/', 'apps.galleries.views.client_access', name='client_access'),
 

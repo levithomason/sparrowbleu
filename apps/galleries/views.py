@@ -287,7 +287,7 @@ def send_completed_gallery(request, pk=None):
                 'extra_cost': extra_cost
             }
 
-            subject = 'Gallery Done: %s' % gallery.name
+            subject = 'Gallery Complete: %s' % gallery.name
             html_body = render_to_string('send_completed_gallery_email.html', context)
 
             message = PMMail(api_key=POSTMARK_API_KEY,
@@ -298,12 +298,16 @@ def send_completed_gallery(request, pk=None):
                              tag="")
             message.send()
 
-            return HttpResponse(status=200)
+            return redirect('/gallery-completed-thanks/')
 
         except Gallery.DoesNotExist:
             return HttpResponse(content="Gallery with pk '%s' does not exist!" % pk, status=400)
     else:
         return redirect('/galleries/')
+
+
+def gallery_completed_thanks(request):
+    return render(request, 'gallery_completed_thanks.html')
 
 
 def create_gallery_image(request):

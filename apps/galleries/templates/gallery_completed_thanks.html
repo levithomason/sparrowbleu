@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load thumbnail %}
+
+{% block additional_head %}
+    <link rel="stylesheet" href="{% static 'less/gallery_completed.css' %}" type="text/css" />
+{% endblock additional_head %}
+
+{% block nav %}
+{% endblock nav %}
+
+{% block body %}
+<div class="thanks">
+    Thank you!
+</div>
+<div class="buttons">
+    <a href="{% url 'apps.galleries.views.client_access' %}" class="btn btn-lg btn-primary">
+        <i class="fa fa-hand-o-left"></i> Another gallery
+    </a>
+</div>
+{% endblock body %}
+
+{% block additional_script %}
+{% endblock additional_script %}
