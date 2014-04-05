@@ -15,7 +15,7 @@
         <div class="controls">
             <div class="btn-group">
                 <div class="gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
-                    <i class="fa fa-check-square-o"></i> done
+                    <i class="fa fa-check"></i> done
                 </div>
                 <div class="thumbnails btn btn-lg btn-link">
                     <i class="fa fa-resize-small"></i> small
@@ -24,7 +24,7 @@
                     <i class="fa fa-resize-full"></i> full
                 </div>
                 <div class="view_selected btn btn-lg btn-link">
-                    <i class="fa fa-heart"></i> favs
+                    <i class="fa fa-heart-o"></i> favs
                 </div>
                 <div class="view_all btn btn-lg btn-link">
                     <i class="fa fa-camera-retro"></i> all
@@ -84,35 +84,37 @@
             </div>
         </div>
 
-        {% for image in gallery_images %}
-        <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.thumb_width }}px; height: {{ image.thumb_height }}px;">
-            <div class="gallery_image_item_inner">
-                <div class="loading">
-                    <i class="fa fa-spin fa-spinner"></i>
-                </div>
-                <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
-                <span class="favorite"><i class="fa fa-heart-o"></i></span>
+        <div class="thumbnails_view">
+            {% for image in gallery_images %}
+            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.thumb_width }}px; height: {{ image.thumb_height }}px;">
+                <div class="gallery_image_item_inner">
+                    <div class="loading">
+                        <i class="fa fa-spin fa-spinner"></i>
+                    </div>
+                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
+                    <span class="favorite"><i class="fa fa-heart-o"></i></span>
 
-                <div class="gallery_thumbnail_overlay"></div>
+                    <div class="gallery_thumbnail_overlay"></div>
+                </div>
             </div>
-        </div>
-        {% endfor %}
-        {% if gallery_images %}
-        <div class="the_end">~ the end ~</div>
-        {% else %}
-            {% if perms.Gallery.can_change %}
+            {% endfor %}
+            {% if gallery_images %}
+            <div class="the_end">~ the end ~</div>
+            {% else %}
+                {% if perms.Gallery.can_change %}
                 <div class="drop_images">
                     drop images
                     <i class="fa fa-hand-o-down"></i>
                 </div>
-            {% else %}
-            <div class="no_photos">
-                <i class="fa fa-camera-retro"></i>
-                <br/>
-                SparrowBleu will add your photos soon
-            </div>
+                {% else %}
+                <div class="no_photos">
+                    <i class="fa fa-camera-retro"></i>
+                    <br/>
+                    SparrowBleu will add your photos soon
+                </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
+        </div>
     </div>
 
     <div class="modal fade" id="done_modal" tabindex="-1" role="dialog" aria-labelledby="done_modal_label" aria-hidden="true">
@@ -120,14 +122,27 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="done_modal_label">Send Images</h4>
+                    <h3 class="modal-title" id="done_modal_label"><i class="fa fa-envelope"></i> Send Images</h3>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        SparrowBleu will start editing your selected images and notify you when they are complete.
-                    </p>
-                    <p>If you would like to select more photos for editing, go back and do that before clicking send.</p>
-                    <p>By the way, wow, those are some beautiful photos!</p>
+                    <p>SparrowBleu will start artistic editing of the items you have selected and notify you when they are complete.</p>
+                    <div class="summary">
+                        <h4>Summary:</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item included">
+                                <span class="badge included">{{ gallery.number_of_images }}</span>
+                                Included
+                            </li>
+                            <li class="list-group-item selected">
+                                <span class="badge"><span class="selected"></span></span>
+                                Selected
+                            </li>
+                            <li class="list-group-item total">
+                                <span class="badge">$<span class="total"></span></span>
+                                Additional Cost
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Back</button>

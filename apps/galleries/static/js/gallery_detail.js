@@ -4,6 +4,8 @@
 function update_selected_images() {
     var widget_selected = $('.selected_images .selected'),
         widget_extra = $('.selected_images .extra'),
+        summary_selected = $('.summary .badge .selected'),
+        summary_total = $('.summary .badge .total'),
         max = widget_selected.data('max'),
         selected = $('.gallery_image_item.selected').length,
         cost_per_extra_image = $('#cost_per_extra_image').data('cost'),
@@ -40,6 +42,9 @@ function update_selected_images() {
 
     widget_selected.text(selected + " selected");
     widget_extra.text(extra_text);
+
+    summary_selected.text(selected + extra);
+    summary_total.text(extra * cost_per_extra_image);
 }
 
 
@@ -111,7 +116,7 @@ var fullscreen = {
         // controls
         $('body').on('keydown', function(e) {
 
-            if ($('body').hasClass('fullscreen')) {
+            if ($('.fullscreen_view').is(':visible')) {
                 // left
                 if (e.keyCode === 37) {
                     fullscreen.previous();
@@ -136,10 +141,6 @@ $(document).ready(function() {
 
     // Image size controls
     $('.controls .thumbnails').click(function() {
-        $('body')
-            .removeClass('fullscreen')
-            .addClass('thumbnails');
-
         // swap controls
         $('.controls .thumbnails').hide();
         $('.controls .fullscreen').show();
@@ -150,13 +151,9 @@ $(document).ready(function() {
         $('.gallery_image_container').find('.gallery_image_item:not(.selected)').fadeIn();
 
         $('.fullscreen_view').fadeOut();
-        $('.gallery_image_container').find('.gallery_image_item').fadeIn();
+        $('.thumbnails_view').fadeIn();
     });
     $('.controls .fullscreen').click(function() {
-        $('body')
-            .removeClass('thumbnails')
-            .addClass('fullscreen');
-
         // swap controls
         $('.controls .fullscreen').hide();
         $('.controls .thumbnails').show();
@@ -166,14 +163,10 @@ $(document).ready(function() {
         $('.controls .view_selected').hide();
 
         $('.fullscreen_view').fadeIn();
-        $('.gallery_image_container').find('.gallery_image_item').fadeOut();
+        $('.thumbnails_view').fadeOut();
     });
 
     $('.controls .view_all').click(function() {
-        $('body')
-            .removeClass('view_selected')
-            .addClass('view_all');
-
         // swap controls
         $('.controls .view_all').hide();
         $('.controls .view_selected').show();
@@ -182,10 +175,6 @@ $(document).ready(function() {
         $('.gallery_image_container').find('.gallery_image_item:not(.selected)').fadeIn();
     });
     $('.controls .view_selected').click(function() {
-        $('body')
-            .removeClass('view_all')
-            .addClass('view_selected');
-
         // swap controls
         $('.controls .view_selected').hide();
         $('.controls .view_all').show();

@@ -124,7 +124,7 @@ body {
 }
 .gallery_image_container .fullscreen_view .image_container {
   position: fixed;
-  top: 10px;
+  top: 70px;
   left: 10px;
   bottom: 10px;
   right: 10px;
@@ -351,6 +351,29 @@ body {
 #done_modal {
   font-family: "Raleway Medium", sans-serif;
 }
+#done_modal h1,
+#done_modal h2,
+#done_modal h3,
+#done_modal h4,
+#done_modal h5,
+#done_modal h6 {
+  font-family: "Raleway Medium", sans-serif;
+}
 #done_modal .modal-body {
   font-size: 16px;
+}
+#done_modal .modal-body .summary {
+  margin: 40px auto 20px auto;
+  width: 60%;
+}
+#done_modal .modal-body .summary .list-group-item:last-child {
+  color: #479285;
+}
+#done_modal .modal-body .summary .list-group-item:last-child .badge {
+  background: #5dafa2;
+}
+#done_modal .modal-body .summary .list-group-item .badge {
+  font-size: 16px;
+  border-radius: 3px;
+  background: #CCC;
 }

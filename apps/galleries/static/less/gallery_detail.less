@@ -88,7 +88,7 @@ body {
 
         .image_container {
             position: fixed;
-            top: 10px;
+            top: 70px;
             left: 10px;
             bottom: 10px;
             right: 10px;
@@ -338,7 +338,33 @@ body {
 #done_modal {
     font-family: "Raleway Medium", sans-serif;
 
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Raleway Medium", sans-serif;
+    }
+
     .modal-body {
         font-size: 16px;
+
+        .summary {
+            margin: 40px auto 20px auto;
+            width: 60%;
+
+
+            .list-group-item {
+
+                &:last-child {
+                    color: darken(@sbp_blue, 30%);
+
+                    .badge {
+                        background: darken(@sbp_blue, 20%);
+                    }
+                }
+                .badge {
+                    font-size: 16px;
+                    border-radius: 3px;
+                    background: #CCC;
+                }
+            }
+        }
     }
 }
