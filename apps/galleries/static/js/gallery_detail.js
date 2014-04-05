@@ -197,11 +197,6 @@ $(document).ready(function() {
     function init() {
         update_selected_images();
 
-        $('.controls .view_all').hide();
-        $('.controls .thumbnails').hide();
-
-        $('.fullscreen_view').hide();
-
         fullscreen.init();
     }
     init();

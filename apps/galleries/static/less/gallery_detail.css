@@ -69,6 +69,10 @@ body {
   text-decoration: none;
   color: #74736e;
 }
+.gallery_detail_nav .controls .thumbnails,
+.gallery_detail_nav .controls .view_all {
+  display: none;
+}
 .gallery_detail_nav .gallery_title {
   position: absolute;
   width: 100%;
@@ -116,6 +120,7 @@ body {
 }
 .gallery_image_container .fullscreen_view {
   position: fixed;
+  display: none;
   top: 0;
   left: 0;
   bottom: 0;
