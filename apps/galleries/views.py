@@ -264,7 +264,7 @@ def gallery_detail(request, pk=None, passcode=None):
         return redirect('/galleries/')
 
 
-def gallery_done(request, pk=None):
+def send_completed_gallery(request, pk=None):
     if pk:
         try:
             gallery = Gallery.objects.get(pk=pk)
@@ -288,7 +288,7 @@ def gallery_done(request, pk=None):
             }
 
             subject = 'Gallery Done: %s' % gallery.name
-            html_body = render_to_string('gallery_done_email.html', context)
+            html_body = render_to_string('send_completed_gallery_email.html', context)
 
             message = PMMail(api_key=POSTMARK_API_KEY,
                              subject=subject,
