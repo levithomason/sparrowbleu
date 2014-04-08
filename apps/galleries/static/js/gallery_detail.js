@@ -87,7 +87,7 @@ var fullscreen = {
         var nextImage;
 
         if (view_selected_only) {
-            nextImage = fullscreen.currentImage().nextAll('.selected');
+            nextImage = fullscreen.currentImage().nextAll('.selected').first();
 
             if (!nextImage.length) {
                 nextImage = fullscreen.images.filter('.selected').first();
@@ -107,7 +107,7 @@ var fullscreen = {
         var prevImage;
 
         if (view_selected_only) {
-            prevImage = fullscreen.currentImage().prevAll('.selected');
+            prevImage = fullscreen.currentImage().prevAll('.selected').first();
 
             if (!prevImage.length) {
                 prevImage = fullscreen.images.filter('.selected').last();
