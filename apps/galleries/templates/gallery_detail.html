@@ -15,19 +15,24 @@
         <div class="controls">
             <div class="btn-group">
                 <div class="gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
-                    <i class="fa fa-check"></i> done
+                    <i class="fa fa-check"></i>
+                    <span class="text">done</span>
                 </div>
-                <div class="thumbnails btn btn-lg btn-link">
-                    <i class="fa fa-resize-small"></i> small
+                <div class="thumbnails btn btn-lg btn-link hide">
+                    <i class="fa fa-resize-small"></i>
+                    <span class="text">small</span>
                 </div>
                 <div class="fullscreen btn btn-lg btn-link">
-                    <i class="fa fa-resize-full"></i> full
+                    <i class="fa fa-resize-full"></i>
+                    <span class="text">full</span>
                 </div>
                 <div class="view_selected btn btn-lg btn-link">
-                    <i class="fa fa-heart-o"></i> favs
+                    <i class="fa fa-heart-o"></i>
+                    <span class="text">favs</span>
                 </div>
-                <div class="view_all btn btn-lg btn-link">
-                    <i class="fa fa-camera-retro"></i> all
+                <div class="view_all btn btn-lg btn-link hide">
+                    <i class="fa fa-camera-retro"></i>
+                    <span class="text">all</span>
                 </div>
             </div>
         </div>
@@ -57,7 +62,7 @@
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
-        <div class="fullscreen_view">
+        <div class="fullscreen_view hide">
             <div class="image_container">
                 {% for image in gallery_images %}
                 <div class="fullscreen_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.width }}px; height: {{ image.height }}px">
@@ -91,7 +96,7 @@
                     <div class="loading">
                         <i class="fa fa-spin fa-spinner"></i>
                     </div>
-                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}">
+                    <img class="gallery_thumbnail lazy" data-src="{{ image.thumbnail }}" width="{{ image.thumb_width }}" height="{{ image.thumb_height }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>
 
                     <div class="gallery_thumbnail_overlay"></div>
@@ -160,6 +165,7 @@
         <script src="{% static 'js/lodash.min.js' %}"></script>
         <script src="{% static 'js/s3uploads.js' %}"></script>
         <script src="{% static 'js/gallery_detail_admin.js' %}"></script>
+        <script src="{% static 'js/lazyload.js' %}"></script>
     {% endif %}
 
 {% endblock additional_script %}

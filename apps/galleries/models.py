@@ -16,7 +16,7 @@ class Gallery(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return "/gallery/%i/%s" % (self.id, self.passcode)
+        return "/gallery/%s" % self.passcode
 
     def selected_images(self):
         return GalleryImage.objects.filter(gallery=self).filter(is_selected=True).count()

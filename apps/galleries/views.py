@@ -26,7 +26,7 @@ def client_access(request):
 
             try:
                 gallery = Gallery.objects.get(passcode=passcode)
-                return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
+                return redirect('/gallery/%s' % passcode)
 
             except Gallery.DoesNotExist:
                 return render(request, 'client_access.html', {
@@ -207,11 +207,11 @@ def delete_gallery(request):
             return HttpResponse(content="Sorry, this gallery doesn't exist anymore.", content_type=None, status=400)
 
 
-def gallery_detail(request, pk=None, passcode=None):
-    if pk and passcode:
+def gallery_detail(request, passcode=None):
+    if passcode:
         try:
-            gallery = Gallery.objects.get(pk=pk)
-            gallery_image_qs = GalleryImage.objects.filter(gallery=pk)
+            gallery = Gallery.objects.get(passcode=passcode)
+            gallery_image_qs = GalleryImage.objects.filter(gallery=gallery.pk)
 
             naturally_sorted_qs = sorted(gallery_image_qs, key=lambda img: _human_key(img.name))
 

@@ -43,7 +43,7 @@ function update_selected_images() {
         }
     }
 
-    widget_selected.text(selected + " selected");
+    widget_selected.text(selected + " favs");
     widget_extra.text(extra_text);
 
     summary_selected.text(selected + extra);
@@ -58,7 +58,7 @@ function selectImage(image_element) {
         these_images = $('[data-pk="' + image_pk + '"]'),
         jqxhr;
 
-    thumb_overlay.show();
+    thumb_overlay.removeClass('hide');
     thumb_overlay.fadeOut(400);
 
     jqxhr = $.post('/toggle-select-gallery-image/', {'image_pk': image_pk}, function() {
@@ -173,37 +173,37 @@ $(document).ready(function() {
             not_selected_thumbnails = $('.gallery_image_item:not(.selected)');
 
         if (view_is_fullscreen) {
-            thumbnails_view.hide();
-            thumbnails_btn.show();
+            thumbnails_view.addClass('hide');
+            thumbnails_btn.removeClass('hide');
 
-            fullscreen_view.show();
-            fullscreen_btn.hide();
+            fullscreen_view.removeClass('hide');
+            fullscreen_btn.addClass('hide');
 
             if (view_selected_only) {
-                view_selected.hide();
-                view_all.show();
+                view_selected.addClass('hide');
+                view_all.removeClass('hide');
                 fullscreen.showSelected();
             } else {
-                view_selected.show();
-                view_all.hide();
+                view_selected.removeClass('hide');
+                view_all.addClass('hide');
             }
         }
 
         if (!view_is_fullscreen) {
-            thumbnails_view.show();
-            thumbnails_btn.hide();
+            thumbnails_view.removeClass('hide');
+            thumbnails_btn.addClass('hide');
 
-            fullscreen_view.hide();
-            fullscreen_btn.show();
+            fullscreen_view.addClass('hide');
+            fullscreen_btn.removeClass('hide');
 
             if (view_selected_only) {
-                not_selected_thumbnails.hide();
-                view_selected.hide();
-                view_all.show();
+                not_selected_thumbnails.addClass('hide');
+                view_selected.addClass('hide');
+                view_all.removeClass('hide');
             } else {
-                not_selected_thumbnails.show();
-                view_selected.show();
-                view_all.hide();
+                not_selected_thumbnails.removeClass('hide');
+                view_selected.removeClass('hide');
+                view_all.addClass('hide');
             }
         }
 
