@@ -15,6 +15,7 @@ from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKE
 from sorl.thumbnail.conf import settings  # required for sorl default to work properly
 from sorl.thumbnail import default, get_thumbnail
 from postmark import PMMail
+from endless_pagination.decorators import page_template
 
 
 def client_access(request):
@@ -207,7 +208,8 @@ def delete_gallery(request):
             return HttpResponse(content="Sorry, this gallery doesn't exist anymore.", content_type=None, status=400)
 
 
-def gallery_detail(request, passcode=None):
+@page_template('gallery_detail_page.html')
+def gallery_detail(request, passcode=None, template='gallery_detail.html', extra_context=None):
     if passcode:
         try:
             gallery = Gallery.objects.get(passcode=passcode)
@@ -253,10 +255,15 @@ def gallery_detail(request, passcode=None):
                     'is_selected': image.is_selected
                 })
 
-            return render(request, 'gallery_detail.html', {
+            context = {
                 'gallery': gallery,
                 'gallery_images': gallery_images,
-            })
+            }
+
+            if extra_context is not None:
+                context.update(extra_context)
+
+            return render(request, template, context)
 
         except Gallery.DoesNotExist:
             return redirect('/galleries/')

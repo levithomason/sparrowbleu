@@ -191,6 +191,6 @@ INSTALLED_APPS = (
     'south',
     'sorl.thumbnail',
     'gunicorn',
-
-    'storages'
+    'storages',
+    'endless_pagination'
 )

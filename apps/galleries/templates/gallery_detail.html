@@ -90,19 +90,8 @@
         </div>
 
         <div class="thumbnails_view">
-            {% for image in gallery_images %}
-            <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.thumb_width }}px; height: {{ image.thumb_height }}px;">
-                <div class="gallery_image_item_inner">
-                    <div class="loading">
-                        <i class="fa fa-spin fa-spinner"></i>
-                    </div>
-                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}" width="{{ image.thumb_width }}" height="{{ image.thumb_height }}">
-                    <span class="favorite"><i class="fa fa-heart-o"></i></span>
+            {% include 'gallery_detail_page.html' %}
 
-                    <div class="gallery_thumbnail_overlay"></div>
-                </div>
-            </div>
-            {% endfor %}
             {% if gallery_images %}
             <div class="the_end">~ the end ~</div>
             {% else %}
@@ -161,6 +150,13 @@
 {% block additional_script %}
     <script src="{% static 'js/detectmobilebrowser.js' %}"></script>
     <script src="{% static 'js/jquery.tap.js' %}"></script>
+    <script src="{% static 'js/endless-pagination.js' %}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 20
+        });
+    </script>
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}
