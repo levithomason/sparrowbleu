@@ -96,7 +96,7 @@
                     <div class="loading">
                         <i class="fa fa-spin fa-spinner"></i>
                     </div>
-                    <img class="gallery_thumbnail lazy" data-src="{{ image.thumbnail }}" width="{{ image.thumb_width }}" height="{{ image.thumb_height }}">
+                    <img class="gallery_thumbnail" src="{{ image.thumbnail }}" width="{{ image.thumb_width }}" height="{{ image.thumb_height }}">
                     <span class="favorite"><i class="fa fa-heart-o"></i></span>
 
                     <div class="gallery_thumbnail_overlay"></div>
@@ -159,6 +159,8 @@
 {% endblock body %}
 
 {% block additional_script %}
+    <script src="{% static 'js/detectmobilebrowser.js' %}"></script>
+    <script src="{% static 'js/jquery.tap.js' %}"></script>
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}

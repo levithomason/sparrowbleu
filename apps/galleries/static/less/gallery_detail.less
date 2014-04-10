@@ -2,6 +2,7 @@
 @import "../../../../static/less/mixins.less";
 
 @sbp_gallery_overlay_background: hsla(25, 4%, 10%, 0.80);
+@sbp_mobile_nav_font_size: 18px;
 
 body {
     font-family: "Raleway Light", sans-serif;
@@ -22,6 +23,10 @@ body {
     z-index: 900;
     .user-select(none);
 
+    @media (max-width: 768px) {
+        padding: 5px 0;
+    }
+
     .controls {
         float: left;
         .gallery_detail_done_btn,
@@ -39,14 +44,11 @@ body {
                 text-decoration: none;
                 color: darken(@sbp_heading_color, 10%);
             }
-
-        }
-        .fullscreen,
-        .thumbnails,
-        .text {
             @media (max-width: 768px) {
-                display: none;
+                font-size: @sbp_mobile_nav_font_size;
+                padding: 15px 10px;
             }
+
         }
     }
 
@@ -70,10 +72,22 @@ body {
         z-index: 100;
         .selected,
         .extra {
-            .sbp_transition(all);
+            .sbp_transition(font-size, color;);
             &.primary {
                 font-size: 21px;
                 color: @sbp_blue;
+            }
+        }
+        @media (max-width: 768px) {
+            font-size: @sbp_mobile_nav_font_size - 4px;
+            padding: 2px 10px 0 0;
+
+            .selected,
+            .extra {
+                &.primary {
+                    font-size: @sbp_mobile_nav_font_size;
+                    color: @sbp_blue;
+                }
             }
         }
     }
@@ -85,6 +99,10 @@ body {
     padding: 80px @padding @padding @padding;
     text-align: center;
     .user-select(none);
+    
+    @media (max-width: 768px) {
+        padding: 80px 0 0 0;
+    }
 
     .fullscreen_view {
         position: fixed;
@@ -191,10 +209,16 @@ body {
     }
 
     .gallery_image_item {
+        .box-sizing(content-box);
         display: inline-block;
-        margin: @padding;
+        padding: @padding;
         vertical-align: middle;
         max-width: 100%;
+
+        @media (max-width: 768px) {
+            padding: 20px 0;
+            height: auto !important;
+        }
 
         .gallery_image_item_inner {
             position: relative;
@@ -252,6 +276,11 @@ body {
         &.selected {
             .favorite {
                 opacity: 1;
+
+                @media (max-width: 768px) {
+                    top: 10px;
+                    bottom: auto;
+                }
             }
         }
         &.uploading {
@@ -356,6 +385,10 @@ body {
         .summary {
             margin: 40px auto 20px auto;
             width: 60%;
+            
+            @media (max-width: 768px) {
+                width: auto;
+            }
 
 
             .list-group-item {

@@ -3,6 +3,12 @@
 var view_is_fullscreen = false;
 var view_selected_only = false;
 
+// remove fullscreen on mobile
+if (jQuery.browser.mobile) {
+    $('.fullscreen_view').remove();
+    $('.controls .fullscreen').remove();
+}
+
 // Selected images widget
 function update_selected_images() {
     var widget_selected = $('.selected_images .selected'),
@@ -55,22 +61,25 @@ function selectImage(image_element) {
     var ele = $(image_element),
         image_pk = ele.data('pk'),
         thumb_overlay = ele.find('.gallery_thumbnail_overlay'),
-        these_images = $('[data-pk="' + image_pk + '"]'),
+        image = $('[data-pk="' + image_pk + '"]'),
         jqxhr;
 
-    thumb_overlay.removeClass('hide');
+    thumb_overlay.show();
     thumb_overlay.fadeOut(400);
+    image.toggleClass('selected');
+
 
     jqxhr = $.post('/toggle-select-gallery-image/', {'image_pk': image_pk}, function() {
         if (jqxhr.responseText === "True") {
-            these_images.addClass('selected');
+            image.addClass('selected');
         } else {
-            these_images.removeClass('selected');
+            image.removeClass('selected');
         }
 
         update_selected_images();
     })
         .fail(function() {
+            image.removeClass('selected');
             alert(
                 "Oops, couldn't change that image.  If this keeps happening, please contact SparrowBleu"
             );
@@ -214,25 +223,25 @@ $(document).ready(function() {
      */
 
     // thumbnails
-    $('.controls .thumbnails').click(function() {
+    $('.controls .thumbnails').on('tap', function() {
         view_is_fullscreen = false;
         updateGalleryView();
     });
 
     // fullscreen
-    $('.controls .fullscreen').click(function() {
+    $('.controls .fullscreen').on('tap', function() {
         view_is_fullscreen = true;
         updateGalleryView();
     });
 
     // view all
-    $('.controls .view_all').click(function() {
+    $('.controls .view_all').on('tap', function() {
         view_selected_only = false;
         updateGalleryView();
     });
 
     // view selected
-    $('.controls .view_selected').click(function() {
+    $('.controls .view_selected').on('tap', function() {
         view_selected_only = true;
         updateGalleryView();
     });
@@ -240,11 +249,11 @@ $(document).ready(function() {
     /*
      Selecting images
      */
-    $('.gallery_image_item').click(function() {
+    $('.gallery_image_item').on('tap', function() {
         selectImage(this);
     });
 
-    $('.fullscreen_image_item').click(function() {
+    $('.fullscreen_image_item').on('tap', function() {
         selectImage(this);
     });
 
