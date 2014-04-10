@@ -89,7 +89,7 @@ def create_gallery(request):
                 gallery = Gallery(name=name, passcode=passcode, number_of_images=number_of_images, cost_per_extra_image=cost_per_extra_image)
                 gallery.save()
 
-            return redirect('/gallery/%s/%s' % (gallery.pk, passcode))
+            return redirect('/gallery/%s' % passcode)
 
         return render(request, 'create_edit_gallery.html', {'form': form, 'errors': errors})
     
