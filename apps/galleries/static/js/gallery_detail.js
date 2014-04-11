@@ -1,10 +1,10 @@
 "use strict";
 
-var view_is_fullscreen = false,
-    view_selected_only = false,
-    selected_images_count = $('.selected_images .selected').data('selected');
 
 $(document).ready(function() {
+    var view_is_fullscreen = false,
+        view_selected_only = false,
+        selected_images_count = $('.selected_images .selected').data('selected');
 
     var fullscreen = {
         'image_container': $('.fullscreen_view .image_container'),
