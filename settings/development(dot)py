@@ -40,25 +40,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+INSTALLED_APPS += (
     'django.contrib.admin',
-
-    'raven.contrib.django.raven_compat',
-
-    'south',
-    'sorl.thumbnail',
-
-    'apps.user',
-    'apps.sparrow_bleu',
-    'apps.galleries',
-
-    'storages'
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

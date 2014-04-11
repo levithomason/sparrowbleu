@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <a href="{{ g.get_absolute_url }}">
+                    <a href="{{ g.get_desktop_url }}">
                         {% if im %}
                         <img src="{{ im }}" class="gallery_list_item_image">
                         {% else %}
@@ -61,7 +61,7 @@
                     </a>
                 </div>
                 <div class="panel-footer">
-                    <a href="{{ g.get_absolute_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
+                    <a href="{{ g.get_desktop_url }}" class="gallery_list_gallery_title">{{ g.name }}</a>
 
                     <div class="gallery_list_gallery_info">
                         <div class="gallery_passcode"><i class="fa fa-lock"></i>{{ g.passcode }}</div>

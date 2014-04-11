@@ -130,7 +130,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    'django.core.context_processors.request'
+    'django.core.context_processors.request',
 )
 
 ROOT_URLCONF = 'apps.sparrow_bleu.urls'
@@ -173,3 +173,27 @@ INTERNAL_IPS = ('',)
 RAVEN_CONFIG = {
     'dsn': 'https://c4bf3fe7a4e64448a062c04a603e7450:de418b2411944472a3c6695270622d41@app.getsentry.com/13905',
 }
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    'raven.contrib.django.raven_compat',
+
+    'apps.user',
+    'apps.sparrow_bleu',
+    'apps.galleries',
+
+    'south',
+    'sorl.thumbnail',
+    'gunicorn',
+    'storages',
+    'endless_pagination'
+)
+
+ENDLESS_PAGINATION_PREVIOUS_LABEL = '<i class="fa fa-chevron-left"></i>'
+ENDLESS_PAGINATION_NEXT_LABEL = '<i class="fa fa-chevron-right"></i>'

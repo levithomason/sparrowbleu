@@ -70,25 +70,7 @@ ROOT_URLCONF = 'apps.sparrow_bleu.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = os.path.join(PROJECT_PATH, 'wsgi.application')
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'raven.contrib.django.raven_compat',
-
-    'apps.user',
-    'apps.sparrow_bleu',
-    'apps.galleries',
-    
-    'south',
-    'sorl.thumbnail',
-    'gunicorn',
-
-    'storages'
+INSTALLED_APPS += (
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

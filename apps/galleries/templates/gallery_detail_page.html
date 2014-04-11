@@ -1,0 +1,35 @@
+{% load endless %}
+
+{% paginate 20 gallery_images %}
+{% get_pages %}
+
+{% include '_gallery_detail_images.html' %}
+
+{% if gallery_images.count > 0 %}
+<div class="sbp_pagination">
+    <div class="page_controls">
+        {% if pages.next == '' %}
+        <div class="the_end">~ the end ~</div>
+        {% endif %}
+
+        {% if pages.previous %}
+        <a class="previous control" href="{{ page.previous }}"><i class="fa fa-chevron-left"></i></a>
+        {% endif %}
+
+        <span class="select_page control">page {{ pages.current }}</span>
+
+        {% if pages.next %}
+            <a class="next control" href="{{ page.next }}"><i class="fa fa-chevron-right"></i></a>
+        {% endif %}
+    </div>
+    <div class="page_selector">
+        {% for page in pages %}
+            {% if page.is_current %}
+                <span class="page_current">{{ page.number }}</span>
+            {% else %}
+                <a href="{{ page.path }}" class="page_link">{{ page.number }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
