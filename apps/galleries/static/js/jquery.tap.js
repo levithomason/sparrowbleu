@@ -71,7 +71,7 @@
      * @type {number}
      * @constant
      */
-    var MAX_TAP_TIME = 400;
+    var MAX_TAP_TIME = 200;
 
     /**
      * Event variables to copy to touches

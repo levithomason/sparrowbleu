@@ -1,12 +1,14 @@
 "use strict";
 
-var view_is_fullscreen = false;
-var view_selected_only = false;
+var view_is_fullscreen = false,
+    view_selected_only = false,
+    selected_images_count = $('.selected_images .selected').data('selected');
 
 // remove fullscreen on mobile
 if (jQuery.browser.mobile) {
     $('.fullscreen_view').remove();
     $('.controls .fullscreen').remove();
+    $('.controls .view_selected').remove();
 }
 
 // Selected images widget
@@ -16,14 +18,14 @@ function update_selected_images() {
         summary_selected = $('.summary .badge .selected'),
         summary_total = $('.summary .badge .total'),
         max = widget_selected.data('max'),
-        selected = $('.gallery_image_item.selected').length,
         cost_per_extra_image = $('#cost_per_extra_image').data('cost'),
+        selected,
         extra,
         extra_text;
 
     // update selected images, min of 0
-    if (selected > max) {
-        extra = Math.abs(selected - max);
+    if (selected_images_count > max) {
+        extra = Math.abs(selected_images_count - max);
         selected = max;
     } else {
         extra = 0;
@@ -68,18 +70,19 @@ function selectImage(image_element) {
     thumb_overlay.fadeOut(400);
     image.toggleClass('selected');
 
-
     jqxhr = $.post('/toggle-select-gallery-image/', {'image_pk': image_pk}, function() {
         if (jqxhr.responseText === "True") {
             image.addClass('selected');
+            selected_images_count += 1;
         } else {
             image.removeClass('selected');
+            selected_images_count -= 1;
         }
 
         update_selected_images();
     })
         .fail(function() {
-            image.removeClass('selected');
+            image.toggleClass('selected');
             alert(
                 "Oops, couldn't change that image.  If this keeps happening, please contact SparrowBleu"
             );
@@ -219,31 +222,48 @@ $(document).ready(function() {
     };
 
     /*
-      Controls
+      Top Nav Controls
      */
 
     // thumbnails
-    $('.controls .thumbnails').on('tap', function() {
+    $('.gallery_detail_nav .controls .thumbnails').on('tap', function() {
         view_is_fullscreen = false;
         updateGalleryView();
     });
 
     // fullscreen
-    $('.controls .fullscreen').on('tap', function() {
+    $('.gallery_detail_nav .controls .fullscreen').on('tap', function() {
         view_is_fullscreen = true;
         updateGalleryView();
     });
 
     // view all
-    $('.controls .view_all').on('tap', function() {
+    $('.gallery_detail_nav .controls .view_all').on('tap', function() {
         view_selected_only = false;
         updateGalleryView();
     });
 
     // view selected
-    $('.controls .view_selected').on('tap', function() {
+    $('.gallery_detail_nav .controls .view_selected').on('tap', function() {
         view_selected_only = true;
         updateGalleryView();
+    });
+
+    /*
+     Pagination Controls
+     */
+    $('.sbp_pagination .select_page').on('tap', function() {
+        $('.sbp_pagination .page_selector').toggle();
+    });
+
+    $('.sbp_pagination .page_current').on('tap', function() {
+        $('.sbp_pagination .page_selector').hide();
+    });
+
+    $('.sbp_pagination .page_selector').on('tap', function(e) {
+        if (!e.target.hasClass('page_link')) {
+            $('.sbp_pagination .page_selector').hide();
+        }
     });
 
     /*

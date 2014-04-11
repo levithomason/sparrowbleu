@@ -1,6 +1,8 @@
 {% load endless %}
 
-{% paginate gallery_images %}
+{% paginate 20 gallery_images %}
+{% get_pages %}
+
 {% for image in gallery_images %}
  <div class="gallery_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.thumb_width }}px; height: {{ image.thumb_height }}px;">
     <div class="gallery_image_item_inner">
@@ -14,4 +16,46 @@
     </div>
 </div>
 {% endfor %}
-{% show_more %}
+
+
+{% if gallery_images.count == 0 %}
+    {% if perms.Gallery.can_change %}
+    <div class="drop_images">
+        drop images
+        <i class="fa fa-hand-o-down"></i>
+    </div>
+    {% else %}
+    <div class="no_photos">
+        <i class="fa fa-camera-retro"></i>
+        <br/>
+        SparrowBleu will add your photos soon
+    </div>
+    {% endif %}
+{% else %}
+<div class="sbp_pagination">
+    <div class="page_controls">
+        {% if pages.next == '' %}
+        <div class="the_end">~ the end ~</div>
+        {% endif %}
+
+        {% if pages.previous %}
+        <a class="previous control" href="{{ page.previous }}"><i class="fa fa-chevron-left"></i></a>
+        {% endif %}
+
+        <span class="select_page control">page {{ pages.current }}</span>
+
+        {% if pages.next %}
+            <a class="next control" href="{{ page.next }}"><i class="fa fa-chevron-right"></i></a>
+        {% endif %}
+    </div>
+    <div class="page_selector">
+        {% for page in pages %}
+            {% if page.is_current %}
+                <span class="page_current">{{ page.number }}</span>
+            {% else %}
+                <a href="{{ page.path }}" class="page_link">{{ page.number }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

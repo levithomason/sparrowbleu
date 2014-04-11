@@ -38,7 +38,7 @@
         </div>
         <div class="gallery_title">{{ gallery }}</div>
         <div class="selected_images">
-            <div class="selected" data-max="{{ gallery.number_of_images }}"></div>
+            <div class="selected" data-selected="{{ gallery.selected_images }}" data-max="{{ gallery.number_of_images }}"></div>
             <span class="extra"></span>
         </div>
     </div>
@@ -90,24 +90,9 @@
         </div>
 
         <div class="thumbnails_view">
-            {% include 'gallery_detail_page.html' %}
-
-            {% if gallery_images %}
-            <div class="the_end">~ the end ~</div>
-            {% else %}
-                {% if perms.Gallery.can_change %}
-                <div class="drop_images">
-                    drop images
-                    <i class="fa fa-hand-o-down"></i>
-                </div>
-                {% else %}
-                <div class="no_photos">
-                    <i class="fa fa-camera-retro"></i>
-                    <br/>
-                    SparrowBleu will add your photos soon
-                </div>
-                {% endif %}
-            {% endif %}
+            <div class="endless_page_template">
+                {% include 'gallery_detail_page.html' %}
+            </div>
         </div>
     </div>
 
@@ -151,12 +136,7 @@
     <script src="{% static 'js/detectmobilebrowser.js' %}"></script>
     <script src="{% static 'js/jquery.tap.js' %}"></script>
     <script src="{% static 'js/endless-pagination.js' %}"></script>
-    <script>
-        $.endlessPaginate({
-            paginateOnScroll: true,
-            paginateOnScrollMargin: 500
-        });
-    </script>
+    <script>$.endlessPaginate();</script>
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}
