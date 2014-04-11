@@ -449,55 +449,53 @@ body {
                 }
             }
         }
+    }
+}
 
-        .no_photos,
-        .drop_images,
-        .the_end {
-            font-size: 42px;
-            margin: 150px 0 75px 0;
+.no_photos,
+.drop_images,
+.the_end {
+    font-size: 42px;
+    margin: 150px 0 75px 0;
 
-            @media (max-width: 768px) {
-                font-size: 28px;
-                margin: 100px 0;
-            }
-        }
+    @media (max-width: 768px) {
+        font-size: 28px;
+        margin: 100px 0;
+    }
+}
+
+#done_modal {
+    font-family: "Raleway Medium", sans-serif;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Raleway Medium", sans-serif;
     }
 
-    .modal {
-        font-family: "Raleway Medium", sans-serif;
+    .modal-body {
+        font-size: 16px;
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: "Raleway Medium", sans-serif;
-        }
+        .summary {
+            margin: 40px auto 20px auto;
+            width: 60%;
+            max-width: 300px;
 
-        .modal-body {
-            font-size: 16px;
+            .list-group-item {
 
-            .summary {
-                margin: 40px auto 20px auto;
-                width: 60%;
+                &:last-child {
+                    color: darken(@sbp_blue, 30%);
 
-                @media (max-width: 768px) {
-                    width: auto;
-                }
-
-                .list-group-item {
-
-                    &:last-child {
-                        color: darken(@sbp_blue, 30%);
-
-                        .badge {
-                            background: darken(@sbp_blue, 20%);
-                        }
-                    }
                     .badge {
-                        font-size: 16px;
-                        border-radius: 3px;
-                        background: #CCC;
+                        background: darken(@sbp_blue, 20%);
                     }
+                }
+                .badge {
+                    font-size: 16px;
+                    border-radius: 3px;
+                    background: #CCC;
                 }
             }
         }
     }
 }
+
 
