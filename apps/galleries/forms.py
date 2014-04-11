@@ -17,3 +17,4 @@ class GalleryImageForm(forms.Form):
 
 class ClientAccessForm(forms.Form):
     passcode = forms.CharField(max_length=60)
+    is_mobile = forms.BooleanField(required=False)

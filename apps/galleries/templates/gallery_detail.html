@@ -18,6 +18,7 @@
                     <i class="fa fa-check"></i>
                     <span class="text">done</span>
                 </div>
+                {% if is_desktop %}
                 <div class="thumbnails btn btn-lg btn-link hide">
                     <i class="fa fa-resize-small"></i>
                     <span class="text">small</span>
@@ -34,6 +35,7 @@
                     <i class="fa fa-camera-retro"></i>
                     <span class="text">all</span>
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="gallery_title">{{ gallery }}</div>
@@ -62,6 +64,7 @@
             <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
         {% endif %}
 
+        {% if is_desktop %}
         <div class="fullscreen_view hide">
             <div class="image_container">
                 {% for image in gallery_images %}
@@ -88,11 +91,17 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <div class="thumbnails_view">
+            {% if is_mobile %}
             <div class="endless_page_template">
                 {% include 'gallery_detail_page.html' %}
             </div>
+            {% else %}
+                {% include '_gallery_detail_images.html' %}
+
+            {% endif %}
         </div>
     </div>
 
@@ -100,7 +109,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3 class="modal-title" id="done_modal_label"><i class="fa fa-envelope"></i> Send Images</h3>
                 </div>
                 <div class="modal-body">
@@ -133,10 +141,11 @@
 {% endblock body %}
 
 {% block additional_script %}
-    <script src="{% static 'js/detectmobilebrowser.js' %}"></script>
     <script src="{% static 'js/jquery.tap.js' %}"></script>
-    <script src="{% static 'js/endless-pagination.js' %}"></script>
-    <script>$.endlessPaginate();</script>
+    {% if is_mobile %}
+        <script src="{% static 'js/endless-pagination.js' %}"></script>
+        <script>$.endlessPaginate();</script>
+    {% endif %}
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}

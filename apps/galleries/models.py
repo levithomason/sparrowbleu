@@ -15,8 +15,11 @@ class Gallery(models.Model):
     def __unicode__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return "/gallery/%s" % self.passcode
+    def get_desktop_url(self):
+        return "/gallery/%s/%s" % ('d', self.passcode)
+
+    def get_mobile_url(self):
+        return "/gallery/%s/%s" % ('m', self.passcode)
 
     def selected_images(self):
         return GalleryImage.objects.filter(gallery=self).filter(is_selected=True).count()

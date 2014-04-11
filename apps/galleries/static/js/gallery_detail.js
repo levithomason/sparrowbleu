@@ -4,13 +4,6 @@ var view_is_fullscreen = false,
     view_selected_only = false,
     selected_images_count = $('.selected_images .selected').data('selected');
 
-// remove fullscreen on mobile
-if (jQuery.browser.mobile) {
-    $('.fullscreen_view').remove();
-    $('.controls .fullscreen').remove();
-    $('.controls .view_selected').remove();
-}
-
 // Selected images widget
 function update_selected_images() {
     var widget_selected = $('.selected_images .selected'),
@@ -84,7 +77,7 @@ function selectImage(image_element) {
         .fail(function() {
             image.toggleClass('selected');
             alert(
-                "Oops, couldn't change that image.  If this keeps happening, please contact SparrowBleu"
+                "Oops, couldn't select that image.  Is your internet connection working?"
             );
         });
 }

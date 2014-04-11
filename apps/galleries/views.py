@@ -24,10 +24,16 @@ def client_access(request):
 
         if form.is_valid():
             passcode = form.cleaned_data['passcode']
+            is_mobile = form.cleaned_data['is_mobile']
+
+            if is_mobile:
+                version = 'm'
+            else:
+                version = 'd'
 
             try:
                 gallery = Gallery.objects.get(passcode=passcode)
-                return redirect('/gallery/%s' % passcode)
+                return redirect('/gallery/%s/%s' % (version, passcode))
 
             except Gallery.DoesNotExist:
                 return render(request, 'client_access.html', {
@@ -209,8 +215,8 @@ def delete_gallery(request):
 
 
 @page_template('gallery_detail_page.html')
-def gallery_detail(request, passcode=None, template='gallery_detail.html', extra_context=None):
-    if passcode:
+def gallery_detail(request, version, passcode=None, template='gallery_detail.html', extra_context=None):
+    if version and passcode:
         try:
             gallery = Gallery.objects.get(passcode=passcode)
             gallery_image_qs = GalleryImage.objects.filter(gallery=gallery.pk)
@@ -255,9 +261,14 @@ def gallery_detail(request, passcode=None, template='gallery_detail.html', extra
                     'is_selected': image.is_selected
                 })
 
+            is_mobile = version == 'm'
+            is_desktop = version == 'd'
+
             context = {
                 'gallery': gallery,
                 'gallery_images': gallery_images,
+                'is_mobile': is_mobile,
+                'is_desktop': is_desktop
             }
 
             if extra_context is not None:

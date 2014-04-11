@@ -323,6 +323,7 @@ body {
   width: 100%;
   height: 100%;
   box-shadow: inset 0 0 0 1px #555;
+  cursor: pointer;
 }
 @media (max-width: 768px) {
   .gallery_image_container .thumbnails_view .gallery_image_item .gallery_image_item_inner {
@@ -338,7 +339,6 @@ body {
   max-width: 100%;
   height: auto;
   vertical-align: middle;
-  cursor: pointer;
   box-shadow: 8px 8px 1px rgba(0, 0, 0, 0.1);
 }
 .gallery_image_container .thumbnails_view .gallery_image_item .gallery_image_item_inner .favorite {
@@ -472,36 +472,36 @@ body {
     margin: 100px 0;
   }
 }
-.gallery_image_container #done_modal {
+.gallery_image_container .modal {
   font-family: "Raleway Medium", sans-serif;
 }
-.gallery_image_container #done_modal h1,
-.gallery_image_container #done_modal h2,
-.gallery_image_container #done_modal h3,
-.gallery_image_container #done_modal h4,
-.gallery_image_container #done_modal h5,
-.gallery_image_container #done_modal h6 {
+.gallery_image_container .modal h1,
+.gallery_image_container .modal h2,
+.gallery_image_container .modal h3,
+.gallery_image_container .modal h4,
+.gallery_image_container .modal h5,
+.gallery_image_container .modal h6 {
   font-family: "Raleway Medium", sans-serif;
 }
-.gallery_image_container #done_modal .modal-body {
+.gallery_image_container .modal .modal-body {
   font-size: 16px;
 }
-.gallery_image_container #done_modal .modal-body .summary {
+.gallery_image_container .modal .modal-body .summary {
   margin: 40px auto 20px auto;
   width: 60%;
 }
 @media (max-width: 768px) {
-  .gallery_image_container #done_modal .modal-body .summary {
+  .gallery_image_container .modal .modal-body .summary {
     width: auto;
   }
 }
-.gallery_image_container #done_modal .modal-body .summary .list-group-item:last-child {
+.gallery_image_container .modal .modal-body .summary .list-group-item:last-child {
   color: #479285;
 }
-.gallery_image_container #done_modal .modal-body .summary .list-group-item:last-child .badge {
+.gallery_image_container .modal .modal-body .summary .list-group-item:last-child .badge {
   background: #5dafa2;
 }
-.gallery_image_container #done_modal .modal-body .summary .list-group-item .badge {
+.gallery_image_container .modal .modal-body .summary .list-group-item .badge {
   font-size: 16px;
   border-radius: 3px;
   background: #CCC;
