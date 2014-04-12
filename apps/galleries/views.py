@@ -290,6 +290,7 @@ def send_completed_gallery(request, pk=None):
             cost_per_extra_image = gallery.cost_per_extra_image
             number_of_images = gallery.number_of_images
             images = GalleryImage.objects.all().filter(gallery=gallery, is_selected=True)
+            sorted_images = sorted(images, key=lambda img: _human_key(img.name))
             selected_image_count = images.count()
             if selected_image_count > number_of_images:
                 extra_images = selected_image_count - number_of_images
@@ -300,7 +301,7 @@ def send_completed_gallery(request, pk=None):
 
             context = {
                 'gallery': gallery,
-                'images': images,
+                'images': sorted_images,
                 'cost_per_extra_image': cost_per_extra_image,
                 'extra_images': extra_images,
                 'extra_cost': extra_cost
