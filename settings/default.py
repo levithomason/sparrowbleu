@@ -192,7 +192,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'gunicorn',
     'storages',
-    'endless_pagination'
+    'endless_pagination',
+    'django_extensions'
 )
 
 ENDLESS_PAGINATION_PREVIOUS_LABEL = '<i class="fa fa-chevron-left"></i>'
