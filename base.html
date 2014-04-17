@@ -42,10 +42,7 @@
         </div>
 
         <!-- Javascript -->
-        <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
-        <script src="{% static 'js/jquery.cookie.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'js/sparrow_bleu.js' %}"></script>
+        <script data-main="{% static 'js/main.js' %}" src="{% static 'js/require-2.1.11.min.js' %}"></script>
 
         {% block additional_script %}
         {% endblock additional_script %}

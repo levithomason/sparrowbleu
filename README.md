@@ -3,24 +3,20 @@ Setup
 1. Clone repo
 2. Rename /settings/development(dot).py to development.py
     - *If you use virtualenvs make one now and activate it.*
-3. Install the requirements ```pip install -r <path_to_the_repo>/requirements.dev.txt```
-
-**Mac (continued from above):**
-
-4. Install PostgreSQL ```brew install postgres```
+3. Install the requirements `pip install -r <path_to_the_repo>/requirements.dev.txt`
+4. Install PostgreSQL `brew install postgres`
     - *If you do not have homebrew: http://brew.sh/*
 5. Create and sync a database: ```python manage.py freshdb```
     - *If you get libssl errors try [this blog post](http://joshuakehn.com/2013/10/13/Postgresapp-and-psycopg2-on-OS-X.html)*
-    - *If you get postgres errors, make sure postgres is running!  Try ```brew info postgres``` for help*
+    - *If you get postgres errors, make sure postgres is running!  Try `brew info postgres` for help*
 
+**Unit Testing**
 
-**Windows (continued from above):**
+This project runs [Jasmine 2.0.0](https://github.com/pivotal/jasmine/) in [PhantomJS 1.9.7](http://phantomjs.org/).
 
-4. Download and install postgreSQL >= v9.2
-5. Copy fresdb from helper_files to your env scripts folder or somewhere else on your path.
-  - Update the local paths to your local paths
-6. If you cant compile, copy PIL from helper_files to your env site-packages
-7. Create and sync a database: ```freshdb```
+6. `brew update && brew install phantomjs`
+
+Then to run tests, `phantomjs static/js/run-jasmine.js ????????`
 
 
 **AWS Config**
@@ -39,12 +35,7 @@ This site will be the main site for SparrowBleu Photography.  It will showcase i
 
 # Goals
 
-1. Private proofing galleries
-
-~~2. Image galleries for various types of photography~~
-
 ## Private Proofing Galleries
-
 
 ### Photographer should be able to:
 
@@ -75,15 +66,3 @@ This site will be the main site for SparrowBleu Photography.  It will showcase i
     - See which images they have selected
     - See the total number of images they can select
     - See how many images they have remaining to select
-
-
-~~## Image Galleries~~
-
-~~The site should have separate newborn, kids, families, engagement, and wedding galleries. These are static galleries updated by the photographer infrequently (~4 times per year).~~
-
-~~- Each gallery should:~~
-    ~~- have a top nav link~~
-    ~~- play automatically~~
-    ~~- should transition between photos~~
-    ~~- should show thumbs of all the images in the gallery~~
-    ~~- should auto repeat~~
