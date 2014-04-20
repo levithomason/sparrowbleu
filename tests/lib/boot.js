@@ -23,7 +23,7 @@
   jasmineRequire.html(jasmine);
 
   /**
-   * Create the Jasmine environment. This is used to run all specs in a project.
+   * Create the Jasmine environment. This is used to run all tests in a project.
    */
   var env = jasmine.getEnv();
 
@@ -75,7 +75,7 @@
   };
 
   /**
-   * Add all of the Jasmine global/public interface to the proper global, so a project can use the public interface directly. For example, calling `describe` in specs instead of `jasmine.getEnv().describe`.
+   * Add all of the Jasmine global/public interface to the proper global, so a project can use the public interface directly. For example, calling `describe` in tests instead of `jasmine.getEnv().describe`.
    */
   if (typeof window == "undefined" && typeof exports == "object") {
     extend(exports, jasmineInterface);
@@ -119,7 +119,7 @@
 
   /**
    * ## Reporters
-   * The `HtmlReporter` builds all of the HTML UI for the runner page. This reporter paints the dots, stars, and x's for specs, as well as all spec names and all failures (if any).
+   * The `HtmlReporter` builds all of the HTML UI for the runner page. This reporter paints the dots, stars, and x's for tests, as well as all spec names and all failures (if any).
    */
   var htmlReporter = new jasmine.HtmlReporter({
     env: env,
@@ -137,7 +137,7 @@
   env.addReporter(htmlReporter);
 
   /**
-   * Filter which specs will be run by matching the start of the full name against the `spec` query param.
+   * Filter which tests will be run by matching the start of the full name against the `spec` query param.
    */
   var specFilter = new jasmine.HtmlSpecFilter({
     filterString: function() { return queryString.getParam("spec"); }
@@ -158,7 +158,7 @@
   /**
    * ## Execution
    *
-   * Replace the browser window's `onload`, ensure it's called, and then run all of the loaded specs. This includes initializing the `HtmlReporter` instance and then executing the loaded Jasmine environment. All of this will happen after all of the specs are loaded.
+   * Replace the browser window's `onload`, ensure it's called, and then run all of the loaded tests. This includes initializing the `HtmlReporter` instance and then executing the loaded Jasmine environment. All of this will happen after all of the tests are loaded.
    */
   var currentWindowOnload = window.onload;
 

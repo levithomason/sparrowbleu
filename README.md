@@ -4,20 +4,12 @@ Setup
 2. Rename /settings/development(dot).py to development.py
     - *If you use virtualenvs make one now and activate it.*
 3. Install the requirements `pip install -r <path_to_the_repo>/requirements.dev.txt`
-4. Install PostgreSQL `brew install postgres`
+4. Install jpeg support for PIL `brew install libjpeg`
+5. Install PostgreSQL `brew install postgres`
     - *If you do not have homebrew: http://brew.sh/*
-5. Create and sync a database: ```python manage.py freshdb```
+6. Create and sync a database: ```python manage.py freshdb```
     - *If you get libssl errors try [this blog post](http://joshuakehn.com/2013/10/13/Postgresapp-and-psycopg2-on-OS-X.html)*
     - *If you get postgres errors, make sure postgres is running!  Try `brew info postgres` for help*
-
-**Unit Testing**
-
-This project runs [Jasmine 2.0.0](https://github.com/pivotal/jasmine/) in [PhantomJS 1.9.7](http://phantomjs.org/).
-
-6. `brew update && brew install phantomjs`
-
-Then to run tests, `phantomjs static/js/run-jasmine.js ????????`
-
 
 **AWS Config**
 
@@ -28,16 +20,20 @@ set AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
 set AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
 ```
 
+# JavaScript Unit Testing
 
-SparrowBleu Photography
-===========
-This site will be the main site for SparrowBleu Photography.  It will showcase images and allow clients to select images from their photo shoots which they would like the photographer to further process.
+This project runs [Jasmine 2.0.0](https://github.com/pivotal/jasmine/).
+
+Simply open the spec runner `tests/SpecRunner.html`
+
+
+SparrowBleu Photography Requirements
+====================================
 
 # Goals
+The goal of this web app is to make online proofing galleries dead simple for both the photographer and client.  It will allow clients to select images from their photo shoots which they would like the photographer to further process.
 
-## Private Proofing Galleries
-
-### Photographer should be able to:
+## Photographer should be able to:
 
 - Create price proofing galleries with
     - a name
@@ -53,7 +49,7 @@ This site will be the main site for SparrowBleu Photography.  It will showcase i
 
 - Drag and drop images from their desktop to the gallery add/edit form
 
-### Client should be able to:
+## Client should be able to:
 
 - Access a client access page with:
     - a passcode field

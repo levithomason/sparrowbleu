@@ -137,7 +137,7 @@ TAGS = {
 
     33432: "Copyright",
 
-    # various extensions (should check specs for "official" names)
+    # various extensions (should check tests for "official" names)
     33723: "IptcNaaInfo",
     34377: "PhotoshopInfo",
 
