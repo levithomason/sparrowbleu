@@ -1,4 +1,5 @@
 import os
+import sys
 from os.path import abspath, join, curdir
 from boto.s3.connection import S3Connection, SubdomainCallingFormat
 from boto.s3.key import Key
@@ -64,6 +65,9 @@ USE_TZ = True
 
 # Static asset configuration
 PROJECT_PATH = abspath(curdir)
+
+# Append '/apps/' dir to PYTHON_PATH so we don't have to do 'apps.sparrow_bleu'
+sys.path.append(join(PROJECT_PATH, 'apps'))
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -185,19 +189,20 @@ INSTALLED_APPS = (
 
     'raven.contrib.django.raven_compat',
 
-    'apps.user',
-    'apps.sparrow_bleu',
-    'apps.galleries',
+    'user',
+    'sparrow_bleu',
+    'galleries',
 
     'south',
     'sorl.thumbnail',
     'gunicorn',
     'storages',
     'endless_pagination',
-    'django_extensions'
+    'django_extensions',
+    'django_nose',
 )
 
 ENDLESS_PAGINATION_PREVIOUS_LABEL = '<i class="fa fa-chevron-left"></i>'
 ENDLESS_PAGINATION_NEXT_LABEL = '<i class="fa fa-chevron-right"></i>'
 
-TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
