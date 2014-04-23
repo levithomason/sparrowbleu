@@ -1,14 +1,13 @@
 "use strict";
 
-
-$(document).ready(function() {
+jQuery(document).ready(function() {
     var view_is_fullscreen = false,
         view_selected_only = false,
-        selected_images_count = $('.selected_images .selected').data('selected');
+        selected_images_count = jQuery('.selected_images .selected').data('selected');
 
     var fullscreen = {
-        'image_container': $('.fullscreen_view .image_container'),
-        'images': $('.fullscreen_image_item'),
+        'image_container': jQuery('.fullscreen_view .image_container'),
+        'images': jQuery('.fullscreen_image_item'),
         'currentImage': function() {
             return fullscreen.image_container.children('.active');
         },
@@ -57,7 +56,7 @@ $(document).ready(function() {
                 nextSelected = currentImage.next('.selected');
 
             if (!nextSelected.length) {
-                nextSelected = $('.fullscreen_image_item.selected').first();
+                nextSelected = jQuery('.fullscreen_image_item.selected').first();
             }
 
             fullscreen.images.removeClass('active');
@@ -68,7 +67,7 @@ $(document).ready(function() {
             fullscreen.images.first().addClass('active');
 
             // controls
-            $('body').on('keydown', function(e) {
+            jQuery('body').on('keydown', function(e) {
 
                 if (view_is_fullscreen) {
                     // left
@@ -83,7 +82,7 @@ $(document).ready(function() {
 
                     // space || enter
                     if (e.keyCode === 32 || e.keyCode === 13) {
-                        selectImage($('.fullscreen_image_item.active'));
+                        selectImage(jQuery('.fullscreen_image_item.active'));
                     }
                 }
             });
@@ -92,12 +91,12 @@ $(document).ready(function() {
 
     // Selected images widget
     function update_selected_images() {
-        var widget_selected = $('.selected_images .selected'),
-            widget_extra = $('.selected_images .extra'),
-            summary_selected = $('.summary .badge .selected'),
-            summary_total = $('.summary .badge .total'),
+        var widget_selected = jQuery('.selected_images .selected'),
+            widget_extra = jQuery('.selected_images .extra'),
+            summary_selected = jQuery('.summary .badge .selected'),
+            summary_total = jQuery('.summary .badge .total'),
             max = widget_selected.data('max'),
-            cost_per_extra_image = $('#cost_per_extra_image').data('cost'),
+            cost_per_extra_image = jQuery('#cost_per_extra_image').data('cost'),
             favs_count,
             extra_count,
             extra_text;
@@ -113,7 +112,7 @@ $(document).ready(function() {
 
         // update the widget readout
         if (extra_count > 0) {
-            extra_text = extra_count + " extra = $" + extra_count * cost_per_extra_image;
+            extra_text = extra_count + " extra = jQuery" + extra_count * cost_per_extra_image;
 
             widget_selected.removeClass('primary');
 
@@ -140,17 +139,17 @@ $(document).ready(function() {
 
 
     function selectImage(image_element) {
-        var ele = $(image_element),
+        var ele = jQuery(image_element),
             image_pk = ele.data('pk'),
             thumb_overlay = ele.find('.gallery_thumbnail_overlay'),
-            image = $('[data-pk="' + image_pk + '"]'),
+            image = jQuery('[data-pk="' + image_pk + '"]'),
             jqxhr;
 
         thumb_overlay.show();
         thumb_overlay.fadeOut(400);
         image.toggleClass('selected');
 
-        jqxhr = $.post('/toggle-select-gallery-image/', {'image_pk': image_pk}, function() {
+        jqxhr = jQuery.post('/toggle-select-gallery-image/', {'image_pk': image_pk}, function() {
             if (jqxhr.responseText === "True") {
                 image.addClass('selected');
                 selected_images_count += 1;
@@ -170,13 +169,13 @@ $(document).ready(function() {
     }
 
     var updateGalleryView = function() {
-        var fullscreen_view = $('.fullscreen_view'),
-            thumbnails_view = $('.thumbnails_view'),
-            fullscreen_btn = $('.controls .fullscreen'),
-            thumbnails_btn = $('.controls .thumbnails'),
-            view_all = $('.controls .view_all'),
-            view_selected = $('.controls .view_selected'),
-            not_selected_thumbnails = $('.gallery_image_item:not(.selected)');
+        var fullscreen_view = jQuery('.fullscreen_view'),
+            thumbnails_view = jQuery('.thumbnails_view'),
+            fullscreen_btn = jQuery('.controls .fullscreen'),
+            thumbnails_btn = jQuery('.controls .thumbnails'),
+            view_all = jQuery('.controls .view_all'),
+            view_selected = jQuery('.controls .view_selected'),
+            not_selected_thumbnails = jQuery('.gallery_image_item:not(.selected)');
 
         if (view_is_fullscreen) {
             thumbnails_view.addClass('hide');
@@ -220,25 +219,25 @@ $(document).ready(function() {
      */
 
     // thumbnails
-    $('.gallery_detail_nav .controls .thumbnails').on('tap', function() {
+    jQuery('.gallery_detail_nav .controls .thumbnails').on('tap', function() {
         view_is_fullscreen = false;
         updateGalleryView();
     });
 
     // fullscreen
-    $('.gallery_detail_nav .controls .fullscreen').on('tap', function() {
+    jQuery('.gallery_detail_nav .controls .fullscreen').on('tap', function() {
         view_is_fullscreen = true;
         updateGalleryView();
     });
 
     // view all
-    $('.gallery_detail_nav .controls .view_all').on('tap', function() {
+    jQuery('.gallery_detail_nav .controls .view_all').on('tap', function() {
         view_selected_only = false;
         updateGalleryView();
     });
 
     // view selected
-    $('.gallery_detail_nav .controls .view_selected').on('tap', function() {
+    jQuery('.gallery_detail_nav .controls .view_selected').on('tap', function() {
         view_selected_only = true;
         updateGalleryView();
     });
@@ -246,28 +245,28 @@ $(document).ready(function() {
     /*
      Pagination Controls
      */
-    $('.sbp_pagination .select_page').on('tap', function() {
-        $('.sbp_pagination .page_selector').toggle();
+    jQuery('.sbp_pagination .select_page').on('tap', function() {
+        jQuery('.sbp_pagination .page_selector').toggle();
     });
 
-    $('.sbp_pagination .page_current').on('tap', function() {
-        $('.sbp_pagination .page_selector').hide();
+    jQuery('.sbp_pagination .page_current').on('tap', function() {
+        jQuery('.sbp_pagination .page_selector').hide();
     });
 
-    $('.sbp_pagination .page_selector').on('tap', function(e) {
+    jQuery('.sbp_pagination .page_selector').on('tap', function(e) {
         if (!e.target.hasClass('page_link')) {
-            $('.sbp_pagination .page_selector').hide();
+            jQuery('.sbp_pagination .page_selector').hide();
         }
     });
 
     /*
      Selecting images
      */
-    $('.gallery_image_item').on('tap', function() {
+    jQuery('.gallery_image_item').on('tap', function() {
         selectImage(this);
     });
 
-    $('.fullscreen_image_item').on('tap', function() {
+    jQuery('.fullscreen_image_item').on('tap', function() {
         selectImage(this);
     });
 

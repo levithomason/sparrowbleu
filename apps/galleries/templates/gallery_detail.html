@@ -12,40 +12,44 @@
     <div id="cost_per_extra_image" data-cost="{{ gallery.cost_per_extra_image }}"></div>
 
     <div class="gallery_detail_nav" oncontextmenu="return false">
-        {% if gallery_images or perms.Gallery.can_change %}
-            <div class="controls">
-                <div class="btn-group">
-                    <div class="gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
-                        <i class="fa fa-check"></i>
-                        <span class="text">done</span>
-                    </div>
-                    {% if is_desktop %}
-                    <div class="thumbnails btn btn-lg btn-link hide">
-                        <i class="fa fa-resize-small"></i>
-                        <span class="text">small</span>
-                    </div>
-                    <div class="fullscreen btn btn-lg btn-link">
-                        <i class="fa fa-resize-full"></i>
-                        <span class="text">full</span>
-                    </div>
-                    <div class="view_selected btn btn-lg btn-link">
-                        <i class="fa fa-heart-o"></i>
-                        <span class="text">favs</span>
-                    </div>
-                    <div class="view_all btn btn-lg btn-link hide">
-                        <i class="fa fa-camera-retro"></i>
-                        <span class="text">all</span>
-                    </div>
-                    {% endif %}
+        <div class="controls">
+            <div class="btn-group">
+                <div class="control back btn btn-lg btn-link" onclick="window.history.back();">
+                    <i class="icon fa fa-arrow-left"></i>
+                    <span class="text">back</span>
                 </div>
+            {% if gallery_images %}
+                <div class="control gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
+                    <i class="icon fa fa-check"></i>
+                    <span class="text">done</span>
+                </div>
+                {% if is_desktop %}
+                <div class="control thumbnails btn btn-lg btn-link hide">
+                    <i class="icon fa fa-resize-small"></i>
+                    <span class="text">small</span>
+                </div>
+                <div class="control fullscreen btn btn-lg btn-link">
+                    <i class="icon fa fa-resize-full"></i>
+                    <span class="text">full</span>
+                </div>
+                <div class="control view_selected btn btn-lg btn-link">
+                    <i class="icon fa fa-heart-o"></i>
+                    <span class="text">favs</span>
+                </div>
+                <div class="control view_all btn btn-lg btn-link hide">
+                    <i class="icon fa fa-camera-retro"></i>
+                    <span class="text">all</span>
+                </div>
+                {% endif %}
+            {% endif %}
             </div>
-        {% endif %}
+        </div>
         <div class="gallery_title">{{ gallery }}</div>
-        {% if gallery_images or perms.Gallery.can_change %}
-            <div class="selected_images">
-                <div class="selected" data-selected="{{ gallery.selected_images }}" data-max="{{ gallery.number_of_images }}"></div>
-                <span class="extra"></span>
-            </div>
+        {% if gallery_images %}
+        <div class="selected_images">
+            <div class="selected" data-selected="{{ gallery.selected_images }}" data-max="{{ gallery.number_of_images }}"></div>
+            <span class="extra"></span>
+        </div>
         {% endif %}
     </div>
 {% endblock nav %}
@@ -111,14 +115,13 @@
         {% else %}
             {% if perms.Gallery.can_change %}
             <div class="drop_images">
-                drop images
-                <i class="fa fa-hand-o-down"></i>
+                <i class="icon fa fa-hand-o-down"></i>
+                <div class="text">drop images</div>
             </div>
             {% else %}
             <div class="no_photos">
-                <i class="fa fa-camera-retro"></i>
-                <br/>
-                SparrowBleu will add your photos soon
+                <i class="icon fa fa-camera-retro"></i>
+                <div class="text">SparrowBleu will add your photos soon</div>
             </div>
             {% endif %}
         {% endif %}

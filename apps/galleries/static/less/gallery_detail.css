@@ -54,11 +54,7 @@ body {
 .gallery_detail_nav .controls {
   float: left;
 }
-.gallery_detail_nav .controls .gallery_detail_done_btn,
-.gallery_detail_nav .controls .view_selected,
-.gallery_detail_nav .controls .view_all,
-.gallery_detail_nav .controls .thumbnails,
-.gallery_detail_nav .controls .fullscreen {
+.gallery_detail_nav .controls .control {
   display: block;
   padding: 12px;
   line-height: normal;
@@ -66,20 +62,12 @@ body {
   color: inherit;
   z-index: 100;
 }
-.gallery_detail_nav .controls .gallery_detail_done_btn:hover,
-.gallery_detail_nav .controls .view_selected:hover,
-.gallery_detail_nav .controls .view_all:hover,
-.gallery_detail_nav .controls .thumbnails:hover,
-.gallery_detail_nav .controls .fullscreen:hover {
+.gallery_detail_nav .controls .control:hover {
   text-decoration: none;
   color: #74736e;
 }
 @media (max-width: 768px) {
-  .gallery_detail_nav .controls .gallery_detail_done_btn,
-  .gallery_detail_nav .controls .view_selected,
-  .gallery_detail_nav .controls .view_all,
-  .gallery_detail_nav .controls .thumbnails,
-  .gallery_detail_nav .controls .fullscreen {
+  .gallery_detail_nav .controls .control {
     font-size: 18px;
     padding: 15px 10px;
   }
@@ -463,6 +451,12 @@ body {
 .the_end {
   font-size: 42px;
   margin: 150px 0 75px 0;
+}
+.no_photos .icon,
+.drop_images .icon,
+.the_end .icon {
+  font-size: 112px;
+  margin-bottom: 20px;
 }
 @media (max-width: 768px) {
   .no_photos,

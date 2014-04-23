@@ -1,10 +1,10 @@
-/*
+/**
  * Delete gallery
  */
 
 // delete
-$('.delete').click(function() {
-    var gallery = $(this).parents('.gallery_list_item');
+jQuery('.delete').click(function() {
+    var gallery = jQuery(this).parents('.gallery_list_item');
 
     gallery.find('.edit_delete').hide();
     gallery.find('.delete_confirm').show();
@@ -12,14 +12,14 @@ $('.delete').click(function() {
 });
 
 
-// confirm delete
-$('.confirm_delete_yes').click(function() {
-    var gallery = $(this).parents('.gallery_list_item');
+// confirm
+jQuery('.confirm_delete_yes').click(function() {
+    var gallery = jQuery(this).parents('.gallery_list_item');
     var gallery_pk = gallery.data('pk');
 
     gallery.addClass('deleting');
 
-    var jqxhr = $.post('/delete-gallery/', {'gallery_pk': gallery_pk}, function() {
+    var jqxhr = jQuery.post('/delete-gallery/', {'gallery_pk': gallery_pk}, function() {
         gallery.fadeOut(200);
     })
         .fail(function() {
@@ -28,9 +28,9 @@ $('.confirm_delete_yes').click(function() {
         });
 });
 
-// cancel delete
-$('.confirm_delete_no').click(function() {
-    var gallery = $(this).parents('.gallery_list_item');
+// cancel
+jQuery('.confirm_delete_no').click(function() {
+    var gallery = jQuery(this).parents('.gallery_list_item');
 
     gallery.find('.edit_delete').show();
     gallery.find('.delete_confirm').hide();

@@ -1,1 +1,1 @@
-$('input[name="is_mobile"]').prop('checked', jQuery.browser.mobile);
+jQuery('input[name="is_mobile"]').prop('checked', isMobile.any);

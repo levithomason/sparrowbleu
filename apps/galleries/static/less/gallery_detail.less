@@ -29,11 +29,7 @@ body {
 
     .controls {
         float: left;
-        .gallery_detail_done_btn,
-        .view_selected,
-        .view_all,
-        .thumbnails,
-        .fullscreen {
+        .control {
             display: block;
             padding: 12px;
             line-height: normal;
@@ -44,11 +40,11 @@ body {
                 text-decoration: none;
                 color: darken(@sbp_heading_color, 10%);
             }
+
             @media (max-width: 768px) {
                 font-size: @sbp_mobile_nav_font_size;
                 padding: 15px 10px;
             }
-
         }
     }
 
@@ -457,6 +453,11 @@ body {
 .the_end {
     font-size: 42px;
     margin: 150px 0 75px 0;
+
+    .icon {
+        font-size: 112px;
+        margin-bottom: 20px;
+    }
 
     @media (max-width: 768px) {
         font-size: 28px;
