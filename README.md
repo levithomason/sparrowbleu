@@ -1,5 +1,7 @@
 Setup
 ===========
+These docs are for MacOS but should suffice for most windows users with moderate experience.
+
 1. Clone repo
 2. Rename /settings/development(dot).py to development.py
     - *If you use virtualenvs make one now and activate it.*
@@ -17,25 +19,25 @@ Set the following AWS environment variables on virtualenv activate (remember to 
 **AWS Config**
 
 ```
-set AWS_ACCESS_KEY_ID=<your_s3_access_id>
-set AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
-set AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
+export AWS_ACCESS_KEY_ID=<your_s3_access_id>
+export AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
+export AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
 ```
 
 **Development Env Super User**
 
 ```
-SUPERUSER_NAME = <your_development_name>
-SUPERUSER_EMAIL = <your_development_email>
-SUPERUSER_PASSWORD = <your_development_password>
+export SUPERUSER_NAME = <your_development_name>
+export SUPERUSER_EMAIL = <your_development_email>
+export SUPERUSER_PASSWORD = <your_development_password>
 ```
 
 **Postmark Email Service**
 
 ```
-POSTMARK_API_KEY = <your_postmark_api_key>
-POSTMARK_SMTP_SERVER = <your_postmark_smpt_server>
-POSTMARK_INBOUND_ADDRESS = <your_postmark_inbound_address>
+export POSTMARK_API_KEY = <your_postmark_api_key>
+export POSTMARK_SMTP_SERVER = <your_postmark_smpt_server>
+export POSTMARK_INBOUND_ADDRESS = <your_postmark_inbound_address>
 ```
 
 # Testing
@@ -72,7 +74,7 @@ The goal of this web app is to make online proofing galleries dead simple for bo
     - a passcode field
     - a "Go to gallery" button
 
-- Enter a valid access code, click go to gallery and be taken directly to their private gallery craeted by the photographer
+- Enter a valid access code, click go to gallery and be taken directly to their private gallery created by the photographer
 
 - Inside the Gallery
     - Click/Tap to choose images for further processing by the photographer
