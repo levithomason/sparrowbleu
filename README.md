@@ -12,10 +12,10 @@ Setup
     - *If you get postgres errors, make sure postgres is running!  Try `brew info postgres` for help*
 
 ## Environment Vars
+Set the following AWS environment variables on virtualenv activate (remember to clear them on deactivate):
 
 **AWS Config**
 
-Set the following AWS environment variables on virtualenv activate (remember to clear them on deactivate):
 ```
 set AWS_ACCESS_KEY_ID=<your_s3_access_id>
 set AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
@@ -24,15 +24,19 @@ set AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
 
 **Development Env Super User**
 
+```
 SUPERUSER_NAME = <your_development_name>
 SUPERUSER_EMAIL = <your_development_email>
 SUPERUSER_PASSWORD = <your_development_password>
+```
 
 **Postmark Email Service**
 
+```
 POSTMARK_API_KEY = <your_postmark_api_key>
 POSTMARK_SMTP_SERVER = <your_postmark_smpt_server>
 POSTMARK_INBOUND_ADDRESS = <your_postmark_inbound_address>
+```
 
 # Testing
 
