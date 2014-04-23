@@ -24,15 +24,15 @@ set AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
 
 **Development Env Super User**
 
-SUPERUSER_NAME = os.environ['SUPERUSER_NAME']
-SUPERUSER_EMAIL = os.environ['SUPERUSER_EMAIL']
-SUPERUSER_PASSWORD = os.environ['SUPERUSER_PASSWORD']
+SUPERUSER_NAME = <your_development_name>
+SUPERUSER_EMAIL = <your_development_email>
+SUPERUSER_PASSWORD = <your_development_password>
 
 **Postmark Email Service**
 
-POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
-POSTMARK_SMTP_SERVER = os.environ['POSTMARK_SMTP_SERVER']
-POSTMARK_INBOUND_ADDRESS = os.environ['POSTMARK_INBOUND_ADDRESS']
+POSTMARK_API_KEY = <your_postmark_api_key>
+POSTMARK_SMTP_SERVER = <your_postmark_smpt_server>
+POSTMARK_INBOUND_ADDRESS = <your_postmark_inbound_address>
 
 # Testing
 
