@@ -12,13 +12,13 @@ ADMINS = (
     ('Jerica Thomason', 'jerica@sparrowbleuphotography.com'),
 )
 
-SUPERUSER_NAME = os.environ['SUPERUSER_NAME']
-SUPERUSER_EMAIL = os.environ['SUPERUSER_EMAIL']
-SUPERUSER_PASSWORD = os.environ['SUPERUSER_PASSWORD']
+SUPERUSER_NAME = os.environ.get('SUPERUSER_NAME', 'admin')
+SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'admin@sparrowbleu.com')
+SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'admin')
 
-POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
-POSTMARK_SMTP_SERVER = os.environ['POSTMARK_SMTP_SERVER']
-POSTMARK_INBOUND_ADDRESS = os.environ['POSTMARK_INBOUND_ADDRESS']
+POSTMARK_API_KEY = os.environ.get('POSTMARK_API_KEY', None)
+POSTMARK_SMTP_SERVER = os.environ.get('POSTMARK_SMTP_SERVER', None)
+POSTMARK_INBOUND_ADDRESS = os.environ.get('POSTMARK_INBOUND_ADDRESS', None)
 
 MANAGERS = ADMINS
 
@@ -89,9 +89,10 @@ STATICFILES_FINDERS = (
 SECRET_KEY = '*blhedyelf3m-y90by&0@4ta0&6$k#@70qy93dn#-2&or5d(l1'
 
 # AWS
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', None)
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
+
 
 # boto
 boto_conn = S3Connection(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)

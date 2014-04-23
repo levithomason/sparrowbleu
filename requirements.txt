@@ -1,5 +1,5 @@
 Django==1.5.4
-Pillow==2.3.0
+Pillow>=2.3.0
 South==0.8.2
 boto==2.27.0
 dj-database-url==0.2.2
