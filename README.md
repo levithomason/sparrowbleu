@@ -11,6 +11,8 @@ Setup
     - *If you get libssl errors try [this blog post](http://joshuakehn.com/2013/10/13/Postgresapp-and-psycopg2-on-OS-X.html)*
     - *If you get postgres errors, make sure postgres is running!  Try `brew info postgres` for help*
 
+## Environment Vars
+
 **AWS Config**
 
 Set the following AWS environment variables on virtualenv activate (remember to clear them on deactivate):
@@ -20,7 +22,21 @@ set AWS_SECRET_ACCESS_KEY=<your_s3_secret_access_key>
 set AWS_STORAGE_BUCKET_NAME=<your_s3_bucket_name>
 ```
 
-# JavaScript Unit Testing
+**Development Env Super User**
+
+SUPERUSER_NAME = os.environ['SUPERUSER_NAME']
+SUPERUSER_EMAIL = os.environ['SUPERUSER_EMAIL']
+SUPERUSER_PASSWORD = os.environ['SUPERUSER_PASSWORD']
+
+**Postmark Email Service**
+
+POSTMARK_API_KEY = os.environ['POSTMARK_API_KEY']
+POSTMARK_SMTP_SERVER = os.environ['POSTMARK_SMTP_SERVER']
+POSTMARK_INBOUND_ADDRESS = os.environ['POSTMARK_INBOUND_ADDRESS']
+
+# Testing
+
+## JavaScript Unit
 
 This project runs [Jasmine 2.0.0](https://github.com/pivotal/jasmine/).
 
