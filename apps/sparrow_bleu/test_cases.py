@@ -21,7 +21,6 @@ class E2ETestCase(LiveServerTestCase):
     def get_remote(self, url):
         self.driver.get(url)
 
-
     def get_local(self, url):
         '''
         Automatically puts WebDriver url in front
