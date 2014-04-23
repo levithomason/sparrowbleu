@@ -7,6 +7,12 @@ def test():
 def test_e2e():
     local('python manage.py test --attr=e2e --nologcapture')
 
+def push():
+    local('git push')
+
+def push_heroku():
+    local('git push heroku master')
+
 def deploy():
     print "%" * 80
     print " Deploying Sparrow Bleu, me lord!"
@@ -19,8 +25,9 @@ def deploy():
 
         # run jasmine tests
         # run pep8
-        # git push
-        # git push heroku master
+
+        _fancy_output("Pushing to GitHub", push)
+        _fancy_output("Pushing to Heroku", push_heroku)
 
 def _fancy_output(message, func):
     sys.stdout.write("%s..." % message)
