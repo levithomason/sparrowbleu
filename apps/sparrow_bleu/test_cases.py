@@ -9,7 +9,8 @@ class E2ETestCase(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = WebDriver()
-        # Implicitly wait means if we don't find an element automatically keep looking for 10 seconds
+        # Implicitly wait means if we don't find an element automatically keep
+        # looking for 10 seconds
         cls.driver.implicitly_wait(10)
         super(E2ETestCase, cls).setUpClass()
 
