@@ -27,8 +27,8 @@ This project runs [Jasmine 2.0.0](https://github.com/pivotal/jasmine/).
 Simply open the spec runner `tests/SpecRunner.html`
 
 
-SparrowBleu Photography Requirements
-====================================
+SparrowBleu Photography
+=======================
 
 # Goals
 The goal of this web app is to make online proofing galleries dead simple for both the photographer and client.  It will allow clients to select images from their photo shoots which they would like the photographer to further process.
