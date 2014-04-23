@@ -199,3 +199,5 @@ INSTALLED_APPS = (
 
 ENDLESS_PAGINATION_PREVIOUS_LABEL = '<i class="fa fa-chevron-left"></i>'
 ENDLESS_PAGINATION_NEXT_LABEL = '<i class="fa fa-chevron-right"></i>'
+
+TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'
