@@ -14,29 +14,29 @@
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
             <div class="btn-group">
-                <div onclick="window.history.back();" class="back btn btn-lg btn-link">
-                    <i class="icon fa fa-angle-double-left"></i>
+                <div class="control back btn btn-lg btn-link" onclick="window.history.back();">
+                    <i class="icon fa fa-arrow-left"></i>
                     <span class="text">back</span>
                 </div>
             {% if gallery_images %}
-                <div class="gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
+                <div class="control gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
                     <i class="icon fa fa-check"></i>
                     <span class="text">done</span>
                 </div>
                 {% if is_desktop %}
-                <div class="thumbnails btn btn-lg btn-link hide">
+                <div class="control thumbnails btn btn-lg btn-link hide">
                     <i class="icon fa fa-resize-small"></i>
                     <span class="text">small</span>
                 </div>
-                <div class="fullscreen btn btn-lg btn-link">
+                <div class="control fullscreen btn btn-lg btn-link">
                     <i class="icon fa fa-resize-full"></i>
                     <span class="text">full</span>
                 </div>
-                <div class="view_selected btn btn-lg btn-link">
+                <div class="control view_selected btn btn-lg btn-link">
                     <i class="icon fa fa-heart-o"></i>
                     <span class="text">favs</span>
                 </div>
-                <div class="view_all btn btn-lg btn-link hide">
+                <div class="control view_all btn btn-lg btn-link hide">
                     <i class="icon fa fa-camera-retro"></i>
                     <span class="text">all</span>
                 </div>

@@ -2,8 +2,8 @@
  * Delete gallery
  */
 
-    // delete
-    jQuery('.delete').click(function() {
+// delete
+jQuery('.delete').click(function() {
     var gallery = jQuery(this).parents('.gallery_list_item');
 
     gallery.find('.edit_delete').hide();
