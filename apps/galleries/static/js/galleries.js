@@ -22,8 +22,11 @@ jQuery('.confirm_delete_yes').click(function() {
     var jqxhr = jQuery.post('/delete-gallery/', {'gallery_pk': gallery_pk}, function() {
         gallery.fadeOut(200);
     })
-        .fail(function() {
-            alert(jqxhr.responseText);
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error(textStatus);
+            console.error(jqxhr.responseText);
+            console.error(errorThrown);
+            alert('Something went wrong:\n\n' + 'Error: ' + errorThrown + '\n' + textStatus);
             gallery.removeClass('deleting');
         });
 });
