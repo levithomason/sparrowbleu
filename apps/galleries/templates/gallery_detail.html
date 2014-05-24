@@ -164,7 +164,13 @@
 {% block additional_script %}
     <script src="{% static 'js/jquery.tap.js' %}"></script>
     <script src="{% static 'js/endless-pagination.js' %}"></script>
-    <script>$.endlessPaginate();</script>
+    <script>$.endlessPaginate({
+        onClick: function() {
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+            }, 500);
+        }
+    });</script>
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}
