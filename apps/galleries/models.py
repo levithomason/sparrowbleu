@@ -21,6 +21,9 @@ class Gallery(models.Model):
     def get_mobile_url(self):
         return "/gallery/%s/%s" % ('m', self.passcode)
 
+    def total_images(self):
+        return GalleryImage.objects.filter(gallery=self).count()
+
     def selected_images(self):
         return GalleryImage.objects.filter(gallery=self).filter(is_selected=True).count()
 
