@@ -12,14 +12,15 @@ body {
 
 .gallery_detail_nav {
     position: fixed;
-    padding: 5px 10px;
-    height: 60px;
+    padding: 0 10px;
+    height: @sbp_gallery_nav_height;
     top: 0;
     left: 0;
     right: 0;
-    background: @sbp_gallery_overlay_background;
+    font-family: @sbp_gallery_nav_font_family;
     color: rgba(255, 255, 255, 0.65);
     text-shadow: 0 1px rgba(0, 0, 0, 0.75);
+    background: @sbp_gallery_overlay_background;
     z-index: 900;
     .user-select(none);
 
@@ -31,8 +32,8 @@ body {
         float: left;
         .control {
             display: block;
-            padding: 12px;
-            line-height: normal;
+            padding: 0 12px;
+            line-height: @sbp_gallery_nav_height;
             font-size: @sbp_gallery_nav_font_size;
             color: inherit;
             z-index: 100;
@@ -51,7 +52,7 @@ body {
     .gallery_title {
         position: absolute;
         width: 100%;
-        font-size: 28px;
+        font-size: @sbp_gallery_nav_font_size * 1.2;
         line-height: 50px;
         text-align: center;
         cursor: default;
@@ -62,15 +63,15 @@ body {
 
     .selected_images {
         float: right;
-        padding: 0 12px;
+        padding: 3px 12px;
         text-align: right;
-        font-size: 16px;
         z-index: 100;
+        font-size: @sbp_gallery_nav_font_size * 0.8;
         .selected,
         .extra {
             .sbp_transition(font-size, color;);
             &.primary {
-                font-size: 21px;
+                font-size: @sbp_gallery_nav_font_size;
                 color: @sbp_blue;
             }
         }
@@ -370,6 +371,7 @@ body {
             right: 0;
             text-align: center;
             font-size: @sbp_gallery_nav_font_size;
+            font-family: @sbp_gallery_nav_font_family;
             background: @sbp_gallery_overlay_background;
 
             .endless_page_current,
@@ -382,7 +384,6 @@ body {
             }
             .endless_page_current {
                 color: #eee;
-                background: @sbp_gallery_overlay_background;
             }
             .endless_page_link {
                 text-decoration: none;

@@ -32,14 +32,15 @@ body {
 }
 .gallery_detail_nav {
   position: fixed;
-  padding: 5px 10px;
-  height: 60px;
+  padding: 0 10px;
+  height: 50px;
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(27, 25, 24, 0.8);
+  font-family: "Raleway Regular";
   color: rgba(255, 255, 255, 0.65);
   text-shadow: 0 1px rgba(0, 0, 0, 0.75);
+  background: rgba(27, 25, 24, 0.8);
   z-index: 900;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -56,9 +57,9 @@ body {
 }
 .gallery_detail_nav .controls .control {
   display: block;
-  padding: 12px;
-  line-height: normal;
-  font-size: 21px;
+  padding: 0 12px;
+  line-height: 50px;
+  font-size: 18px;
   color: inherit;
   z-index: 100;
 }
@@ -75,7 +76,7 @@ body {
 .gallery_detail_nav .gallery_title {
   position: absolute;
   width: 100%;
-  font-size: 28px;
+  font-size: 21.599999999999998px;
   line-height: 50px;
   text-align: center;
   cursor: default;
@@ -87,10 +88,10 @@ body {
 }
 .gallery_detail_nav .selected_images {
   float: right;
-  padding: 0 12px;
+  padding: 3px 12px;
   text-align: right;
-  font-size: 16px;
   z-index: 100;
+  font-size: 14.4px;
 }
 .gallery_detail_nav .selected_images .selected,
 .gallery_detail_nav .selected_images .extra {
@@ -106,7 +107,7 @@ body {
 }
 .gallery_detail_nav .selected_images .selected.primary,
 .gallery_detail_nav .selected_images .extra.primary {
-  font-size: 21px;
+  font-size: 18px;
   color: #a1d1c9;
 }
 @media (max-width: 768px) {
@@ -377,7 +378,8 @@ body {
   left: 0;
   right: 0;
   text-align: center;
-  font-size: 21px;
+  font-size: 18px;
+  font-family: "Raleway Regular";
   background: rgba(27, 25, 24, 0.8);
 }
 .gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_current,
@@ -390,7 +392,6 @@ body {
 }
 .gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_current {
   color: #eee;
-  background: rgba(27, 25, 24, 0.8);
 }
 .gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_link {
   text-decoration: none;

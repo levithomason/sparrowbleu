@@ -112,7 +112,7 @@ jQuery(document).ready(function() {
 
         // update the widget readout
         if (extra_count > 0) {
-            extra_text = extra_count + " extra = jQuery" + extra_count * cost_per_extra_image;
+            extra_text = extra_count + " extra = $" + extra_count * cost_per_extra_image;
 
             widget_selected.removeClass('primary');
 
