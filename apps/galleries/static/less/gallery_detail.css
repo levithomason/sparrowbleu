@@ -47,11 +47,6 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
-@media (max-width: 768px) {
-  .gallery_detail_nav {
-    padding: 5px 0;
-  }
-}
 .gallery_detail_nav .controls {
   float: left;
 }
@@ -70,7 +65,7 @@ body {
 @media (max-width: 768px) {
   .gallery_detail_nav .controls .control {
     font-size: 18px;
-    padding: 15px 10px;
+    padding: 0 10px;
   }
 }
 .gallery_detail_nav .gallery_title {
@@ -361,12 +356,6 @@ body {
 }
 .gallery_image_container .thumbnails_view .gallery_image_item.selected .favorite {
   opacity: 1;
-}
-@media (max-width: 768px) {
-  .gallery_image_container .thumbnails_view .gallery_image_item.selected .favorite {
-    top: 10px;
-    bottom: auto;
-  }
 }
 .gallery_image_container .thumbnails_view .gallery_image_item.uploading .gallery_thumbnail {
   opacity: 0.35;

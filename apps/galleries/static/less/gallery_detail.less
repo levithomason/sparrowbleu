@@ -24,10 +24,6 @@ body {
     z-index: 900;
     .user-select(none);
 
-    @media (max-width: 768px) {
-        padding: 5px 0;
-    }
-
     .controls {
         float: left;
         .control {
@@ -44,7 +40,7 @@ body {
 
             @media (max-width: 768px) {
                 font-size: @sbp_mobile_nav_font_size;
-                padding: 15px 10px;
+                padding: 0 10px;
             }
         }
     }
@@ -349,11 +345,6 @@ body {
             &.selected {
                 .favorite {
                     opacity: 1;
-
-                    @media (max-width: 768px) {
-                        top: 10px;
-                        bottom: auto;
-                    }
                 }
             }
             &.uploading {
