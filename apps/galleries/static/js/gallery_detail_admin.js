@@ -196,6 +196,8 @@ function safeString(string) {
  */
 
 function uploadImageToServer(file, url) {
+    var url_no_args = url.replace(/\?.*/, '');
+
     $('#' + safeString(file.name)).html('<i class="fa fa-spin fa-spinner"></i> making thumbnails');
 
     $.ajax({
@@ -203,7 +205,7 @@ function uploadImageToServer(file, url) {
         method: "POST",
         data: {
             gallery: $('#gallery_pk').data('pk'),
-            full_size_url: url,
+            full_size_url: url_no_args,
             name: file.name
         },
         complete: function(data) {
