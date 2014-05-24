@@ -14,10 +14,10 @@
     <div class="gallery_detail_nav" oncontextmenu="return false">
         <div class="controls">
             <div class="btn-group">
-                <div class="control back btn btn-lg btn-link" onclick="window.history.back();">
+                <a href="/galleries/" class="control back btn btn-lg btn-link">
                     <i class="icon fa fa-arrow-left"></i>
                     <span class="text">back</span>
-                </div>
+                </a>
             {% if gallery_images %}
                 <div class="control gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
                     <i class="icon fa fa-check"></i>

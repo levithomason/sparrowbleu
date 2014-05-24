@@ -30,7 +30,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            {% for g, im, selected_images, total_cost in galleries %}
+            {% for g, im, total_cost in galleries %}
             <div class="gallery_list_item panel panel-default" data-pk="{{ g.pk }}">
                 <div class="controls">
                     <div class="edit_delete">
@@ -66,10 +66,13 @@
                     <div class="gallery_list_gallery_info">
                         <div class="gallery_passcode"><i class="fa fa-lock"></i>{{ g.passcode }}</div>
                         <div class="gallery_number_of_images">
-                            <i class="fa fa-picture-o"></i>{{ selected_images }} / {{ g.number_of_images }} selected
+                            <i class="fa fa-heart-o"></i>{{ g.selected_images }} / {{ g.number_of_images }}
                         </div>
                         <div class="gallery_cost_per_extra_image">
-                            <i class="fa fa-plus"></i>${{ total_cost }} @ ${{ g.cost_per_extra_image }}ea
+                            <i class="fa fa-money"></i>${{ total_cost }}
+                        </div>
+                        <div class="gallery_total_images">
+                            <i class="fa fa-picture-o"></i>{{ g.total_images }}
                         </div>
                     </div>
                 </div>

@@ -59,14 +59,12 @@ def galleries(request):
         else:
             preview_image_url = None
 
-        selected_images = gallery.selected_images()
-
-        if selected_images > gallery.number_of_images:
-            total_cost = (selected_images - gallery.number_of_images) * gallery.cost_per_extra_image
+        if gallery.selected_images() > gallery.number_of_images:
+            total_cost = (gallery.selected_images() - gallery.number_of_images) * gallery.cost_per_extra_image
         else:
             total_cost = 0
 
-        galleries.append([gallery, preview_image_url, selected_images, total_cost])
+        galleries.append([gallery, preview_image_url, total_cost])
 
     return render(request, 'galleries.html', {'galleries': galleries})
 
