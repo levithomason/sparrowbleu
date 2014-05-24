@@ -29,7 +29,6 @@ class Gallery(models.Model):
 
     def get_s3_directory_name(self):
         s3_dir = '%s/' % self.pk
-
         return s3_dir
 
 
@@ -56,6 +55,19 @@ class GalleryImage(models.Model):
 
     def fullscreen(self):
         return self._thumbnail(1200, 1200)
+
+    def process(self):
+        urllib.urlretrieve(self.full_size_url, filename=self.name)
+        image_file = Image.open(self.name)
+
+        self.width = image_file.size[0]
+        self.height = image_file.size[1]
+        self.is_portrait = image_file.size[0] < image_file.size[1]
+        self.thumbnail()
+        self.fullscreen()
+        self.save()
+
+        os.remove('%s' % self.name)
 
 
 def process_gallery_image(sender, **kwargs):

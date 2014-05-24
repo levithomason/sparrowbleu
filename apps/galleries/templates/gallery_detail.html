@@ -103,14 +103,9 @@
             {% endif %}
 
             <div class="thumbnails_view">
-                {% if is_mobile %}
-                    <div class="endless_page_template">
-                        {% include 'gallery_detail_page.html' %}
-                    </div>
-                {% else %}
-                    {% include '_gallery_detail_images.html' %}
-                    <div class="the_end">~ the end ~</div>
-                {% endif %}
+                <div class="endless_page_template">
+                    {% include 'gallery_detail_page.html' %}
+                </div>
             </div>
         {% else %}
             {% if perms.Gallery.can_change %}
@@ -164,10 +159,8 @@
 
 {% block additional_script %}
     <script src="{% static 'js/jquery.tap.js' %}"></script>
-    {% if is_mobile %}
-        <script src="{% static 'js/endless-pagination.js' %}"></script>
-        <script>$.endlessPaginate();</script>
-    {% endif %}
+    <script src="{% static 'js/endless-pagination.js' %}"></script>
+    <script>$.endlessPaginate();</script>
     <script src="{% static 'js/gallery_detail.js' %}"></script>
 
     {% if perms.Gallery.can_change %}

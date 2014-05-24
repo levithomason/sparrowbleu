@@ -33,7 +33,7 @@ body {
             display: block;
             padding: 12px;
             line-height: normal;
-            font-size: 24px;
+            font-size: @sbp_gallery_nav_font_size;
             color: inherit;
             z-index: 100;
             &:hover {
@@ -362,7 +362,35 @@ body {
             }
         }
 
-        .sbp_pagination {
+        .sbp_desktop_pagination {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: @sbp_gallery_nav_font_size;
+            background: @sbp_gallery_overlay_background;
+
+            .endless_page_current,
+            .endless_page_link {
+                display: inline-block;
+                padding: 10px 5px;
+                max-width: 60px;
+                min-width: 30px;
+                width: 5%;
+            }
+            .endless_page_current {
+                color: #eee;
+                background: @sbp_gallery_overlay_background;
+            }
+            .endless_page_link {
+                text-decoration: none;
+                color: @sbp_font_color;
+            }
+        }
+
+        .sbp_mobile_pagination {
             display: block;
 
             .page_controls {

@@ -245,17 +245,17 @@ jQuery(document).ready(function() {
     /*
      Pagination Controls
      */
-    jQuery('.sbp_pagination .select_page').on('tap', function() {
-        jQuery('.sbp_pagination .page_selector').toggle();
+    jQuery('.sbp_mobile_pagination .select_page').on('tap', function() {
+        jQuery('.sbp_mobile_pagination .page_selector').toggle();
     });
 
-    jQuery('.sbp_pagination .page_current').on('tap', function() {
-        jQuery('.sbp_pagination .page_selector').hide();
+    jQuery('.sbp_mobile_pagination .page_current').on('tap', function() {
+        jQuery('.sbp_mobile_pagination .page_selector').hide();
     });
 
-    jQuery('.sbp_pagination .page_selector').on('tap', function(e) {
+    jQuery('.sbp_mobile_pagination .page_selector').on('tap', function(e) {
         if (!e.target.hasClass('page_link')) {
-            jQuery('.sbp_pagination .page_selector').hide();
+            jQuery('.sbp_mobile_pagination .page_selector').hide();
         }
     });
 

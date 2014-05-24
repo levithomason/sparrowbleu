@@ -224,6 +224,12 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
 
             gallery_images = []
             for image in naturally_sorted_qs:
+                try:
+                    test_width = image.width / 1
+                    test_height = image.height / 1
+                except TypeError:
+                    image.process()
+
                 if image.is_portrait:
                     if image.width >= 360:
                         thumb_width = 360
@@ -248,6 +254,7 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
                         thumb_width = image.width
                     else:
                         thumb_width = max_width
+
 
                 gallery_images.append({
                     'pk': image.pk,

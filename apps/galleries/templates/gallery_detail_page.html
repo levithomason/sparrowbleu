@@ -1,35 +1,48 @@
 {% load endless %}
 
+{% if is_mobile %}
 {% paginate 20 gallery_images %}
+{% else %}
+{% paginate 50 gallery_images %}
+{% endif %}
+
+
 {% get_pages %}
 
 {% include '_gallery_detail_images.html' %}
 
 {% if gallery_images.count > 0 %}
-<div class="sbp_pagination">
+
+{% if is_mobile %}
+<div class="sbp_mobile_pagination">
     <div class="page_controls">
         {% if pages.next == '' %}
         <div class="the_end">~ the end ~</div>
         {% endif %}
 
         {% if pages.previous %}
-        <a class="previous control" href="{{ page.previous }}"><i class="fa fa-chevron-left"></i></a>
+        <a class="previous control" href="{{ pages.previous.path }}"><i class="fa fa-chevron-left"></i></a>
         {% endif %}
 
         <span class="select_page control">page {{ pages.current }}</span>
 
         {% if pages.next %}
-            <a class="next control" href="{{ page.next }}"><i class="fa fa-chevron-right"></i></a>
+        <a class="next control" href="{{ pages.next.path }}"><i class="fa fa-chevron-right"></i></a>
         {% endif %}
     </div>
     <div class="page_selector">
         {% for page in pages %}
-            {% if page.is_current %}
-                <span class="page_current">{{ page.number }}</span>
-            {% else %}
-                <a href="{{ page.path }}" class="page_link">{{ page.number }}</a>
-            {% endif %}
+        {% if page.is_current %}
+        <span class="page_current">{{ page.number }}</span>
+        {% else %}
+        <a href="{{ page.path }}" class="page_link">{{ page.number }}</a>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
+{% else %}
+<div class="sbp_desktop_pagination">
+    {{ pages }}
+</div>
+{% endif %}
 {% endif %}
