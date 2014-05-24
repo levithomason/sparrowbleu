@@ -133,7 +133,7 @@
 .gallery_list_item .panel-footer .gallery_list_gallery_info i {
   width: 15px;
   margin-right: 10px;
-  text-align: right;
+  text-align: center;
 }
 .gallery_list_item .deleting_overlay {
   position: absolute;
