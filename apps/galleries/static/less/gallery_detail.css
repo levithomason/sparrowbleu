@@ -314,9 +314,6 @@ body {
     box-shadow: none;
   }
 }
-.gallery_image_container .thumbnails_view .gallery_image_item .gallery_image_item_inner:hover .name {
-  opacity: 1;
-}
 .gallery_image_container .thumbnails_view .gallery_image_item .gallery_image_item_inner .gallery_thumbnail {
   position: relative;
   margin: auto;
@@ -353,6 +350,11 @@ body {
   top: 50%;
   left: 50%;
   font-size: 28px;
+}
+.gallery_image_container .thumbnails_view .gallery_image_item .gallery_image_item_inner .gallery_image_name {
+  font-family: "Raleway Regular", sans-serif;
+  font-size: 14px;
+  line-height: 32px;
 }
 .gallery_image_container .thumbnails_view .gallery_image_item.selected .favorite {
   opacity: 1;

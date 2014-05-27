@@ -255,9 +255,9 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
                     else:
                         thumb_width = max_width
 
-
                 gallery_images.append({
                     'pk': image.pk,
+                    'name': image.name,
                     'width': image.width,
                     'height': image.height,
                     'thumbnail': image.thumbnail,

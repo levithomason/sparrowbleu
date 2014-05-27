@@ -121,10 +121,10 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    ".",
-    "./sparrow_bleu/templates/",
-    "./galleries/templates/",
-    "./galleries/templates/",
+    PROJECT_PATH,
+    join(PROJECT_PATH, 'apps/sparrow_bleu/templates/'),
+    join(PROJECT_PATH, 'apps/galleries/templates/'),
+    join(PROJECT_PATH, 'apps/user/templates/'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
