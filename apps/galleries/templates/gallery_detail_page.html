@@ -13,13 +13,13 @@
 
 {% if gallery_images.count > 0 %}
 
+{% if pages.next == '' %}
+<div class="the_end">~ the end ~</div>
+{% endif %}
+
 {% if is_mobile %}
 <div class="sbp_mobile_pagination">
     <div class="page_controls">
-        {% if pages.next == '' %}
-        <div class="the_end">~ the end ~</div>
-        {% endif %}
-
         {% if pages.previous %}
         <a class="previous control" href="{{ pages.previous.path }}"><i class="fa fa-chevron-left"></i></a>
         {% endif %}
@@ -42,7 +42,23 @@
 </div>
 {% else %}
 <div class="sbp_desktop_pagination">
-    {{ pages }}
+    {% if pages.previous %}
+    <a href="{{ pages.previous.path }}" class="endless_page_link"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+
+    {% for page in pages %}
+    {% if page.is_current %}
+    <span class="endless_page_current">
+        <strong>{{ page.number }}</strong>
+    </span>
+    {% else %}
+    <a href="{{ page.path }}" class="endless_page_link">{{ page.number }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if pages.next %}
+    <a href="{{ pages.next.path }}" class="endless_page_link"><i class="fa fa-chevron-right"></i></a>
+    {% endif %}
 </div>
 {% endif %}
 {% endif %}
