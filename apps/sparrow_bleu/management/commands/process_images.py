@@ -51,7 +51,5 @@ class Command(BaseCommand):
                 self.stdout.write('        - done')
 
                 current_image += 1
-                total_images -= 1
 
             current_gallery += 1
-            total_galleries -= 1
