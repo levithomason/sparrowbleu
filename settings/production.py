@@ -107,4 +107,5 @@ LOGGING = {
 INTERNAL_IPS = ('',)
 
 # Email
-EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
