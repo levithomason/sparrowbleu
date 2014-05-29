@@ -313,8 +313,9 @@ def send_completed_gallery(request, pk=None):
 
             subject = 'Gallery Complete: %s' % gallery.name
             html_body = render_to_string('send_completed_gallery_email.html', context)
+            send_to = [a[1] for a in ADMINS]
 
-            msg = EmailMessage(subject, html_body, POSTMARK_SENDER, [a[1] for a in ADMINS])
+            msg = EmailMessage(subject, html_body, POSTMARK_SENDER, send_to)
             msg.content_subtype = "html"  # Main content is now text/html
             msg.send()
 
