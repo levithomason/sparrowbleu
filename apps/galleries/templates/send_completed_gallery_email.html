@@ -18,7 +18,7 @@
 
 <div class="image_container" style="padding: 20px; background: #696969; border: 1px solid #555; border-radius: 4px; overflow: hidden;">
 {% for img in images %}
-    <a href="{{ img.fullscreen }}" target="_blank">
+    <a href="{{ img.full_size_url }}" target="_blank">
         <div class="image_wrapper" style="display: inline-block; vertical-align: middle; margin: 20px; text-align: center">
             <img src="{{ img.thumbnail }}" alt="{{ img.name }}" class="image" style="max-width: 250px; max-height: 250px; border-radius: 2px; overflow: hidden;"/>
 
