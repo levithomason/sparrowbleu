@@ -316,7 +316,6 @@ def send_completed_gallery(request, pk=None):
             send_to = [a[1] for a in ADMINS]
 
             connection = get_connection()
-            connection.open()
 
             msg = EmailMessage(subject=subject, body=html_body, from_email=POSTMARK_SENDER, to=send_to, connection=connection)
             msg.content_subtype = "html"  # Main content is now text/html
@@ -324,8 +323,6 @@ def send_completed_gallery(request, pk=None):
             connection.send_messages([
                 msg
             ])
-
-            connection.close()
 
             return redirect('/gallery-completed-thanks/')
 
