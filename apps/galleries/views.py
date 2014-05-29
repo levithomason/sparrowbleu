@@ -6,7 +6,7 @@ import hashlib
 import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.core.mail import EmailMessage, get_connection
+from django.core.mail import mail_managers
 from django.template.loader import render_to_string
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
@@ -313,16 +313,9 @@ def send_completed_gallery(request, pk=None):
 
             subject = 'Gallery Complete: %s' % gallery.name
             html_body = render_to_string('send_completed_gallery_email.html', context)
-            send_to = [a[1] for a in ADMINS]
+            text_body = render_to_string('send_completed_gallery_email.txt', context)
 
-            connection = get_connection()
-
-            msg = EmailMessage(subject=subject, body=html_body, from_email=POSTMARK_SENDER, to=send_to, connection=connection)
-            msg.content_subtype = "html"  # Main content is now text/html
-
-            connection.send_messages([
-                msg
-            ])
+            mail_managers(subject, text_body, html_message=html_body)
 
             return redirect('/gallery-completed-thanks/')
 
