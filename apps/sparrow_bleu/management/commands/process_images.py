@@ -28,15 +28,20 @@ class Command(BaseCommand):
                 except Gallery.DoesNotExist:
                     raise CommandError('Gallery %s does not exist' % gallery_id)
 
-        self.stdout.write('\nProcessing %s galleries...' % len(galleries))
+        current_gallery = 1
+        total_galleries = len(galleries)
 
         for gallery in galleries:
             self.stdout.write('\n    ----------------------------------------')
-            self.stdout.write('    %s' % gallery)
+            self.stdout.write('    (%s of %s) %s' % (current_gallery, total_galleries, gallery))
             self.stdout.write('    ----------------------------------------')
 
-            for gallery_image in gallery.galleryimage_set.all():
-                self.stdout.write('\n    %s' % gallery_image.name)
+            gallery_images = gallery.galleryimage_set.all()
+            current_image = 1
+            total_images = len(gallery_images)
+
+            for gallery_image in gallery_images:
+                self.stdout.write('\n    (%s of %s) %s' % (current_image, total_images, gallery_image.name))
                 if options['thumbs_only']:
                     self.stdout.write('        - making thumbs')
                     gallery_image.generate_thumbnails()
@@ -44,3 +49,9 @@ class Command(BaseCommand):
                     self.stdout.write('        - processing')
                     gallery_image.process()
                 self.stdout.write('        - done')
+
+                current_image += 1
+                total_images -= 1
+
+            current_gallery += 1
+            total_galleries -= 1

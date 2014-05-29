@@ -53,8 +53,8 @@ class GalleryImage(models.Model):
     def thumbnail(self):
         return self._thumbnail(720, 720)
 
-    def fullscreen(self):
-        return self._thumbnail(1200, 1200)
+    #def fullscreen(self):
+        #return self._thumbnail(1200, 1200)
 
     def process(self):
         urllib.urlretrieve(self.full_size_url, filename=self.name)
@@ -70,7 +70,7 @@ class GalleryImage(models.Model):
 
     def generate_thumbnails(self):
         self.thumbnail()
-        self.fullscreen()
+        #self.fullscreen()
 
 
 def process_gallery_image(sender, **kwargs):
