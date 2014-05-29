@@ -46,12 +46,12 @@ class GalleryImage(models.Model):
 
     def _thumbnail(self, width, height):
         thumb_dimensions = '%sx%s' % (width, height)
-        thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=80, crop='noop', upscale=False, padding=True)
+        thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=85, crop='noop', upscale=False, padding=True)
 
         return thumb.url
 
     def thumbnail(self):
-        return self._thumbnail(360, 360)
+        return self._thumbnail(720, 720)
 
     def fullscreen(self):
         return self._thumbnail(1200, 1200)
