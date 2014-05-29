@@ -76,18 +76,7 @@ class GalleryImage(models.Model):
 def process_gallery_image(sender, **kwargs):
     if kwargs['created']:
         gallery_image = kwargs['instance']
-
-        urllib.urlretrieve(gallery_image.full_size_url, filename=gallery_image.name)
-        image_file = Image.open(gallery_image.name)
-
-        gallery_image.width = image_file.size[0]
-        gallery_image.height = image_file.size[1]
-        gallery_image.is_portrait = image_file.size[0] < image_file.size[1]
-        gallery_image.thumbnail()
-        gallery_image.fullscreen()
-        gallery_image.save()
-
-        os.remove(gallery_image.name)
+        gallery_image.process()
 
 
 post_save.connect(process_gallery_image, sender=GalleryImage)
