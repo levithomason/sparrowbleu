@@ -63,11 +63,14 @@ class GalleryImage(models.Model):
         self.width = image_file.size[0]
         self.height = image_file.size[1]
         self.is_portrait = image_file.size[0] < image_file.size[1]
-        self.thumbnail()
-        self.fullscreen()
+        self.generate_thumbnails()
         self.save()
 
         os.remove('%s' % self.name)
+
+    def generate_thumbnails(self):
+        self.thumbnail()
+        self.fullscreen()
 
 
 def process_gallery_image(sender, **kwargs):

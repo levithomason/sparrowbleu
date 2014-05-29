@@ -1,37 +1,46 @@
-import os
-import urllib
-from django.core.management.base import NoArgsCommand
-from apps.galleries.models import GalleryImage
-from PIL import Image
+from django.core.management.base import BaseCommand, CommandError
+from apps.galleries.models import Gallery
+from optparse import make_option
 
 
-class Command(NoArgsCommand):
-    help = 'Process image thumbs and other meta data'
+class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option('--thumbs-only',
+                    action='store_true',
+                    dest='thumbs_only',
+                    default=False,
+                    help='Generate thumbnails only, skip meta data.'),
+    )
 
-    def handle_noargs(self, **options):
-        for gallery_image in GalleryImage.objects.all():
-            print '%s' % gallery_image.name
-            print '    - downloading'
-            urllib.urlretrieve(gallery_image.full_size_url, filename=gallery_image.name)
-            image_file = Image.open(gallery_image.name)
+    args = '<gallery_id gallery_id ...>'
+    help = 'Process gallery image meta data and/or thumbnails'
 
-            gallery_image.width = image_file.size[0]
-            gallery_image.height = image_file.size[1]
-            print '    - dimensions: %s x %s' % (gallery_image.width, gallery_image.height)
+    def handle(self, *args, **options):
 
-            gallery_image.is_portrait = image_file.size[0] < image_file.size[1]
-            print '    - is_portait: %s' % gallery_image.is_portrait
+        if len(args) == 0:
+            galleries = Gallery.objects.all()
 
-            print '    - ...making small thumb'
-            gallery_image.thumbnail()
+        else:
+            galleries = []
+            for gallery_id in args:
+                try:
+                    galleries.append(Gallery.objects.get(pk=int(gallery_id)))
+                except Gallery.DoesNotExist:
+                    raise CommandError('Gallery %s does not exist' % gallery_id)
 
-            print '    - ...making full thumb'
-            gallery_image.fullscreen()
+        self.stdout.write('\nProcessing %s galleries...' % len(galleries))
 
-            print '    - ...saving'
-            gallery_image.save()
+        for gallery in galleries:
+            self.stdout.write('\n    ----------------------------------------')
+            self.stdout.write('    %s' % gallery)
+            self.stdout.write('    ----------------------------------------')
 
-            print '    - ...cleaning up'
-            os.remove(gallery_image.name)
-
-            print '    - done!\n'
+            for gallery_image in gallery.galleryimage_set.all():
+                self.stdout.write('\n    %s' % gallery_image.name)
+                if options['thumbs_only']:
+                    self.stdout.write('        - making thumbs')
+                    gallery_image.generate_thumbnails()
+                else:
+                    self.stdout.write('        - processing')
+                    gallery_image.process()
+                self.stdout.write('        - done')
