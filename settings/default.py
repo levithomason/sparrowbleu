@@ -18,8 +18,8 @@ SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'admin@sparrowbleu.com')
 SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'admin')
 
 POSTMARK_API_KEY = os.environ.get('POSTMARK_API_KEY', None)
-POSTMARK_SMTP_SERVER = os.environ.get('POSTMARK_SMTP_SERVER', None)
-POSTMARK_INBOUND_ADDRESS = os.environ.get('POSTMARK_INBOUND_ADDRESS', None)
+POSTMARK_SENDER = os.environ.get('POSTMARK_SENDER', None)
+POSTMARK_TEST_MODE = False
 
 MANAGERS = ADMINS
 

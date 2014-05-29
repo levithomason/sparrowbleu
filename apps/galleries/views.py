@@ -6,15 +6,14 @@ import hashlib
 import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.core.mail import mail_managers
+from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from apps.sparrow_bleu.utils import _human_key
-from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key, POSTMARK_API_KEY
+from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key, POSTMARK_API_KEY, POSTMARK_SENDER, ADMINS
 from sorl.thumbnail.conf import settings  # required for sorl default to work properly
 from sorl.thumbnail import default, get_thumbnail
-from postmark import PMMail
 from endless_pagination.decorators import page_template
 
 
@@ -315,13 +314,9 @@ def send_completed_gallery(request, pk=None):
             subject = 'Gallery Complete: %s' % gallery.name
             html_body = render_to_string('send_completed_gallery_email.html', context)
 
-            message = PMMail(api_key=POSTMARK_API_KEY,
-                             subject=subject,
-                             sender="levi@sparrowbleuphotography.com",
-                             to="jerica@sparrowbleuphotography.com",
-                             html_body=html_body,
-                             tag="")
-            message.send()
+            msg = EmailMessage(subject, html_body, POSTMARK_SENDER, [a[1] for a in ADMINS])
+            msg.content_subtype = "html"  # Main content is now text/html
+            msg.send()
 
             return redirect('/gallery-completed-thanks/')
 

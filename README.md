@@ -36,8 +36,7 @@ export SUPERUSER_PASSWORD = <your_development_password>
 
 ```
 export POSTMARK_API_KEY = <your_postmark_api_key>
-export POSTMARK_SMTP_SERVER = <your_postmark_smpt_server>
-export POSTMARK_INBOUND_ADDRESS = <your_postmark_inbound_address>
+export POSTMARK_SENDER = <your_postmark_sender_signature>
 ```
 
 # Testing
