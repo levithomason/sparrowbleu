@@ -13,6 +13,8 @@ ADMINS = (
     ('Jerica Thomason', 'jerica@sparrowbleuphotography.com'),
 )
 
+MANAGERS = ADMINS
+
 SUPERUSER_NAME = os.environ.get('SUPERUSER_NAME', 'admin')
 SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'admin@sparrowbleu.com')
 SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'admin')
@@ -23,8 +25,6 @@ POSTMARK_TEST_MODE = DEBUG
 
 SERVER_EMAIL = POSTMARK_SENDER
 EMAIL_SUBJECT_PREFIX = 'SparrowBleu'
-
-MANAGERS = ADMINS
 
 DATABASES = {
     'default': {

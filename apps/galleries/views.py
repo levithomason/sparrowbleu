@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from apps.sparrow_bleu.utils import _human_key
-from settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, boto_bucket, boto_key, POSTMARK_API_KEY, POSTMARK_SENDER, ADMINS
+from django.conf import settings
 from sorl.thumbnail.conf import settings  # required for sorl default to work properly
 from sorl.thumbnail import default, get_thumbnail
 from endless_pagination.decorators import page_template
@@ -192,8 +192,8 @@ def delete_gallery(request):
             gallery = Gallery.objects.get(pk=gallery_pk)
 
             try:
-                for key in boto_bucket.list(prefix=gallery.get_s3_directory_name()):
-                    boto_key.key = key
+                for key in settings.boto_bucket.list(prefix=gallery.get_s3_directory_name()):
+                    settings.boto_key.key = key
                     key.delete()
 
                 try:
@@ -316,7 +316,7 @@ def send_completed_gallery(request, pk=None):
             text_body = render_to_string('send_completed_gallery_email.txt', context)
 
             mail_managers(subject, text_body, html_message=html_body)
-
+            
             return redirect('/gallery-completed-thanks/')
 
         except Gallery.DoesNotExist:
@@ -353,16 +353,16 @@ def s3_sign_upload(request):
     expires = int(time.time() + 3600)
     amz_headers = "x-amz-acl:public-read"
 
-    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, AWS_STORAGE_BUCKET_NAME, object_name)
+    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, settings.AWS_STORAGE_BUCKET_NAME, object_name)
 
-    signature = base64.encodestring(hmac.new(AWS_SECRET_ACCESS_KEY, put_request, hashlib.sha1).digest())
+    signature = base64.encodestring(hmac.new(settings.AWS_SECRET_ACCESS_KEY, put_request, hashlib.sha1).digest())
     signature = signature.replace(' ', '%20').replace('+', '%2B')
 
-    url = 'https://%s.s3.amazonaws.com/%s' % (AWS_STORAGE_BUCKET_NAME, object_name)
+    url = 'https://%s.s3.amazonaws.com/%s' % (settings.AWS_STORAGE_BUCKET_NAME, object_name)
 
     data = json.dumps({
         'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (
-            url, AWS_ACCESS_KEY_ID, expires, signature),
+            url, settings.AWS_ACCESS_KEY_ID, expires, signature),
         'url': url
     })
 
