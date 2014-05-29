@@ -261,7 +261,7 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
                     'width': image.width,
                     'height': image.height,
                     'thumbnail': image.thumbnail,
-                    'fullscreen': image.fullscreen,
+                    #'fullscreen': image.fullscreen,
                     'thumb_width': thumb_width,
                     'thumb_height': thumb_height,
                     'is_selected': image.is_selected
