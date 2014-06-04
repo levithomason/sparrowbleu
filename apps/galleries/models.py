@@ -1,4 +1,5 @@
 import os
+import re
 import urllib
 from django.db.models.signals import post_save, pre_delete
 from django.db import models
@@ -48,8 +49,8 @@ class GalleryImage(models.Model):
     def _thumbnail(self, width, height):
         thumb_dimensions = '%sx%s' % (width, height)
         thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=85, crop='noop', upscale=False, padding=True)
-
-        return thumb.url
+        url_no_args = re.sub(r'\?.*', '', thumb.url)
+        return url_no_args
 
     def thumbnail(self):
         return self._thumbnail(720, 720)
