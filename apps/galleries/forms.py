@@ -13,6 +13,7 @@ class GalleryImageForm(forms.Form):
     gallery = forms.ModelChoiceField(Gallery.objects.all())
     full_size_url = forms.URLField(max_length=200)
     name = forms.CharField(max_length=100)
+    s3_object_name = forms.CharField(max_length=200)
 
 
 class ClientAccessForm(forms.Form):

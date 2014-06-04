@@ -19,16 +19,17 @@ jQuery('.confirm_delete_yes').click(function() {
 
     gallery.addClass('deleting');
 
-    var jqxhr = jQuery.post('/delete-gallery/', {'gallery_pk': gallery_pk}, function() {
-        gallery.fadeOut(200);
-    })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            console.error(textStatus);
-            console.error(jqxhr.responseText);
-            console.error(errorThrown);
-            alert('Something went wrong:\n\n' + 'Error: ' + errorThrown + '\n' + textStatus);
+    $.ajax('/delete-gallery/', {
+        method: 'POST',
+        data: {'gallery_pk': gallery_pk},
+        success: function() {
+            gallery.fadeOut(200);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown + '\n\n' + jqXHR.responseText);
             gallery.removeClass('deleting');
-        });
+        }
+    });
 });
 
 // cancel

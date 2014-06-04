@@ -1,9 +1,11 @@
 import os
+import re
 import urllib
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.db import models
-from sorl.thumbnail import get_thumbnail
+from sorl.thumbnail import get_thumbnail, delete
 from PIL import Image
+from settings import *
 
 
 class Gallery(models.Model):
@@ -28,8 +30,7 @@ class Gallery(models.Model):
         return GalleryImage.objects.filter(gallery=self).filter(is_selected=True).count()
 
     def get_s3_directory_name(self):
-        s3_dir = '%s/' % self.pk
-        return s3_dir
+        return '%s/' % self.pk
 
 
 class GalleryImage(models.Model):
@@ -40,6 +41,7 @@ class GalleryImage(models.Model):
     name = models.CharField(max_length=100, null=True)
     width = models.PositiveIntegerField(null=True)
     height = models.PositiveIntegerField(null=True)
+    s3_object_name = models.CharField(max_length=200)
 
     def __unicode__(self):
         return self.full_size_url
@@ -47,8 +49,8 @@ class GalleryImage(models.Model):
     def _thumbnail(self, width, height):
         thumb_dimensions = '%sx%s' % (width, height)
         thumb = get_thumbnail(self.full_size_url, thumb_dimensions, quality=85, crop='noop', upscale=False, padding=True)
-
-        return thumb.url
+        url_no_args = re.sub(r'\?.*', '', thumb.url)
+        return url_no_args
 
     def thumbnail(self):
         return self._thumbnail(720, 720)
@@ -72,6 +74,13 @@ class GalleryImage(models.Model):
         self.thumbnail()
         #self.fullscreen()
 
+    def delete_image_files(self):
+        # AWS S3 original image
+        boto_bucket.delete_key(self.s3_object_name)
+
+        # sorl thumbnail
+        delete(self.full_size_url)
+
 
 def process_gallery_image(sender, **kwargs):
     if kwargs['created']:
@@ -79,4 +88,10 @@ def process_gallery_image(sender, **kwargs):
         gallery_image.process()
 
 
+def delete_gallery_image_files(sender, **kwargs):
+    gallery_image = kwargs['instance']
+    gallery_image.delete_image_files()
+
+
 post_save.connect(process_gallery_image, sender=GalleryImage)
+pre_delete.connect(delete_gallery_image_files, sender=GalleryImage)

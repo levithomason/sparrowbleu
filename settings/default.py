@@ -10,10 +10,11 @@ TEMPLATE_DEBUG = False
 
 ADMINS = (
     ('Levi Thomason', 'me@levithomason.com'),
-    ('Jerica Thomason', 'jerica@sparrowbleuphotography.com'),
 )
 
-MANAGERS = ADMINS
+MANAGERS = ADMINS + (
+    ('Jerica Thomason', 'jerica@sparrowbleuphotography.com')
+)
 
 SUPERUSER_NAME = os.environ.get('SUPERUSER_NAME', 'admin')
 SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'admin@sparrowbleu.com')
