@@ -13,7 +13,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS + (
-    ('Jerica Thomason', 'jerica@sparrowbleuphotography.com')
+    ('Jerica Thomason', 'jerica@sparrowbleuphotography.com'),
 )
 
 SUPERUSER_NAME = os.environ.get('SUPERUSER_NAME', 'admin')
