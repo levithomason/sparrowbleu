@@ -60,10 +60,11 @@
         };
 
         S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
-            var this_s3upload, xhr;
-            this_s3upload = this;
-            xhr = new XMLHttpRequest();
-            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.gallery_pk + "/" + window.btoa(file.name), true);
+            var object_name = this.gallery_pk + "/" + window.btoa(file.name);
+            var object_type = file.type;
+            var this_s3upload = this;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + object_type + '&s3_object_name=' + object_name, true);
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
@@ -74,7 +75,7 @@
                         this_s3upload.onError('Signing server returned some ugly/empty JSON: "' + this.responseText + '"');
                         return false;
                     }
-                    return callback(result.signed_request, result.url);
+                    return callback(result.signed_request, result.url, object_name);
                 } else if (this.readyState === 4 && this.status !== 200) {
                     return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status);
                 }
@@ -82,16 +83,15 @@
             return xhr.send();
         };
 
-        S3Upload.prototype.uploadToS3 = function(file, url, public_url) {
-            var this_s3upload, xhr;
-            this_s3upload = this;
-            xhr = this.createCORSRequest('PUT', url);
+        S3Upload.prototype.uploadToS3 = function(file, url, public_url, object_name) {
+            var this_s3upload = this;
+            var xhr = this.createCORSRequest('PUT', url);
             if (!xhr) {
                 this.onError('CORS not supported');
             } else {
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        return this_s3upload.onFinishS3Put(file, public_url);
+                        return this_s3upload.onFinishS3Put(file, public_url, object_name);
                     } else {
                         return this_s3upload.onError(file, 'Upload error: ' + xhr.status);
                     }
@@ -113,8 +113,8 @@
         S3Upload.prototype.uploadFile = function(file) {
             var this_s3upload;
             this_s3upload = this;
-            return this.executeOnSignedUrl(file, function(signedURL, publicURL) {
-                return this_s3upload.uploadToS3(file, signedURL, publicURL);
+            return this.executeOnSignedUrl(file, function(signedURL, publicURL, object_name) {
+                return this_s3upload.uploadToS3(file, signedURL, publicURL, object_name);
             });
         };
 

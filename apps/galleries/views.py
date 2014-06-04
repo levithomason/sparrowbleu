@@ -11,9 +11,8 @@ from django.template.loader import render_to_string
 from apps.galleries.models import Gallery, GalleryImage
 from apps.galleries.forms import GalleryForm, GalleryImageForm, ClientAccessForm
 from apps.sparrow_bleu.utils import _human_key
-from django.conf import settings
-from sorl.thumbnail.conf import settings  # required for sorl default to work properly
-from sorl.thumbnail import default, get_thumbnail
+from settings import *
+from sorl.thumbnail import get_thumbnail
 from endless_pagination.decorators import page_template
 
 
@@ -185,31 +184,22 @@ def edit_gallery(request, pk):
 
 
 def delete_gallery(request):
+    if not request.user.is_authenticated():
+        return redirect('/galleries/')
+
     if request.is_ajax() and request.method == 'POST':
         gallery_pk = request.POST.get('gallery_pk')
 
         try:
             gallery = Gallery.objects.get(pk=gallery_pk)
+            gallery.delete()
 
-            try:
-                for key in settings.boto_bucket.list(prefix=gallery.get_s3_directory_name()):
-                    settings.boto_key.key = key
-                    key.delete()
-
-                try:
-                    gallery.delete()
-                    default.kvstore.cleanup()
-
-                    return HttpResponse(content="Gallery deleted successfully", content_type=None, status=200)
-
-                except:
-                    return HttpResponse(content="Couldn't delete gallery images", content_type=None, status=400)
-
-            except:
-                return HttpResponse(content="Could not delete S3 bucket for the gallery", content_type=None, status=400)
+            return HttpResponse(content="Gallery deleted successfully", content_type=None, status=200)
 
         except Gallery.DoesNotExist:
-            return HttpResponse(content="Sorry, this gallery doesn't exist anymore.", content_type=None, status=400)
+            return HttpResponse(content="Sorry, this gallery doesn't exist.", content_type=None, status=400)
+    else:
+        return HttpResponse(content="delete_gallery only accepts POST requests.  You sent %s." % request.method, content_type=None, status=400)
 
 
 @page_template('gallery_detail_page.html')
@@ -335,9 +325,11 @@ def create_gallery_image(request):
         gallery = Gallery.objects.get(pk=request.POST['gallery'])
         full_size_url = request.POST['full_size_url']
         name = request.POST['name']
+        s3_object_name = request.POST['s3_object_name']
 
         if form.is_valid():
-            new_image = GalleryImage.objects.create(full_size_url=full_size_url, gallery=gallery, name=name)
+            new_image = GalleryImage.objects.create(full_size_url=full_size_url, gallery=gallery, name=name,
+                                                    s3_object_name=s3_object_name)
             new_image.save()
 
             return HttpResponse(content=new_image.pk, content_type=None, status=200)
@@ -353,16 +345,16 @@ def s3_sign_upload(request):
     expires = int(time.time() + 3600)
     amz_headers = "x-amz-acl:public-read"
 
-    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, settings.AWS_STORAGE_BUCKET_NAME, object_name)
+    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, AWS_STORAGE_BUCKET_NAME, object_name)
 
-    signature = base64.encodestring(hmac.new(settings.AWS_SECRET_ACCESS_KEY, put_request, hashlib.sha1).digest())
+    signature = base64.encodestring(hmac.new(AWS_SECRET_ACCESS_KEY, put_request, hashlib.sha1).digest())
     signature = signature.replace(' ', '%20').replace('+', '%2B')
 
-    url = 'https://%s.s3.amazonaws.com/%s' % (settings.AWS_STORAGE_BUCKET_NAME, object_name)
+    url = 'https://%s.s3.amazonaws.com/%s' % (AWS_STORAGE_BUCKET_NAME, object_name)
 
     data = json.dumps({
         'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (
-            url, settings.AWS_ACCESS_KEY_ID, expires, signature),
+            url, AWS_ACCESS_KEY_ID, expires, signature),
         'url': url
     })
 

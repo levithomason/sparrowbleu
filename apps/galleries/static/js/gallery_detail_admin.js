@@ -116,8 +116,8 @@ function s3_upload() {
                     });
                 });
             },
-            onFinishS3Put: function(file, url) {
-                uploadImageToServer(file, url);
+            onFinishS3Put: function(file, url, object_name) {
+                uploadImageToServer(file, url, object_name);
 
                 var retries = image_uploads[file.name].retries;
                 var retry_string = '';
@@ -195,7 +195,7 @@ function safeString(string) {
  Upload to our server
  */
 
-function uploadImageToServer(file, url) {
+function uploadImageToServer(file, url, object_name) {
     var url_no_args = url.replace(/\?.*/, '');
 
     $('#' + safeString(file.name)).html('<i class="fa fa-spin fa-spinner"></i> making thumbnails');
@@ -206,7 +206,8 @@ function uploadImageToServer(file, url) {
         data: {
             gallery: $('#gallery_pk').data('pk'),
             full_size_url: url_no_args,
-            name: file.name
+            name: file.name,
+            s3_object_name: object_name
         },
         complete: function(data) {
             imageUploadComplete(file);
