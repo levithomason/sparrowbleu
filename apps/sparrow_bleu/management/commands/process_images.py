@@ -5,15 +5,25 @@ from optparse import make_option
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
-        make_option('--thumbs-only',
+        make_option('--dimensions',
                     action='store_true',
-                    dest='thumbs_only',
+                    dest='dimensions',
                     default=False,
-                    help='Generate thumbnails only, skip meta data.'),
+                    help='Only update width, height, and is_portrait.'),
+        make_option('--thumbnails',
+                    action='store_true',
+                    dest='thumbnails',
+                    default=False,
+                    help='Only generate thumbnails.'),
+        make_option('--s3-object-names',
+                    action='store_true',
+                    dest='s3_object_names',
+                    default=False,
+                    help='Only update s3_object_name (from full_size_url).'),
     )
 
-    args = '[<gallery_id gallery_id ...>] [--thumbs-only]'
-    help = 'Process gallery image meta data and/or thumbnails'
+    args = '[<gallery_id gallery_id ...>] [--dimensions --s3-object-names --thumbnails]'
+    help = 'Process gallery image meta data and/or thumbnails.  If no options are passed, all options are processed.'
 
     def handle(self, *args, **options):
 
@@ -33,7 +43,8 @@ class Command(BaseCommand):
 
         for gallery in galleries:
             self.stdout.write('\n    ----------------------------------------')
-            self.stdout.write('    (%s of %s) %s' % (current_gallery, total_galleries, gallery))
+            self.stdout.write('    %s' % (gallery))
+            self.stdout.write('    Gallery %s of %s' % (current_gallery, total_galleries))
             self.stdout.write('    ----------------------------------------')
 
             gallery_images = gallery.galleryimage_set.all()
@@ -41,14 +52,27 @@ class Command(BaseCommand):
             total_images = len(gallery_images)
 
             for gallery_image in gallery_images:
-                self.stdout.write('\n    (%s of %s) %s' % (current_image, total_images, gallery_image.name))
-                if options['thumbs_only']:
-                    self.stdout.write('        - making thumbs')
-                    gallery_image.generate_thumbnails()
-                else:
-                    self.stdout.write('        - processing')
-                    gallery_image.process()
-                self.stdout.write('        - done')
+                self.stdout.write('\n    %s' % (gallery_image.name))
+                self.stdout.write('    Image %s of %s' % (current_image, total_images))
+
+                no_options_passed =\
+                    not options['dimensions'] and\
+                    not options['s3_object_names'] and\
+                    not options['thumbnails']
+
+                if options['dimensions'] or no_options_passed:
+                    self.stdout.write('        - setting dimensions')
+                    #gallery_image.set_dimensions()
+
+                if options['s3_object_names'] or no_options_passed:
+                    self.stdout.write('        - setting s3_object_name')
+                    #object_name = gallery_image.set_s3_object_name()
+
+                if options['thumbnails'] or no_options_passed:
+                    self.stdout.write('        - making thumbnails')
+                    #gallery_image.generate_thumbnails()
+
+                self.stdout.write('        - done!')
 
                 current_image += 1
 

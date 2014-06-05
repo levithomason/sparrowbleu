@@ -58,28 +58,37 @@ class GalleryImage(models.Model):
     #def fullscreen(self):
         #return self._thumbnail(1200, 1200)
 
-    def process(self):
-        urllib.urlretrieve(self.full_size_url, filename=self.name)
-        image_file = Image.open(self.name)
-
-        self.width = image_file.size[0]
-        self.height = image_file.size[1]
-        self.is_portrait = image_file.size[0] < image_file.size[1]
-        self.generate_thumbnails()
-        self.save()
-
-        os.remove('%s' % self.name)
-
-    def generate_thumbnails(self):
-        self.thumbnail()
-        #self.fullscreen()
-
     def delete_image_files(self):
         # AWS S3 original image
         boto_bucket.delete_key(self.s3_object_name)
 
         # sorl thumbnail
         delete(self.full_size_url)
+
+    def generate_thumbnails(self):
+        self.thumbnail()
+        #self.fullscreen()
+
+    def process(self):
+        self.set_dimensions()
+        self.set_s3_object_name()
+        self.generate_thumbnails()
+
+    def set_dimensions(self):
+        urllib.urlretrieve(self.full_size_url, filename=self.name)
+        image_file = Image.open(self.name)
+
+        self.width = image_file.size[0]
+        self.height = image_file.size[1]
+        self.is_portrait = image_file.size[0] < image_file.size[1]
+        self.save()
+
+        os.remove('%s' % self.name)
+
+    def set_s3_object_name(self):
+        self.s3_object_name = re.sub(r'http.*com\/', '', '%s' % self.full_size_url)
+        self.save()
+        return self.s3_object_name
 
 
 def process_gallery_image(sender, **kwargs):
