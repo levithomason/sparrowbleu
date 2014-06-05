@@ -12,7 +12,7 @@ class Command(BaseCommand):
                     help='Generate thumbnails only, skip meta data.'),
     )
 
-    args = '<gallery_id gallery_id ...>'
+    args = '[<gallery_id gallery_id ...>] [--thumbs-only]'
     help = 'Process gallery image meta data and/or thumbnails'
 
     def handle(self, *args, **options):
