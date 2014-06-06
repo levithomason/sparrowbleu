@@ -88,7 +88,6 @@ class GalleryImage(models.Model):
     def set_s3_object_name(self):
         self.s3_object_name = re.sub(r'http.*com\/', '', '%s' % self.full_size_url)
         self.save()
-        return self.s3_object_name
 
 
 def process_gallery_image(sender, **kwargs):

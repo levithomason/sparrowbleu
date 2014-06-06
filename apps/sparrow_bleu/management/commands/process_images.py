@@ -62,15 +62,15 @@ class Command(BaseCommand):
 
                 if options['dimensions'] or no_options_passed:
                     self.stdout.write('        - setting dimensions')
-                    #gallery_image.set_dimensions()
+                    gallery_image.set_dimensions()
 
                 if options['s3_object_names'] or no_options_passed:
                     self.stdout.write('        - setting s3_object_name')
-                    #object_name = gallery_image.set_s3_object_name()
+                    gallery_image.set_s3_object_name()
 
                 if options['thumbnails'] or no_options_passed:
                     self.stdout.write('        - making thumbnails')
-                    #gallery_image.generate_thumbnails()
+                    gallery_image.generate_thumbnails()
 
                 self.stdout.write('        - done!')
 
