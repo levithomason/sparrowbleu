@@ -3,7 +3,7 @@
 {{ gallery.name }}
 
 {{ gallery.number_of_images }} included
-{{ gallery.selected_images }} selected
+{{ gallery.selected_image_count }} selected
 {{ extra_images }} extra @ ${{ cost_per_extra_image }} ea
 -----------------------------------------------
 ${{ extra_cost }} Additional Cost

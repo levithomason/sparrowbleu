@@ -57,8 +57,8 @@ def galleries(request):
         else:
             preview_image_url = None
 
-        if gallery.selected_images() > gallery.number_of_images:
-            total_cost = (gallery.selected_images() - gallery.number_of_images) * gallery.cost_per_extra_image
+        if gallery.selected_image_count > gallery.number_of_images:
+            total_cost = (gallery.selected_image_count - gallery.number_of_images) * gallery.cost_per_extra_image
         else:
             total_cost = 0
 
@@ -213,36 +213,6 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
 
             gallery_images = []
             for image in naturally_sorted_qs:
-                try:
-                    test_width = image.width / 1
-                    test_height = image.height / 1
-                except TypeError:
-                    image.process()
-
-                if image.is_portrait:
-                    if image.width >= 360:
-                        thumb_width = 360
-                    else:
-                        thumb_width = image.width
-
-                    max_height = image.height * (360 / image.width)
-
-                    if image.height < max_height:
-                        thumb_height = image.height
-                    else:
-                        thumb_height = max_height
-                else:
-                    if image.height >= 360:
-                        thumb_height = 360
-                    else:
-                        thumb_height = image.height
-
-                    max_width = image.width * (360 / image.height)
-
-                    if image.width < max_width:
-                        thumb_width = image.width
-                    else:
-                        thumb_width = max_width
 
                 gallery_images.append({
                     'pk': image.pk,
@@ -251,8 +221,8 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
                     'height': image.height,
                     'thumbnail': image.thumbnail,
                     #'fullscreen': image.fullscreen,
-                    'thumb_width': thumb_width,
-                    'thumb_height': thumb_height,
+                    'thumb_width': image.template_thumbnail_width,
+                    'thumb_height': image.template_thumbnail_height,
                     'is_selected': image.is_selected
                 })
 
