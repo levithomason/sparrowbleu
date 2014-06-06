@@ -22,7 +22,7 @@ class Command(BaseCommand):
                     help='Only update s3_object_name (from full_size_url).'),
     )
 
-    args = '[<gallery_id gallery_id ...>] [--dimensions --s3-object-names --thumbnails]'
+    args = '<gallery_id gallery_id ...>'
     help = 'Process gallery image meta data and/or thumbnails.  If no options are passed, all options are processed.'
 
     def handle(self, *args, **options):
