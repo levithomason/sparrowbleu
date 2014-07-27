@@ -89,7 +89,7 @@ body {
 .gallery_image_container {
     @sbp_gallery_padding: 2%;
 
-    padding: 80px @sbp_gallery_padding @sbp_gallery_padding @sbp_gallery_padding;
+    padding: 80px @sbp_gallery_padding 0 @sbp_gallery_padding;
     text-align: center;
     .user-select(none);
 
@@ -336,7 +336,7 @@ body {
                     font-size: @loading_size;
                 }
                 .gallery_image_name {
-                    font-family: "Raleway Regular", sans-serif;
+                    font-family: @sbp_gallery_nav_font_family;
                     font-size: 14px;
                     line-height: 32px;
                 }
@@ -354,30 +354,50 @@ body {
         }
 
         .sbp_desktop_pagination {
-            display: block;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: @sbp_gallery_nav_font_size;
-            font-family: @sbp_gallery_nav_font_family;
-            background: @sbp_gallery_overlay_background;
+            .sbp_buttons {
+                overflow: hidden;
+                margin-top: 100px;
 
-            .endless_page_current,
-            .endless_page_link {
-                display: inline-block;
-                padding: 10px 5px;
-                max-width: 60px;
-                min-width: 30px;
-                width: 5%;
+                .previous,
+                .next {
+                    display: inline-block;
+                    background: @sbp_gallery_overlay_background;
+                    padding: 10px 30px;
+                    font-size: @sbp_gallery_nav_font_size;
+                    color: @sbp_font_color;
+                }
+
+                .previous {
+                    float: left;
+                }
+
+                .next {
+                    float: right;
+                }
             }
-            .endless_page_current {
-                color: #eee;
-            }
-            .endless_page_link {
-                text-decoration: none;
-                color: @sbp_font_color;
+
+            .sbp_pages {
+                margin: 40px 0;
+                overflow: hidden;
+                font-family: @sbp_font_family_bold;
+                text-align: center;
+
+                .endless_page_current,
+                .endless_page_link {
+                    display: inline-block;
+                    padding: 8px;
+                    max-width: 50px;
+                    min-width: 28px;
+                    width: 4%;
+                }
+                .endless_page_current {
+                    color: @sbp_blue;
+                }
+                .endless_page_link {
+                    text-decoration: none;
+                    color: @sbp_font_color;
+                    text-shadow: 0 1px #000;
+                }
             }
         }
 

@@ -71,7 +71,7 @@ body {
 .gallery_detail_nav .gallery_title {
   position: absolute;
   width: 100%;
-  font-size: 21.6px;
+  font-size: 21.599999999999998px;
   line-height: 50px;
   text-align: center;
   cursor: default;
@@ -117,7 +117,7 @@ body {
   }
 }
 .gallery_image_container {
-  padding: 80px 2% 2% 2%;
+  padding: 80px 2% 0 2%;
   text-align: center;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -352,7 +352,7 @@ body {
   font-size: 28px;
 }
 .gallery_image_container .thumbnails_view .gallery_image_item .gallery_image_item_inner .gallery_image_name {
-  font-family: "Raleway Regular", sans-serif;
+  font-family: "Raleway Regular";
   font-size: 14px;
   line-height: 32px;
 }
@@ -362,31 +362,45 @@ body {
 .gallery_image_container .thumbnails_view .gallery_image_item.uploading .gallery_thumbnail {
   opacity: 0.35;
 }
-.gallery_image_container .thumbnails_view .sbp_desktop_pagination {
-  display: block;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 18px;
-  font-family: "Raleway Regular";
-  background: rgba(27, 25, 24, 0.8);
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_buttons {
+  overflow: hidden;
+  margin-top: 100px;
 }
-.gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_current,
-.gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_link {
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_buttons .previous,
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_buttons .next {
   display: inline-block;
-  padding: 10px 5px;
-  max-width: 60px;
-  min-width: 30px;
-  width: 5%;
+  background: rgba(27, 25, 24, 0.8);
+  padding: 10px 30px;
+  font-size: 18px;
+  color: #74736e;
 }
-.gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_current {
-  color: #eee;
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_buttons .previous {
+  float: left;
 }
-.gallery_image_container .thumbnails_view .sbp_desktop_pagination .endless_page_link {
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_buttons .next {
+  float: right;
+}
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_pages {
+  margin: 40px 0;
+  overflow: hidden;
+  font-family: "Raleway Medium";
+  text-align: center;
+}
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_pages .endless_page_current,
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_pages .endless_page_link {
+  display: inline-block;
+  padding: 8px;
+  max-width: 50px;
+  min-width: 28px;
+  width: 4%;
+}
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_pages .endless_page_current {
+  color: #a1d1c9;
+}
+.gallery_image_container .thumbnails_view .sbp_desktop_pagination .sbp_pages .endless_page_link {
   text-decoration: none;
   color: #74736e;
+  text-shadow: 0 1px #000;
 }
 .gallery_image_container .thumbnails_view .sbp_mobile_pagination {
   display: block;
