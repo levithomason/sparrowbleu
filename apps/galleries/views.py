@@ -204,7 +204,9 @@ def delete_gallery(request):
 
 @page_template('gallery_detail_page.html')
 def gallery_detail(request, version, passcode=None, template='gallery_detail.html', extra_context=None):
-    if version and passcode:
+    if not version or not passcode:
+        return redirect('/galleries/')
+    else:
         try:
             gallery = Gallery.objects.get(passcode=passcode)
             gallery_image_qs = GalleryImage.objects.filter(gallery=gallery.pk)
@@ -243,7 +245,51 @@ def gallery_detail(request, version, passcode=None, template='gallery_detail.htm
 
         except Gallery.DoesNotExist:
             return redirect('/galleries/')
+
+
+def gallery_review(request, version, passcode=None, extra_context=None):
+    if version and passcode:
+        try:
+            gallery = Gallery.objects.get(passcode=passcode)
+            gallery_image_qs = GalleryImage.objects.filter(gallery=gallery.pk, is_selected=True)
+
+            naturally_sorted_qs = sorted(gallery_image_qs, key=lambda img: _human_key(img.name))
+
+            gallery_images = []
+            for image in naturally_sorted_qs:
+                gallery_images.append({
+                    'pk': image.pk,
+                    'name': image.name,
+                    'width': image.width,
+                    'height': image.height,
+                    'thumbnail': image.thumbnail,
+                    # 'fullscreen': image.fullscreen,
+                    'thumb_width': image.template_thumbnail_width,
+                    'thumb_height': image.template_thumbnail_height,
+                    'is_selected': image.is_selected
+                })
+
+            is_mobile = version == 'm'
+            is_desktop = version == 'd'
+
+            context = {
+                'gallery': gallery,
+                'gallery_images': gallery_images,
+                'is_mobile': is_mobile,
+                'is_desktop': is_desktop
+            }
+
+            if extra_context is not None:
+                context.update(extra_context)
+
+            return render(request, 'gallery_review.html', context)
+
+        except Gallery.DoesNotExist:
+            print('no gallery')
+            return redirect('/galleries/')
+
     else:
+        print('no version or passcode')
         return redirect('/galleries/')
 
 

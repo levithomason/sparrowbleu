@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^delete-gallery/', 'apps.galleries.views.delete_gallery', name='delete_gallery'),
     url(r'^galleries/', 'apps.galleries.views.galleries', name='galleries'),
 
+    url(r'^gallery/(?P<version>.*\w)/(?P<passcode>.*\w)/review', 'apps.galleries.views.gallery_review', name='gallery_review'),
     url(r'^gallery/(?P<version>.*\w)/(?P<passcode>.*\w)', 'apps.galleries.views.gallery_detail', name='gallery_detail'),
 
     url(r'^send-completed-gallery/(?P<pk>\d+)', 'apps.galleries.views.send_completed_gallery', name='send_completed_gallery'),

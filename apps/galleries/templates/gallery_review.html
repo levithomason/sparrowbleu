@@ -19,34 +19,15 @@
                     <span class="text">back</span>
                 </a>
             {% if gallery_images %}
-                <a href="{{ request.path }}/review" class="control gallery_detail_done_btn btn btn-link">
-                    <i class="icon fa fa-eye"></i>
-                    <span class="text">review</span>
-                </a>
-                {% if is_desktop %}
-                <!--
-                <div class="control thumbnails btn btn-lg btn-link hide">
-                    <i class="icon fa fa-resize-small"></i>
-                    <span class="text">small</span>
+                <div class="control gallery_detail_done_btn btn btn-link" data-toggle="modal" data-target="#done_modal">
+                    <i class="icon fa fa-check"></i>
+                    <span class="text">done</span>
                 </div>
-                <div class="control fullscreen btn btn-lg btn-link">
-                    <i class="icon fa fa-resize-full"></i>
-                    <span class="text">full</span>
-                </div>
-                <div class="control view_selected btn btn-lg btn-link">
-                    <i class="icon fa fa-heart-o"></i>
-                    <span class="text">favs</span>
-                </div>
-                <div class="control view_all btn btn-lg btn-link hide">
-                    <i class="icon fa fa-camera-retro"></i>
-                    <span class="text">all</span>
-                </div>
-                -->
-                {% endif %}
             {% endif %}
             </div>
         </div>
         <div class="gallery_title">{{ gallery }}</div>
+
         {% if gallery_images %}
         <div class="selected_images">
             <div class="selected" data-selected="{{ gallery.selected_image_count }}" data-max="{{ gallery.number_of_images }}"></div>
@@ -58,71 +39,16 @@
 
 {% block body %}
     <div class="gallery_image_container" oncontextmenu="return false">
-        {% if perms.Gallery.can_change %}
-            <div id="dropzone">
-                <div class="message">
-                    <div class="icon"><i class="fa fa-cloud-upload"></i></div>
-                    <div class="text">Drop to Upload</div>
-                </div>
-            </div>
-            <div id="status">
-                <div class="progress progress-striped active">
-                    <div class="progress-bar progress-bar-info" role="progressbar"></div>
-                </div>
-                <div class="files_uploading"></div>
-            </div>
-            <input id="image" type="file" onchange="s3_upload();" style="display: none;" multiple>
-        {% endif %}
 
         {% if gallery_images %}
-            {% if is_desktop %}
-            <!--
-                <div class="fullscreen_view hide">
-                    <div class="image_container">
-                        {% for image in gallery_images %}
-                        <div class="fullscreen_image_item{% if image.is_selected %} selected{% endif %}" data-pk="{{ image.pk }}" style="width: {{ image.width }}px; height: {{ image.height }}px">
-                            <div class="inner">
-                                <img class="image" src="{{ image.fullscreen }}">
-                                <span class="favorite"><i class="fa fa-heart-o"></i></span>
-
-                                <div class="gallery_thumbnail_overlay"></div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="controls">
-                        <div class="previous" onclick="fullscreen.showPrev()">
-                            <div class="icon">
-                                <i class="fa fa-chevron-left"></i>
-                            </div>
-                        </div>
-                        <div class="next" onclick="fullscreen.showNext()">
-                            <div class="icon">
-                                <i class="fa fa-chevron-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            -->
-            {% endif %}
-
             <div class="thumbnails_view">
-                <div class="endless_page_template">
-                    {% include 'gallery_detail_page.html' %}
-                </div>
+                {% include '_gallery_detail_images.html' %}
             </div>
         {% else %}
-            {% if perms.Gallery.can_change %}
-            <div class="drop_images">
-                <i class="icon fa fa-hand-o-down"></i>
-                <div class="text">drop images</div>
-            </div>
-            {% else %}
             <div class="no_photos">
                 <i class="icon fa fa-camera-retro"></i>
-                <div class="text">SparrowBleu will add your photos soon</div>
+                <div class="text">You haven't selected any photos yet.</div>
             </div>
-            {% endif %}
         {% endif %}
     </div>
 
