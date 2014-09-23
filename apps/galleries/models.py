@@ -1,11 +1,12 @@
 from __future__ import division
+import os
 import re
 import urllib
 from django.db.models.signals import post_save, pre_delete
 from django.db import models
 from PIL import Image
-from settings import *
-from sorl.thumbnail import get_thumbnail, delete
+from sorl.thumbnail import get_thumbnail
+import tasks
 
 
 class Gallery(models.Model):
@@ -112,13 +113,6 @@ class GalleryImage(models.Model):
         url_no_args = re.sub(r'\?.*', '', thumb.url)
         return url_no_args
 
-    def delete_image_files(self):
-        """
-        Deletes the original image S3 object, all solr thumbnails and KV store data
-        """
-        boto_bucket.delete_key(self.s3_object_name)
-        delete(self.full_size_url)
-
     #def fullscreen(self):
         #return self._get_thumbnail(1200, 1200)
 
@@ -173,10 +167,17 @@ def process_gallery_image(sender, **kwargs):
         gallery_image.process()
 
 
-def delete_gallery_image_files(sender, **kwargs):
-    gallery_image = kwargs['instance']
-    gallery_image.delete_image_files()
+def delete_gallery_images(sender, **kwargs):
+    gallery = kwargs['instance']
+
+    print '################'
+    print gallery
+    print '#'
+    print gallery.pk
+    print '################'
+
+    tasks.delete_gallery_images.delay(gallery.pk)
 
 
+pre_delete.connect(delete_gallery_images, sender=Gallery)
 post_save.connect(process_gallery_image, sender=GalleryImage)
-pre_delete.connect(delete_gallery_image_files, sender=GalleryImage)
