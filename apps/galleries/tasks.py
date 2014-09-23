@@ -9,12 +9,6 @@ from django.core import management
 def delete_gallery_images(gallery_pk):
     key_prefix = "%s" % gallery_pk
 
-    print '####### task #########'
-    print gallery_pk
-    print '#'
-    print key_prefix
-    print '################'
-
     for key in boto_bucket.list(prefix=key_prefix):
         print '- removing key'
         key.delete()

@@ -169,13 +169,6 @@ def process_gallery_image(sender, **kwargs):
 
 def delete_gallery_images(sender, **kwargs):
     gallery = kwargs['instance']
-
-    print '################'
-    print gallery
-    print '#'
-    print gallery.pk
-    print '################'
-
     tasks.delete_gallery_images.delay(gallery.pk)
 
 
