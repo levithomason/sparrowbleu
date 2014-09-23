@@ -106,3 +106,6 @@ INTERNAL_IPS = ('',)
 
 # Email
 EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
+
+# Celery
+BROKER_URL = os.environ['RABBITMQ_BIGWIG_RX_URL']
