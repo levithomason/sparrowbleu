@@ -10,7 +10,6 @@ def delete_gallery_images(gallery_pk):
     key_prefix = "%s" % gallery_pk
 
     for key in boto_bucket.list(prefix=key_prefix):
-        print '- removing key'
         key.delete()
 
     management.call_command('thumbnail', 'cleanup')
